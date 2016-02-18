@@ -23,26 +23,25 @@ Once the project moves into development, the press release can be used as a touc
   	Helping teams share and track information.
 
 ## Summary ##
-  	A one stop shop for team collaboration, providing white boarding and task managing to improve work flow. 
+  	A one stop shop for team collaboration, providing whiteboarding and task management to improve workflow for project groups. 
 
 ## Problem ##
-  > Describe the problem your product solves.
   	A lack of communication in a central location can impede team progress. 
 
 ## Solution ##
-  	Collab.y integrates multiple collobrative tools to inspire motiviations of employee inspiration. 
+  	Collab.y integrates multiple collobrative tools to inspire motivations of employee inspiration. 
 
 ## Quote from You ##
   	'Huh.' - Mark, CEO
 
 ## How to Get Started ##
-  	Type Collab.y into the search bar and let your conscience be your guide..
+  	Type Collab.y into the search bar and let your conscience be your guide.
 
 ## Customer Quote ##
  	'Huh?' - Richard, Customer 
 
 ## Closing and Call to Action ##
-  	Give Collab.y a try for all of your most intimate team work needs. 
+  	Give Collab.y a try for all of your most intimate teamwork needs.
 
 
 
