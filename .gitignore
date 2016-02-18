@@ -4,3 +4,8 @@ bower_components/
 
 build/
 dist/
+
+# Floobits
+.floo
+.floobit
+.flooignore
