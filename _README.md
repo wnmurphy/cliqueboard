@@ -1,6 +1,6 @@
-# Project Name
+# Collab.y
 
-> Pithy project description
+Making the world a better place by providing an arsenal of tools for team collaboration.
 
 ## Team
 
@@ -44,7 +44,7 @@ bower install
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/HRR12-Triceratops/hrr12-triceratops-greenfield/issues)
 
 
 ## Contributing
