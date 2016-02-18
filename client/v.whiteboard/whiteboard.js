@@ -2,28 +2,57 @@
 
 angular.module('collaby.whiteboard', [])
 
-.controller('WhiteboardController', function ($scope, $window, $location, Auth) {
-  $scope.user = {};
+.controller('whiteboardController', function ($scope) {
 
-  $scope.signin = function () {
-    Auth.signin($scope.user)
-      .then(function (token) {
-        $window.localStorage.setItem('com.collaby', token);
-        $location.path('/links');
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+  $scope.Whiteboard = {};
+
+  Whiteboard.init = function(){ 
+    this.canvas = document.createElement('canvas');
+    this.canvas.height = 400;
+    this.canvas.width = 800;  //size it up
+    document.getElementsByTagName('article')[0].appendChild(this.canvas); //append it into the DOM 
+
+    this.ctx = this.canvas.getContext("2d"); // Store the context 
+
+    // set preferences for our line drawing.
+    this.ctx.fillStyle = "solid";
+    this.ctx.strokeStyle = "#bada55";   
+    this.ctx.lineWidth = 5;       
+    this.ctx.lineCap = "round";
   };
 
-  $scope.signup = function () {
-    Auth.signup($scope.user)
-      .then(function (token) {
-        $window.localStorage.setItem('com.collaby', token);
-        $location.path('/links');
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+  //Draw to canvas
+  Whiteboard.draw = function(x, y, type){
+    if (type === "dragstart"){
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, y);
+    }else if (type === "drag"){
+      this.ctx.lineTo(x,y);
+      this.ctx.stroke();
+    }else{
+      this.ctx.closePath();
+    }
+    return;
   };
+
+  // Set up sockets
+  Whiteboard.socket = io.connect('http://localhost:4000');
+
+  Whiteboard.socket.on('draw', function(data){
+    this.draw(data.x, data.y, data.type); //<--- where are these passed in?
+  });
+
+  // Handle draw events
+  $('canvas').live('drag dragstart dragend', function(e){
+    type = e.handleObj.type;
+    offset = $(this).offset();
+    e.offsetX = e.layerX - offset.left;
+    e.offsetY = e.layerY - offset.top;
+    x = e.offsetX;
+    y = e.offsetY;
+    this.draw(x, y, type);
+    this.socket.emit('drawClick', { x : x, y : y, type : type});
+    return;
+  });
+
 });

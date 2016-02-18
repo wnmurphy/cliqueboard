@@ -5,21 +5,22 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="app.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+
 </head>
 <body>
   <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
+    <li><a href="#/view1">Whiteboard</a></li>
+    <li><a href="#/view2">Tasks</a></li>
   </ul>
 
   <div ng-view></div>
-
-  <div>Angular seed app: v<span app-version></span></div>
-
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-  <script src="bower_components/angular/angular.js"></script>
+ 
+<!-- whiteboard dependencies:
+  <script type="text/javascript" src="js/jquery.event.drag-2.0.js"></script>
+  <script src="http://localhost:4000/socket.io/socket.io.js"></script> -->
+  
   <script src="app.js"></script>
   <script src="v.whiteboard/whiteboard.js"></script>
   <script src="v.chat/chat.js"></script>
