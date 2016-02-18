@@ -1,12 +1,12 @@
 # Project Name
 
 > Pithy project description
-A change
+
 ## Team
 
-  - __Product Owner__: teamMember
-  - __Scrum Master__: teamMember
-  - __Development Team Members__: teamMember, teamMember
+  - __Product Owner__: Neil
+  - __Scrum Master__: Derek
+  - __Development Team Members__: Daniel, Brandon
 
 ## Table of Contents
 
