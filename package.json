@@ -1,0 +1,29 @@
+{
+  "name": "collab.y",
+  "version": "0.0.1",
+  "description": "INTEGRATION OF MULTIPLE COLLABORATIVE TOOLS TO INSPIRE MOTIVATIONS OF EMPLOYEE INSPIRATION FOR INTEGRATION",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhuang919/hrr12-triceratops-greenfield.git"
+  },
+  "author": "Triceratops",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhuang919/hrr12-triceratops-greenfield/issues"
+  },
+  "homepage": "https://github.com/dhuang919/hrr12-triceratops-greenfield#readme",
+  "dependencies": {
+    "angular": "^1.5.0",
+    "body-parser": "^1.15.0",
+    "chai": "^3.5.0",
+    "express": "^4.13.4",
+    "mocha": "^2.4.5",
+    "mongoose": "^4.4.4",
+    "morgan": "^1.6.1",
+    "socket.io": "^1.4.5"
+  }
+}

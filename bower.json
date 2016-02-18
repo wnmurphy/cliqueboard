@@ -1,0 +1,23 @@
+{
+  "name": "collab.y",
+  "description": "INTEGRATION OF MULTIPLE COLLABORATIVE TOOLS TO INSPIRE MOTIVATIONS OF EMPLOYEE INSPIRATION FOR INTEGRATION",
+  "main": "server.js",
+  "authors": [
+    "Triceratops"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/dhuang919/hrr12-triceratops-greenfield",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-route": "^1.5.0"
+  }
+}
