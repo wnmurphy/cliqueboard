@@ -5,8 +5,8 @@ angular.module('collaby.whiteboard', [])
 
   $scope.init = function(){ 
     this.canvas = document.createElement('canvas');
-    this.canvas.height = 400;
-    this.canvas.width = 800;  //size it up
+    this.canvas.height = $('.canvas').height();
+    this.canvas.width = $('.canvas').width();
     document.getElementsByClassName('canvas')[0].appendChild(this.canvas); //append it into the DOM 
 
     this.ctx = this.canvas.getContext("2d"); // Store the context 
@@ -41,15 +41,15 @@ angular.module('collaby.whiteboard', [])
 
   //Handle draw events
   $('canvas').live('drag dragstart dragend', function(e){
-    type = e.handleObj.type;
-    offset = $(this).offset();
-    e.offsetX = e.layerX - offset.left;
-    e.offsetY = e.layerY - offset.top;
-    x = e.offsetX;
-    y = e.offsetY;
+    var type = e.handleObj.type;
+    var offset = $(this).offset();
+    e.offsetX = e.pageX - offset.left;
+    e.offsetY = e.pageY - offset.top;
+    var x = e.offsetX;
+    var y = e.offsetY;
     $scope.draw(x, y, type);
     $scope.socket.emit('drawClick', { x : x, y : y, type : type});
-    return;
+    
   });
   
 });

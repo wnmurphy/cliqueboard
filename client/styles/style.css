@@ -1,5 +1,5 @@
 body {
-  margin: 0;
+  margin-left: 2%;
   margin-top: 10px;
   font-family: 'Short Stack', cursive;
 }
@@ -15,7 +15,10 @@ h1 {
   margin-bottom: 10px;
 }
 
-.canvas{
+.canvas {
+  position: relative;
+  height: 400px;
+  width: 800px;
   border: 3px solid black;
 }
 
