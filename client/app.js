@@ -1,12 +1,20 @@
-'use strict';
 
 // Declare app level module which depends on views, and components
 angular.module('collaby', [
   'ngRoute',
   'collaby.whiteboard'
-  // 'collaby.tasks',
+  'collaby.tasks'
   // 'collaby.chat'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+])
+.config(function($routeProvider) {
+  $routeProvider
+    .when('/whiteboard', {
+      templateUrl: 'v.whiteboard/whiteboard.html',
+      controller: 'whiteboardController'
+    })
+    .when('/tasks', {
+      templateUrl: 'v.tasks/tasks.html',
+      controller: 'taskController'
+    })
+   
+});

@@ -1,12 +1,9 @@
-'use strict';
-
 angular.module('collaby.whiteboard', [])
 
 .controller('whiteboardController', function ($scope) {
+  $scope.name = 'whiteboard';
 
-  $scope.Whiteboard = {};
-
-  Whiteboard.init = function(){ 
+  $scope.init = function(){ 
     this.canvas = document.createElement('canvas');
     this.canvas.height = 400;
     this.canvas.width = 800;  //size it up
@@ -22,7 +19,7 @@ angular.module('collaby.whiteboard', [])
   };
 
   //Draw to canvas
-  Whiteboard.draw = function(x, y, type){
+  $scope.draw = function(x, y, type){
     if (type === "dragstart"){
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);
@@ -36,9 +33,9 @@ angular.module('collaby.whiteboard', [])
   };
 
   // Set up sockets
-  Whiteboard.socket = io.connect('http://localhost:4000');
+  $scope.socket = io.connect('http://localhost:4568');
 
-  Whiteboard.socket.on('draw', function(data){
+  $scope.socket.on('draw', function(data){
     this.draw(data.x, data.y, data.type); //<--- where are these passed in?
   });
 
@@ -54,5 +51,5 @@ angular.module('collaby.whiteboard', [])
     this.socket.emit('drawClick', { x : x, y : y, type : type});
     return;
   });
-
+  
 });
