@@ -4,24 +4,25 @@
   <title>Collab.y</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="app.css">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.min.js"></script>
-  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script src="https://cdn.jsdelivr.net/jquery.event.drag/2.2/jquery.event.drag.min.js"></script>
-
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  <!-- <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/jquery.event.drag/2.2/jquery.event.drag.min.js"></script> -->
+  <script src="bower_components/angular-route/angular-route.min.js"></script>
 </head>
-<body>
+
+<body ng-app="collaby">
   <ul class="menu">
-    <li><a href="#/view1">Whiteboard</a></li>
-    <li><a href="#/view2">Tasks</a></li>
+    <li><a href="#/whiteboard">Whiteboard</a></li>
+    <li><a href="#/tasks">Tasks</a></li>
   </ul>
 
   <div ng-view></div>
    
   <script src="app.js"></script>
   <script src="v.whiteboard/whiteboard.js"></script>
-  <script src="v.chat/chat.js"></script>
-  <script src="v.tasks/tasks.js"></script>
+  <!-- <script src="v.chat/chat.js"></script>
+  <script src="v.tasks/tasks.js"></script> -->
 </body>
 </html>

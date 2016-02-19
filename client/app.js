@@ -3,7 +3,7 @@
 angular.module('collaby', [
   'ngRoute',
   'collaby.whiteboard'
-  // 'collaby.tasks',
+  'collaby.tasks'
   // 'collaby.chat'
 ])
 .config(function($routeProvider) {
