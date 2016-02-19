@@ -1,5 +1,3 @@
-"use strict";
-
 describe('whiteboardController', function () {
   var $scope, $rootScope, whiteboardController, $httpBackend;
 

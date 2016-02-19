@@ -7,7 +7,7 @@ angular.module('collaby.whiteboard', [])
     this.canvas = document.createElement('canvas');
     this.canvas.height = 400;
     this.canvas.width = 800;  //size it up
-    document.getElementsByTagName('article')[0].appendChild(this.canvas); //append it into the DOM 
+    document.getElementsByClassName('canvas')[0].appendChild(this.canvas); //append it into the DOM 
 
     this.ctx = this.canvas.getContext("2d"); // Store the context 
 
@@ -31,13 +31,13 @@ angular.module('collaby.whiteboard', [])
     }
     return;
   };
-
+  $scope.init();
   // Set up sockets
-  $scope.socket = io.connect('http://localhost:4568');
+  // $scope.socket = io.connect('http://localhost:4568');
 
-  $scope.socket.on('draw', function(data){
-    this.draw(data.x, data.y, data.type); //<--- where are these passed in?
-  });
+  // $scope.socket.on('draw', function(data){
+  //   this.draw(data.x, data.y, data.type); //<--- where are these passed in?
+  // });
 
   // Handle draw events
   $('canvas').live('drag dragstart dragend', function(e){

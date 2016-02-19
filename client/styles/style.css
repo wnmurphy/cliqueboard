@@ -1,7 +1,7 @@
 body {
   margin: 0;
   margin-top: 10px;
-  font-family: arial, sans-serif;
+  font-family: 'Short Stack', cursive;
 }
 
 a {
@@ -13,4 +13,16 @@ a {
 h1 {
   font-style: italic;
   margin-bottom: 10px;
+}
+
+.canvas{
+  border: 3px solid black;
+}
+
+.menu li{
+  display: inline;
+}
+
+.menu li:hover{
+  background-color: #bada55;
 }
