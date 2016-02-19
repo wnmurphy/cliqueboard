@@ -32,14 +32,14 @@ angular.module('collaby.whiteboard', [])
     return;
   };
   $scope.init();
-  // Set up sockets
-  // $scope.socket = io.connect('http://localhost:4568');
+  //Set up sockets
+  $scope.socket = io.connect('http://localhost:4568');
 
-  // $scope.socket.on('draw', function(data){
-  //   this.draw(data.x, data.y, data.type); //<--- where are these passed in?
-  // });
+  $scope.socket.on('draw', function(data){
+    this.draw(data.x, data.y, data.type); //<--- where are these passed in?
+  });
 
-  // Handle draw events
+  //Handle draw events
   $('canvas').live('drag dragstart dragend', function(e){
     type = e.handleObj.type;
     offset = $(this).offset();
@@ -47,8 +47,8 @@ angular.module('collaby.whiteboard', [])
     e.offsetY = e.layerY - offset.top;
     x = e.offsetX;
     y = e.offsetY;
-    this.draw(x, y, type);
-    this.socket.emit('drawClick', { x : x, y : y, type : type});
+    $scope.draw(x, y, type);
+    $scope.socket.emit('drawClick', { x : x, y : y, type : type});
     return;
   });
   
