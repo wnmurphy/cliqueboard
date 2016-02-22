@@ -1,7 +1,7 @@
 angular.module('collaby.chat', [])
 
 .controller('chatController', function ($scope) {
- 	$scope.socket = io.connect('http://localhost:4568');
+  $scope.socket = io.connect('http://localhost:4568');
 
     // on connection to server, ask for user's name with an anonymous callback
     $scope.socket.on('connect', function(){
@@ -11,18 +11,18 @@ angular.module('collaby.chat', [])
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
  
- 	$scope.socket.on('updateusers', function(data) {
-    	$('#users').empty();
+  $scope.socket.on('updateusers', function(data) {
+      $('#users').empty();
     
-   		$.each(data, function(key, value) {
-   			console.log('key ', key);
-   			console.log('value ', value);
-      		$('#users').append('<div>' + key + '</div>');
+      $.each(data, function(key, value) {
+        console.log('key ', key);
+        console.log('value ', value);
+          $('#users').append('<div>' + key + '</div>');
     });
   });
 
    $scope.socket.on('updatechat', function (username, data) {
-   	console.log(data)
+    console.log(data)
       $('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
     });
 
