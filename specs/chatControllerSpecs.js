@@ -53,6 +53,7 @@ describe('chatController', function () {
     });
   });
   
+
   it('Should be able to broadcast messages', function(done){
     var client1, client2, client3;
     var message = 'Hello World';
@@ -86,6 +87,7 @@ describe('chatController', function () {
       });
     });
   });
+
 
   xit('Should be able to send private messages', function(done){
     var client1, client2, client3;
