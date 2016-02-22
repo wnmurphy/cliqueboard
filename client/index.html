@@ -14,11 +14,18 @@
 </head>
 
 <body ng-app="collaby">
+  <div class="appname">
+    <h1>Collab.y</h1>
+  </div>
   <ul class="menu">
-    <li><a href="#/whiteboard">Whiteboard</a></li>
+    <li><a href="#/chat">Chat</a></li>
     <li><a href="#/tasks">Tasks</a></li>
     <li id="logo"><img src="img/triceratops.gif"></li>
   </ul>
+
+  <div id='whiteboard'>
+    <div class='canvas'><!-- whiteboard canvas is inserted here--></div> 
+  </div>
 
   <div ng-view></div>
    

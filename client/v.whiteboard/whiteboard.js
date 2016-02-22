@@ -3,7 +3,7 @@ angular.module('collaby.whiteboard', [])
 .controller('whiteboardController', function ($scope) {
   $scope.name = 'whiteboard';
 
-  $scope.init = function(){ 
+  $scope.init = function() { 
     this.canvas = document.createElement('canvas');
     this.canvas.height = $('.canvas').height();
     this.canvas.width = $('.canvas').width();
@@ -36,7 +36,7 @@ angular.module('collaby.whiteboard', [])
   $scope.socket = io.connect('http://localhost:4568');
 
   $scope.socket.on('draw', function(data){
-    this.draw(data.x, data.y, data.type); //<--- where are these passed in?
+    this.draw(data.x, data.y, data.type); 
   });
 
   //Handle draw events
