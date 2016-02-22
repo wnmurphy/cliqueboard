@@ -2,17 +2,18 @@
 <head>
   <meta charset="utf-8">
   <title>Collab.y</title>
-  <meta name="description" content="">
+  <!-- Meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Styles -->
   <link rel="stylesheet" href="styles/style.css">
   <link href='https://fonts.googleapis.com/css?family=Short+Stack' rel='stylesheet' type='text/css'>
+  <!-- CDNs -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <!-- New jquery event drag pointer below (updated bower.json) -->
-  <!-- If wb controller appends canvas element, but still not drawing, check this: -->
-  <script src="bower_components/jquery.threedubmedia/event.drag/jquery.event.drag.js"></script>
-  <script src="bower_components/angular-route/angular-route.min.js"></script>
+  <!-- bower dependencies -->
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/jquery.event.drag-2.0.js"></script>
+  <script src="lib/angular-route/angular-route.min.js"></script>
 </head>
 
 <body ng-app="collaby">
@@ -25,12 +26,13 @@
     <li id="logo"><img src="img/triceratops.gif"></li>
   </ul>
 
-  <div id='whiteboard'>
+  <div id='whiteboard' ng-controller="whiteboardController">
     <div class='canvas'><!-- whiteboard canvas is inserted here--></div> 
   </div>
 
   <div ng-view></div>
    
+  <!-- internal dependencies -->
   <script src="app.js"></script>
   <script src="v.whiteboard/whiteboard.js"></script>
   <script src="v.chat/chat.js"></script>
