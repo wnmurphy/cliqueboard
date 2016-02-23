@@ -22,11 +22,11 @@ describe('whiteboardController', function () {
 
   it('should have an init method on the $scope', function() {
     createController();
-    expect($scope.init).to.be.an('function');
+    expect($scope.init).to.be.a('function');
   });
 
   it('should have an draw method on the $scope', function() {
       createController();
-      expect($scope.draw).to.be.an('function');
+      expect($scope.draw).to.be.a('function');
     });
 });

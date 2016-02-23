@@ -16,15 +16,22 @@ angular.module('collaby.tasks', [])
   };
 
   $scope.addTask = function(taskName, dueDate) {
+    
+    // parse dueDate because it will in ISO format
+    dueDate = dueDate.toLocaleString();
+
+    // empty task and date input field
+    $scope.task = '';
+    $scope.datetime = '';
+
     var task = {
-      taskName: '',
-      createdAt: Date.now(),
+      taskName: taskName,
+      createdAt: new Date(Date.now()).toLocaleString(),
       dueDate: dueDate,
       complete: false
     };
 
     $scope.tasks.push(task);
-    //
   };
 
   $scope.completeTask = function(index){
