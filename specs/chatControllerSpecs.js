@@ -138,3 +138,7 @@ describe('chatController', function () {
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 620f4cba1a3910aecef94ebdcb94e0991005669d
