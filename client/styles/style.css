@@ -31,7 +31,12 @@ h1 {
 }
 
 img{
-  width: 10%;
+  width: 5%;
   height: auto;
   align: right;
+}
+
+#clearWhiteboardBtn{
+  position: relative;
+  left: 730px;
 }

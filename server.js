@@ -20,7 +20,7 @@ app.use(express.static(__dirname + '/client'));
 io.sockets.on('connection', function(socket) {
   console.log('connection running');
   socket.on('drawClick', function(data) {
-    // console.log(data); //< --------- log draw events 
+     // console.log(data); //< --------- log draw events 
     socket.broadcast.emit('draw', {
       x: data.x,
       y: data.y,

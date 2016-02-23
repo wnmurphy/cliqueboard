@@ -27,7 +27,8 @@
   </ul>
 
   <div id='whiteboard' ng-controller="whiteboardController">
-    <div class='canvas'><!-- whiteboard canvas is inserted here--></div> 
+    <div class='canvas'><!-- whiteboard canvas is inserted here--></div>
+    <button id="clearWhiteboardBtn" ng-click="clear()">Clear board</button>
   </div>
 
   <div ng-view></div>
