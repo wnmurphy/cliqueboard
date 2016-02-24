@@ -1,4 +1,4 @@
-angular.module('collaby.signup', [])
+angular.module('twork.signup', [])
 
 .controller('signupController', function ($scope, signUpInfo) {
   angular.extend($scope, signUpInfo);

@@ -1,4 +1,4 @@
-angular.module('collaby.tasks', [])
+angular.module('twork.tasks', [])
 
 .controller('tasksController', function ($scope, $http, Tasks) {
   angular.extend($scope, Tasks);

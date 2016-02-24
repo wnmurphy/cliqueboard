@@ -1,12 +1,12 @@
 
 // Declare app level module which depends on views, and components
-angular.module('collaby', [
+angular.module('twork', [
   'ngRoute',
-  'collaby.chat',
-  'collaby.tasks',
-  'collaby.whiteboard',
-  'collaby.login',
-  'collaby.signup'
+  'twork.chat',
+  'twork.tasks',
+  'twork.whiteboard',
+  'twork.login',
+  'twork.signup'
 ])
 .config(function($routeProvider) {
   $routeProvider

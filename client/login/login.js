@@ -1,4 +1,4 @@
-angular.module('collaby.login', [])
+angular.module('twork.login', [])
 
 .controller('loginController', function ($scope, logInUserInfo) {
   angular.extend($scope, logInUserInfo);
