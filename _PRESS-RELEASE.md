@@ -17,31 +17,41 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  	Collab.y
+  	t'Work
 
 ## Sub-Heading ##
-  	Helping teams share and track information.
+  	Helping teams share and track information, so they can get t'Work.
 
 ## Summary ##
-  	A one stop shop for team collaboration, providing whiteboarding and task management to improve workflow for project groups. 
+  	A one-stop shop for team collaboration; provides whiteboarding, chat, and task management to improve workflow for project groups.
 
 ## Problem ##
-  	A lack of communication in a central location can impede team progress. 
+  	A lack of centralized communication can impede team progress, especially for groups collaborating remotely.
 
 ## Solution ##
-  	Collab.y integrates multiple collobrative tools to inspire motivations of employee inspiration. 
+  	t'Work integrates multiple collaborative tools to make it easier to work remotely on a project. 
 
 ## Quote from You ##
   	'Huh.' - Mark, CEO
 
 ## How to Get Started ##
-  	Type Collab.y into the search bar and let your conscience be your guide.
+  	To use the app, visit [t'Work](https://www.linktoheroku.com).
+
+    To install the app locally:
+    1. Download the [package](https://www.linktozipfile.com).
+    2. Extract to a folder.
+    3. Run **npm install** from the root.
+    4. Run **bower install** from the root.
+    5. Run **nodemon server.js**
+    6. Open localhost:4568 in Chrome.
 
 ## Customer Quote ##
  	'Huh?' - Richard, Customer 
 
 ## Closing and Call to Action ##
-  	Give Collab.y a try for all of your most intimate teamwork needs.
+  	Give t'Work a try for all of your most intimate teamwork needs. 
+    
+    Drop us a line if you like it, or submit a pull request if you want to help improve it!
 
 
 

@@ -1,4 +1,4 @@
-angular.module('collaby.whiteboard', [])
+angular.module('twork.whiteboard', [])
 
 .controller('whiteboardController', function ($scope) {
   $scope.name = 'whiteboard';

@@ -1,4 +1,4 @@
-angular.module('collaby.chat', [])
+angular.module('twork.chat', [])
 
 .controller('chatController', function ($scope, logInUserInfo) {
   var userInfo = logInUserInfo.userData;
