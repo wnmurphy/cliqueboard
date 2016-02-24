@@ -1,12 +1,21 @@
 angular.module('collaby.chat', [])
 
-.controller('chatController', function ($scope) {
-  $scope.socket = io.connect('http://localhost:4568');
+.controller('chatController', function ($scope, logInUserInfo) {
+  var userInfo = logInUserInfo.userData;
 
+  $scope.socket = io.connect('http://localhost:4568');
+  console.log('USERINFO ', userInfo);
+
+  var userName = userInfo.map(function (user) {
+    return user.username;
+  });
     // on connection to server, ask for user's name with an anonymous callback
     $scope.socket.on('connect', function(){
       // call the server-side function 'adduser' and send one parameter (value of prompt)
-      $scope.socket.emit('adduser', prompt("What's your name?"));
+      $scope.socket.emit('adduser', userName);
+    // $scope.socket.emit('adduser', function(username){
+    //   return username;
+    // });
     });
 
     // listener, whenever the server emits 'updatechat', this updates the chat body
@@ -17,13 +26,13 @@ angular.module('collaby.chat', [])
       $.each(data, function(key, value) {
         console.log('key ', key);
         console.log('value ', value);
-          $('#users').append('<div>' + key + '</div>');
+          $('#users').append('<div>' + value + '</div>');
     });
   });
 
    $scope.socket.on('updatechat', function (username, data) {
-    console.log(data)
-      $('#conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+    console.log('data ', data)
+      $('#conversation').append('<b>'+ username + ':</b> ' + data + '<br>');
     });
 
  
@@ -44,7 +53,20 @@ angular.module('collaby.chat', [])
     // $scope.switchRoom = function(room){
     //   $scope.socket.emit('switchRoom', room);
     // }
-  
+   
+ // $scope.socket.on('message', function (data) {
+ //  console.log(data);
+ // });
+
+ // socket.emit('subscribe', 'roomOne');
+ // socket.emit('subscribe', 'roomTwo');
+
+ // $('#send').click(function() {
+ //  var room = $('#room').val(),
+ //   message = $('#message').val();
+
+ //  socket.emit('send', { room: room, message: message });
+ // });
     // on load of page
     $(function(){
     // when the client clicks SEND
