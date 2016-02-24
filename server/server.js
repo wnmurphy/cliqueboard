@@ -1,49 +1,68 @@
 var express = require('express');
 var app = express();
+
+var morgan = require('morgan');
+
+var db = require("./config.js");
+var util = require("./utility.js")
+
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var morgan = require('morgan');
-var bodyParse = require('body-parser');
-// var db = require("./config.js");
+
 //bodyParse will be needed for chat later on
 //app.use(bodyParser.urlencoded({extended: true}));
 //app.use(bodyParser.json());
 
+// ================ configure server ==============
+
 var port = process.env.PORT || 4568;
 
-//example interaction with mongo from server:
-// when user enters new username and password
-// encrypt password
-// add to db.users
-
-app.use(morgan('dev'));
-app.use(express.static(__dirname + '/client'));
-
-///// Add CORS headers to all traffic /////
-app.all('*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Accept,X-Access-Token,X-Key');
-  if (req.method == 'OPTIONS') {
-    res.status(200).end();
-  } else {
-    next();
-  }
+app.configure(function() {
+  app.use(morgan('dev'));
+  app.use(express.bodyParser());
+  app.use(express.static(__dirname + './../client'));
+  app.use(express.cookieParser('get tworkin you tworkin tworker'));
+  app.use(express.session());
 });
 
-// handle POST requests
+///// Add CORS headers to all traffic /////
+// app.all('*', function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type,Accept,X-Access-Token,X-Key');
+//   if (req.method == 'OPTIONS') {
+//     res.status(200).end();
+//   } else {
+//     next();
+//   }
+// });
+
+// 
+// ================ handle POST requests ==============
+  // add new user to database
+app.post('/signup', function(req, res) {
+  console.log('req.body.data is: '+ req.body.data);
+  var username = req.body.username;
+  var email = req.body.email;
+  var password = req.body.password;
+  // check if user already exists in db
   
-  // add new user
-  app.post('/signup',
-    function(req,res){
-      var email = req.body.email;
-      var username = req.body.username;
-      var password = req.body.password;
-      // check if user already exists in db
-      
-      // if not, add new user
-    
+  // if not, add new user
+  var user = new db.User({
+    username: username, 
+    email: email, 
+    password: password
+  })
+  .save()
+    .then(function(user){
+      console.log('Saved user: ', user);
+      util.loginUser(user, req, res);
+    })
+    .catch(function(err) {
+      console.error('Error saving user:', err);
+      res.redirect('/#/signup');
     });
+});
   
   // add new tasks
   // app.post();
@@ -55,7 +74,7 @@ app.all('*', function(req, res, next) {
   // app.post();
 
 
-// handle GET requests
+// ================ handle GET requests ==============
   
   // get messages for room
   // app.get();
@@ -65,12 +84,6 @@ app.all('*', function(req, res, next) {
 
   // get username to check auth
   // app.get();
-
-
-
-
-
-
 
 /////The below connection is for whiteboard/////
 
@@ -86,8 +99,6 @@ io.sockets.on('connection', function(socket) {
     });
   });
 });
-
-
 
 /////Connection below is for Multi user chatRoom/////
 
@@ -169,8 +180,6 @@ io.sockets.on('connection', function (socket) {
     socket.leave(socket.room);
   });
 });
-
-
 
 
 http.listen(port);

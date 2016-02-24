@@ -7,12 +7,21 @@ angular.module('twork.login', [])
 	
 	var userData = [];
 
-	var logIn = function(user, password){
-		userData.push({username: user, password: password});
-	}
+  var requestUser = function(){
+    return $http({
+      method: 'GET',
+      url: '/login'
+    })
+    .success(function(resp, status){
+      userData.push(resp.data);
+    }).error(function(err) {
+      console.log('error', err);
+    });
+  };
+
 	return{
-		logIn: logIn,
-		userData: userData,
+		requestUser: requestUser,
+		userData: userData
 	}
 });
 
