@@ -4,15 +4,72 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var morgan = require('morgan');
 var bodyParse = require('body-parser');
+// var db = require("./config.js");
 //bodyParse will be needed for chat later on
 //app.use(bodyParser.urlencoded({extended: true}));
 //app.use(bodyParser.json());
 
 var port = process.env.PORT || 4568;
 
+//example interaction with mongo from server:
+// when user enters new username and password
+// encrypt password
+// add to db.users
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/client'));
+
+///// Add CORS headers to all traffic /////
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Accept,X-Access-Token,X-Key');
+  if (req.method == 'OPTIONS') {
+    res.status(200).end();
+  } else {
+    next();
+  }
+});
+
+// handle POST requests
+  
+  // add new user
+  app.post('/signup',
+    function(req,res){
+      var email = req.body.email;
+      var username = req.body.username;
+      var password = req.body.password;
+      // check if user already exists in db
+      
+      // if not, add new user
+    
+    });
+  
+  // add new tasks
+  // app.post();
+  
+  // add new room
+  // app.post();
+  
+  // add new message
+  // app.post();
+
+
+// handle GET requests
+  
+  // get messages for room
+  // app.get();
+
+  // get tasks
+  // app.get();
+
+  // get username to check auth
+  // app.get();
+
+
+
+
+
 
 
 /////The below connection is for whiteboard/////
@@ -24,7 +81,8 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('draw', {
       x: data.x,
       y: data.y,
-      type: data.type
+      type: data.type,
+      color:data.color
     });
   });
 });
@@ -37,6 +95,22 @@ var usernames = {};
 
 // rooms which are currently available in chat
 //var rooms = ['room1','room2','room3'];
+// io.sockets.on('connection', function(socket){
+//     socket.on('subscribe', function(room) { 
+//         console.log('joining room', room);
+//         socket.join(room); 
+//     })
+
+//     socket.on('unsubscribe', function(room) {  
+//         console.log('leaving room', room);
+//         socket.leave(room); 
+//     })
+
+//     socket.on('send', function(data) {
+//         console.log('sending message');
+//         io.sockets.in(data.room).emit('message', data);
+//     });
+// });
 
 io.sockets.on('connection', function (socket) {
 

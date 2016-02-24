@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/twork';
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://127.0.0.1:27017/twork';
 
 mongoose.connect(mongoURI, function(err, res) {
   if (err) {
@@ -15,9 +15,10 @@ mongoose.connection.once('open', function() {
   console.log('MongoDB Connection Open');
 });
 
+
 ///////////////////////////////////////////////////////////////
 
-var userSchema = mongoose.connection.Schema({
+var userSchema = mongoose.Schema({
   username: {
     type: String,
     required: true
@@ -32,11 +33,11 @@ var userSchema = mongoose.connection.Schema({
   }
 });
 
-exports.User = mongoose.connection.model('User', userSchema);
+exports.User = mongoose.model('User', userSchema);
 
 ///////////////////////////////////////////////////////////////
 
-var taskSchema = mongoose.connection.Schema({
+var taskSchema = mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -55,11 +56,11 @@ var taskSchema = mongoose.connection.Schema({
   }
 });
 
-exports.Task = mongoose.connection.model('Task', taskSchema);
+exports.Task = mongoose.model('Task', taskSchema);
 
 ///////////////////////////////////////////////////////////////
 
-var roomSchema = mongoose.connection.Schema({
+var roomSchema = mongoose.Schema({
   roomname: {
     type: String,
     required: true
@@ -70,4 +71,4 @@ var roomSchema = mongoose.connection.Schema({
   }
 });
 
-exports.Room = mongoose.connection.model('Room', roomSchema);
+exports.Room = mongoose.model('Room', roomSchema);

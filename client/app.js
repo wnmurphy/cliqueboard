@@ -4,7 +4,9 @@ angular.module('collaby', [
   'ngRoute',
   'collaby.chat',
   'collaby.tasks',
-  'collaby.whiteboard'
+  'collaby.whiteboard',
+  'collaby.login',
+  'collaby.signup'
 ])
 .config(function($routeProvider) {
   $routeProvider
@@ -15,5 +17,13 @@ angular.module('collaby', [
     .when('/tasks', {
       templateUrl: 'v.tasks/tasks.html',
       controller: 'tasksController'
+    })
+    .when('/login', {
+      templateUrl: 'login/loginView.html',
+      controller: 'loginController'
+    })
+    .when('/signup', {
+      templateUrl: 'login/signupView.html',
+      controller: 'signupController'
     })
 });

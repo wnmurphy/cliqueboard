@@ -12,7 +12,12 @@ a {
 
 h1 {
   font-style: italic;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+h4{
+  margin-top: 0px;
+  color: #222222;
 }
 
 .canvas {
@@ -33,10 +38,21 @@ h1 {
 img{
   width: 5%;
   height: auto;
-  align: right;
+}
+
+hr{
+  width: 45%;
+  position: relative;
+  right: 450px;
 }
 
 #clearWhiteboardBtn{
   position: relative;
   left: 730px;
+}
+
+td {
+  border: 1px solid;
+  padding: 0 3px 0 3px;
+  text-align: center;
 }

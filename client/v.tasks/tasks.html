@@ -1,15 +1,45 @@
 <div id='Tasks'>
   <h2>Tasks</h2>
-  <form name='createTask' ng-submit="addTask(task, datetime)">
-      <input type='text' ng-model="task" placeholder='Add task name...' required>
-      <input type='datetime-local' ng-model='datetime' required>
-      <button ng-disabled='task.$invalid || datetime.$invalid'>Add</button>
-    </form>
+  <form name='createTask'>
+    <input type='text' ng-model="task" placeholder='Add task name...' required>
+    <input type='date' ng-model='datetime' placeholder='mm/dd'required>
+    <input type='number' ng-model='urgency' min='1' max='5'>
+
+    <button ng-click='addTask(task, datetime, urgency)' ng-disabled='task.$invalid || datetime.$invalid'>Add</button>
+    <button ng-click='view = "completed"' ng-disabled='completed.length < 1'>Complete</button>
+    <button ng-click='view = "incomplete"' ng-disabled='incomplete.length < 1'>Incomplete</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Created</th>
+        <th>Due</th>
+        <th>Urgency</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-if='view === "all"' ng-repeat='task in tasks track by $index' ng-click='deleteTask($index, "tasks")'>
+        <td>{{ task.name }}</td>
+        <td>{{ task.created }}</td>
+        <td>{{ task.due }}</td>
+        <td>{{ task.urgency }}</td>
+      </tr>
+      <tr ng-if='view === "completed"' ng-repeat='task in completed track by $index' ng-click='deleteTask($index, "completed")'>
+        <td>{{ task.name }}</td>
+        <td>{{ task.created }}</td>
+        <td>{{ task.due }}</td>
+        <td>{{ task.urgency }}</td>
+      </tr>
+      <tr ng-if='view === "incomplete"' ng-repeat='task in incomplete track by $index' ng-click='deleteTask($index, "incomplete")'>
+        <td>{{ task.name }}</td>
+        <td>{{ task.created }}</td>
+        <td>{{ task.due }}</td>
+        <td>{{ task.urgency }}</td>
+      </tr>
+    </tbody>
+  </table>
   
-    <ul>
-      <li ng-repeat="task in tasks" ng-click="completeTask($index)">
-        <h4>Task: {{ task.taskName }} Created: {{ task.createdAt }} Due: {{ task.dueDate }}</h4>
-      </li>
-    </ul>
-  
-  </div>
+</div>
