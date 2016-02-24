@@ -13,29 +13,26 @@ angular.module('twork.signup', [])
 	}
 
 	var holdUser = {};
-  var createUser = function(email, username, password){
-    console.log("email", email);
-    console.log("name", username);
-    console.log("password", password);
+
+  var createUser = function(email, username, password) {
     return $http({
       method: 'POST',
-      url: '127.0.0.1:4568', //<-----------update this before deployment
-      // url: 'heroku.triceratops.com/signup',
+      url: '/signup',
       data: {
-        email: email,
         username: username,
+        email: email,
         password: password
       }
     })
     .success(function(resp, status){
       holdUser = resp.data;
     }).error(function(err) {
-      console.log('error', err)
+      console.error('Error posting user:', err)
     });
   };
 
 
-	return{
+	return {
 		signUp: signUp,
 		signUpData: signUpData,
 		createUser: createUser,
