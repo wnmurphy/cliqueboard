@@ -3,19 +3,25 @@ angular.module('twork.login', [])
 .controller('loginController', function ($scope, logInUserInfo) {
   angular.extend($scope, logInUserInfo);
 })
-.factory('logInUserInfo', function(){
+.factory('logInUserInfo', function($http) {
 	
 	var userData = [];
 
-  var requestUser = function(){
+  var requestUser = function(username, password) {
     return $http({
-      method: 'GET',
-      url: '/login'
+      method: 'POST',
+      url: '/login',
+      data: {
+        username: username,
+        password: password
+      }
     })
-    .success(function(resp, status){
+    .success(function(resp, status) {
       userData.push(resp.data);
-    }).error(function(err) {
-      console.log('error', err);
+      // $location.url('/')
+    })
+    .error(function(err) {
+      console.error('Login error:', err);
     });
   };
 
