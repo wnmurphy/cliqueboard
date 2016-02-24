@@ -4,11 +4,11 @@ angular.module('twork.signup', [])
   angular.extend($scope, signUpInfo);
 
 })
-.factory('signUpInfo', function($http){
+.factory('signUpInfo', function($http) {
 	
 	var signUpData = [];
 
-	var signUp = function(email, user, password){
+	var signUp = function(email, user, password) {
 		signUpData.push({email: email, username: user, password: password});
 	}
 
@@ -24,7 +24,7 @@ angular.module('twork.signup', [])
         password: password
       }
     })
-    .success(function(resp, status){
+    .success(function(resp, status) {
       holdUser = resp.data;
     }).error(function(err) {
       console.error('Error posting user:', err)

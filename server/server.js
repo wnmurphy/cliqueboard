@@ -1,29 +1,34 @@
 var express = require('express');
 var app = express();
-
 var morgan = require('morgan');
-
 var db = require("./config.js");
 var util = require("./utility.js")
-
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
-//bodyParse will be needed for chat later on
-//app.use(bodyParser.urlencoded({extended: true}));
-//app.use(bodyParser.json());
+var request = require('request');
+var session = require('express-session');
+var bodyParser = require('body-parser');
 
 // ================ configure server ==============
 
 var port = process.env.PORT || 4568;
+app.use(express.static(__dirname + './../client'));
+app.use(express.cookieParser('get tworkin you tworkin tworker'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.bodyParser());
+app.use(session({
+  secret: 'keyboard cat',
+  cookie: {
+    maxAge: 60000
+  }
+}));
+app.use(morgan('dev'));
 
-app.configure(function() {
-  app.use(morgan('dev'));
-  app.use(express.bodyParser());
-  app.use(express.static(__dirname + './../client'));
-  app.use(express.cookieParser('get tworkin you tworkin tworker'));
-  app.use(express.session());
-});
+
+
+
+
 
 ///// Add CORS headers to all traffic /////
 // app.all('*', function(req, res, next) {
@@ -37,11 +42,10 @@ app.configure(function() {
 //   }
 // });
 
-// 
+
 // ================ handle POST requests ==============
   // add new user to database
 app.post('/signup', function(req, res) {
-  console.log('req.body.data is: '+ req.body.data);
   var username = req.body.username;
   var email = req.body.email;
   var password = req.body.password;
@@ -56,14 +60,42 @@ app.post('/signup', function(req, res) {
   .save()
     .then(function(user){
       console.log('Saved user: ', user);
-      util.loginUser(user, req, res);
+      util.loginUser(user, req, res); //<--------------------------util
     })
     .catch(function(err) {
       console.error('Error saving user:', err);
-      res.redirect('/#/signup');
+      // res.redirect('/#/signup');
+      // $location.url('/');
     });
 });
   
+// check user's credentials
+app.post('/login', function(req, res) {
+  var username = req.body.username;
+  var password = req.body.password;
+  db.User.findOne({ username: username })
+    .exec(function(err, user) {
+      if (!user) {
+        // res.redirect('/login');
+        // $location.url('/')
+      } else {
+        var savedPassword = user.password;
+        db.User.comparePassword(password, savedPassword, function(err, isMatch) {
+          if (err) {
+           return console.error('Error logging in:', err);
+          }
+          if (isMatch) {
+            return util.loginUser(user, req, res);
+          } else {
+            // res.redirect('/login');
+            // $location.url('/')
+          }
+        });
+      }
+    });
+});
+
+
   // add new tasks
   // app.post();
   
@@ -76,14 +108,15 @@ app.post('/signup', function(req, res) {
 
 // ================ handle GET requests ==============
   
+  
+
   // get messages for room
   // app.get();
 
   // get tasks
   // app.get();
 
-  // get username to check auth
-  // app.get();
+  
 
 /////The below connection is for whiteboard/////
 
