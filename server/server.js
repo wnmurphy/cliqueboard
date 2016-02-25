@@ -60,9 +60,7 @@ app.post('/signup', function(req, res) {
       util.loginUser(user, req, res); //<--------------------------util
     })
     .catch(function(err) {
-      console.error('Error saving user:', err);
-      // res.redirect('/#/signup');
-      // $location.url('/');
+      res.send(500, 'Error saving user, or user already in db.');
     });
 });
   
@@ -73,19 +71,17 @@ app.post('/login', function(req, res) {
   db.User.findOne({ username: username })
     .exec(function(err, user) {
       if (!user) {
-        // res.redirect('/login');
-        // $location.url('/')
+        res.send(500, 'User not found in db.');
       } else {
         var savedPassword = user.password;
         db.User.comparePassword(password, savedPassword, function(err, isMatch) {
           if (err) {
-           return console.error('Error logging in:', err);
+            console.error(err);
           }
           if (isMatch) {
             return util.loginUser(user, req, res);
           } else {
-            // res.redirect('/login');
-            // $location.url('/')
+            res.send(500, 'Incorrect password for user.');
           }
         });
       }

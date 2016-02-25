@@ -3,7 +3,7 @@ angular.module('twork.login', [])
 .controller('loginController', function ($scope, logInUserInfo) {
   angular.extend($scope, logInUserInfo);
 })
-.factory('logInUserInfo', function($http) {
+.factory('logInUserInfo', function($http, $location) {
 	
 	var userData = [];
 
@@ -18,10 +18,10 @@ angular.module('twork.login', [])
     })
     .success(function(resp, status) {
       userData.push(resp.data);
-      // $location.url('/')
+      $location.path('/tasks');
     })
     .error(function(err) {
-      console.error('Login error:', err);
+      $location.path('/login');
     });
   };
 
