@@ -1,0 +1,73 @@
+
+<body>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+<!-- Chat  -->
+<div id='chat' ng-controller="chatController">
+  <h2>Chat</h2>
+    <div style="float:left;width:100px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+    <b>USERS</b>
+    <div id="users"></div>
+  </div>
+  <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
+    <div id="conversation"></div>
+    <input id="data" style="width:200px;" autofocus />
+    <input type="button" id="datasend" value="send" />
+  </div>
+</div>
+
+<!-- tasks  -->
+<div id='tasks' ng-controller="tasksController">
+  <h2>Tasks</h2>
+  <form name='createTask'>
+    <input type='text' ng-model="task" placeholder='Add task name...' required>
+    <input type='date' ng-model='datetime' placeholder='mm/dd'required>
+    <input type='number' ng-model='urgency' min='1' max='5'>
+
+    <button ng-click='addTask(task, datetime, urgency)' ng-disabled='task.$invalid || datetime.$invalid'>Add</button>
+    <button ng-click='view = "completed"' ng-disabled='completed.length < 1'>Complete</button>
+    <button ng-click='view = "incomplete"' ng-disabled='incomplete.length < 1'>Incomplete</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Created</th>
+        <th>Due</th>
+        <th>Urgency</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-if='view === "all"' ng-repeat='task in tasks track by $index' ng-click='deleteTask($index, "tasks")'>
+        <td>{{ task.name }}</td>
+        <td>{{ task.created }}</td>
+        <td>{{ task.due }}</td>
+        <td>{{ task.urgency }}</td>
+      </tr>
+      <tr ng-if='view === "completed"' ng-repeat='task in completed track by $index' ng-click='deleteTask($index, "completed")'>
+        <td>{{ task.name }}</td>
+        <td>{{ task.created }}</td>
+        <td>{{ task.due }}</td>
+        <td>{{ task.urgency }}</td>
+      </tr>
+      <tr ng-if='view === "incomplete"' ng-repeat='task in incomplete track by $index' ng-click='deleteTask($index, "incomplete")'>
+        <td>{{ task.name }}</td>
+        <td>{{ task.created }}</td>
+        <td>{{ task.due }}</td>
+        <td>{{ task.urgency }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  <div id="whiteboard" ng-controller="whiteboardController">
+    <div class="canvas"><!-- whiteboard canvas is inserted here--></div>
+    <button id="clearWhiteboardBtn" ng-click="clear()">Clear board</button>
+    <input id="colorpicker" type="color" value="#bada55" ng-model="color"/>
+    <hr>
+  </div>
+
+
+</body>
