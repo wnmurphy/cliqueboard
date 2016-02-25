@@ -7,8 +7,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="styles/style.css">
   <link href="https://fonts.googleapis.com/css?family=Short+Stack" rel="stylesheet" type="text/css">
-  
-  
+
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
@@ -17,23 +16,14 @@
 </head>
 
 <body ng-app="twork">
-  <div class="appname">
+  <div class="app-title">
     <h1>t'Work</h1>
     <h4>"Get t'Work."</h4>
   </div>
+  <div id="logo"><img src="img/triceratops.gif"></div>
   <ul class="menu">
-    <li><a href="#/login">Login</a></li>
-    <li><a href="#/chat">Chat</a></li>
-    <li><a href="#/tasks">Tasks</a></li>
-    <li id="logo"><img src="img/triceratops.gif"></li>
+    <li><a href="#/logout">Logout</a></li>
   </ul>
-
-  <div id="whiteboard" ng-controller="whiteboardController">
-    <div class="canvas"><!-- whiteboard canvas is inserted here--></div>
-    <button id="clearWhiteboardBtn" ng-click="clear()">Clear board</button>
-    <input id="colorpicker" type="color" value="#bada55" ng-model="color"/>
-    <hr>
-  </div>
 
   <div ng-view></div>
    
@@ -41,8 +31,6 @@
   <script src="login/signup.js"></script>
   <script src="login/login.js"></script>
   <script src="app.js"></script>
-  <script src="v.whiteboard/whiteboard.js"></script>
-  <script src="v.chat/chat.js"></script>
-  <script src="v.tasks/tasks.js"></script>
+  <script src="main/main.js"></script>
 </body>
 </html>

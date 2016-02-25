@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html> 
   <head>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -11,6 +11,22 @@
     <!-- Materialize JS CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 
+    <style>
+      h1 {
+        font-family: Orbitron;
+      }
+      .input-field label {
+        color: #fff;
+      }
+      .input-field input {
+        border-bottom: 1px solid #fff;
+        box-shadow: 0 1px 0 0 #fff;
+      }
+      .input-field input[type]:focus {
+        border-bottom: 1px solid #fff;
+        box-shadow: 0 1px 0 0 #fff;
+      }
+    </style>
   </head>
   <body class='blue lighten-1'>
     <div class='container center-align'>
@@ -34,14 +50,20 @@
           </div>
           <div class='row'>
             <div class='input-field col s6 push-s3'>
+              <input id='email' type='email' class='validate white-text'>
+              <label class='white-text' for='email' data-error='Invalid' data-success='Valid'>Email</label>
+            </div>
+          </div>
+          <div class='row'>
+            <div class='input-field col s6 push-s3'>
               <input id='password' type='password' class='validate white-text'>
               <label class='white-text' for='password' data-error='Invalid' data-success='Valid'>Password</label>
             </div>
           </div>
-          <button class='btn white black-text' type='submit' name='action'>Login
+          <button class='btn white black-text' type='submit' name='action'>Submit
           <i class='material-icons right'>flight_takeoff</i>
           </button>
-          <a href='/signup' class='btn white black-text'>Sign Up
+          <a href='/login' class='btn white black-text'>Login
           <i class='material-icons right'>create</i>
           </a>
         </form>
