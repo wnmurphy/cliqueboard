@@ -170,28 +170,39 @@ angular.module('twork.main', [])
   angular.extend($scope, Tasks);
 
   $scope.addTask = function(name, due, urgency) {
-    if (due !== undefined) {
-      due = $scope.formatDate(due, true);
-    } else {
-      due = 'N/A';
-    }
-
-    urgency = urgency || 'Not Urgent';
-
     // empty task and date input field after entry
     $scope.task = '';
     $scope.datetime = '';
 
     var task = {
       name: name,
-      created: $scope.formatDate(new Date(Date.now()), false),
+      created: new Date(Date.now()),
       due: due,
       urgency: urgency,
       complete: false
     };
 
-    $scope.tasks.push(task);
-    $scope.incomplete.push(task);
+    $http.post('/tasks', task)
+      .then(function(err, result) {
+        if (err) {
+          console.error('Task POST error:', err);
+        }
+      });
+
+    $http.get('/tasks')
+      .then(function(result) {
+        console.log('Task GET successful');
+        result.data.forEach(function(task) {
+          task.due = $scope.formatDate(task.due, true);
+          task.created = $scope.formatDate(task.created, false);
+        });
+        $scope.tasks = result.data;
+      })
+      .catch(function(err) {
+        console.error('Task GET error:', err);
+      });
+    // $scope.tasks.push(task);
+    // $scope.incomplete.push(task);
   };
 
 })
@@ -202,8 +213,8 @@ angular.module('twork.main', [])
     view: 'all',
 
     tasks: [],
-    completed: [],
-    incomplete: [],
+    // completed: [],
+    // incomplete: [],
 
     incompleteCheck: function() {
       obj.tasks.forEach(function(task) {
@@ -215,16 +226,15 @@ angular.module('twork.main', [])
       });
     },
 
-    // fetchTasks: function() { //<---------call fetch everytime new task is submitted
-    //   return $http({
-    //     method: 'GET',
-    //     url: 'TBD'  // <---------- update once database exists
-    //   })
-    //   .then(function(result) {
-    //     tasks = result.data;
-    //     return tasks;
-    //   });
-    // },
+    fetchTasks: function() {
+      $http.get('/tasks')
+        .then(function(result) {
+          $scope.tasks = result.data
+        })
+        .catch(function(err) {
+          console.error('Error fetching tasks:', err);
+        });
+    },
 
     formatDate: function(dateStr, due) {
       // the due parameter is just a flag for whether the date
