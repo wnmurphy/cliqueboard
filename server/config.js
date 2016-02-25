@@ -76,6 +76,9 @@ var taskSchema = mongoose.Schema({
     type: Date,
     required: true
   },
+  urgency: {
+    type: Number
+  },
   complete: {
     type: Boolean,
     required: true

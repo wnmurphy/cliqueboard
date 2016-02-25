@@ -1,23 +1,29 @@
+// Express
 var express = require('express');
 var app = express();
-var morgan = require('morgan');
+
+// MongoDB
 var db = require("./config.js");
+
+// Helpers
 var util = require("./utility.js")
+
+// Socket.io
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+// Middleware
+var morgan = require('morgan');
 var request = require('request');
 var session = require('express-session');
-var bodyParser = require('body-parser');
 
-// ================ configure server ==============
+// ================ Configure Server ================= //
 
 var port = process.env.PORT || 4568;
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname + './../client'));
 app.use(express.cookieParser('get tworkin you tworkin tworker'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.bodyParser());
 app.use(session({
   secret: 'keyboard cat',
@@ -26,21 +32,8 @@ app.use(session({
   }
 }));
 
+// ================ POST requests start ============== //
 
-///// Add CORS headers to all traffic /////
-// app.all('*', function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type,Accept,X-Access-Token,X-Key');
-//   if (req.method == 'OPTIONS') {
-//     res.status(200).end();
-//   } else {
-//     next();
-//   }
-// });
-
-
-// ================ handle POST requests ==============
   // add new user to database
 app.post('/signup', function(req, res) {
   var username = req.body.username;
@@ -57,7 +50,7 @@ app.post('/signup', function(req, res) {
   .save()
     .then(function(user){
       console.log('Saved user: ', user);
-      util.loginUser(user, req, res); //<--------------------------util
+      util.loginUser(user, req, res); //<-----util
     })
     .catch(function(err) {
       res.send(500, 'Error saving user, or user already in db.');
@@ -88,20 +81,33 @@ app.post('/login', function(req, res) {
     });
 });
 
+app.post('/tasks', function(req, res) {
+  var task = new db.Task(req.body)
+  .save()
+    .then(function(task) {
+      console.log('Added task:', task.name);
+    })
+    .catch(function(err) {
+      console.error('Error adding task:', err);
+    });
+});
 
-  // add new tasks
-  // app.post();
-  
-  // add new room
-  // app.post();
-  
-  // add new message
-  // app.post();
+// ================ POST requests end ============== //
 
 
-// ================ handle GET requests ==============
-  
-  
+// ================ GET requests start ============== //
+
+app.get('/tasks', function(req, res) {
+  db.Task.find({})
+    .exec(function(err, tasks) {
+      if (err) {
+        console.error('Error fetching tasks:', err);
+        return;
+      } else {
+        res.json(tasks);
+      }
+    });
+});
 
   // get messages for room
   // app.get();
@@ -109,12 +115,21 @@ app.post('/login', function(req, res) {
   // get tasks
   // app.get();
 
-  
+// ================ GET requests end ============== // 
 
-/////The below connection is for whiteboard/////
+
+// ================ SOCKETS start ============== // 
 
 io.sockets.on('connection', function(socket) {
-  console.log('Socket connected');
+
+//////////////////// Tasks Socket /////////////////////
+
+  // socket.on('addTask', function(task) {
+
+  // });
+
+//////////////////// Whiteboard Socket /////////////////////
+
   socket.on('drawClick', function(data) {
      // console.log(data); //< --------- log draw events 
     socket.broadcast.emit('draw', {
@@ -124,34 +139,10 @@ io.sockets.on('connection', function(socket) {
       color:data.color
     });
   });
-});
 
-/////Connection below is for Multi user chatRoom/////
+/////////////////////// Chat Socket ///////////////////////
+  var usernames = {};
 
-var usernames = {};
-
-// rooms which are currently available in chat
-//var rooms = ['room1','room2','room3'];
-// io.sockets.on('connection', function(socket){
-//     socket.on('subscribe', function(room) { 
-//         console.log('joining room', room);
-//         socket.join(room); 
-//     })
-
-//     socket.on('unsubscribe', function(room) {  
-//         console.log('leaving room', room);
-//         socket.leave(room); 
-//     })
-
-//     socket.on('send', function(data) {
-//         console.log('sending message');
-//         io.sockets.in(data.room).emit('message', data);
-//     });
-// });
-
-io.sockets.on('connection', function (socket) {
-
-  // when the client emits 'adduser', this listens and executes
   socket.on('adduser', function(username){
     // store the username in the socket session for this client
     socket.username = username;
@@ -179,23 +170,6 @@ io.sockets.on('connection', function (socket) {
     io.sockets.in(socket.room).emit('updatechat', socket.username, data);
   });
 
-
-/////////////////For switching rooms One Day///////////////////////
-  // socket.on('switchRoom', function(newroom){
-  //  // leave the current room (stored in session)
-  //  socket.leave(socket.room);
-  //  // join new room, received as function parameter
-  //  socket.join(newroom);
-  //  socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
-  //  // sent message to OLD room
-  //  socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
-  //  // update socket session room title
-  //  socket.room = newroom;
-  //  socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
-  //  socket.emit('updateusers', rooms, newroom);
-  // });
-
-  // when the user disconnects.. perform this
   socket.on('disconnect', function(){
     // remove the username from global usernames list
     delete usernames[socket.username];
@@ -207,6 +181,64 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
+// ================ SOCKETS end ============== // 
+
+
+
+// ================ Multi Chat Rooms start ============== // 
+
+// rooms which are currently available in chat
+//var rooms = ['room1','room2','room3'];
+// io.sockets.on('connection', function(socket){
+//     socket.on('subscribe', function(room) { 
+//         console.log('joining room', room);
+//         socket.join(room); 
+//     })
+
+//     socket.on('unsubscribe', function(room) {  
+//         console.log('leaving room', room);
+//         socket.leave(room); 
+//     })
+
+//     socket.on('send', function(data) {
+//         console.log('sending message');
+//         io.sockets.in(data.room).emit('message', data);
+//     });
+// });
+ 
+// ================ Multi Chat Rooms end ============== // 
+
+
+
+// ================ Switch Chat Rooms start ============== // 
+
+//   // socket.on('switchRoom', function(newroom){
+//   //  // leave the current room (stored in session)
+//   //  socket.leave(socket.room);
+//   //  // join new room, received as function parameter
+//   //  socket.join(newroom);
+//   //  socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
+//   //  // sent message to OLD room
+//   //  socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
+//   //  // update socket session room title
+//   //  socket.room = newroom;
+//   //  socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
+//   //  socket.emit('updateusers', rooms, newroom);
+//   // });
+
+//   // when the user disconnects.. perform this
+//   socket.on('disconnect', function(){
+//     // remove the username from global usernames list
+//     delete usernames[socket.username];
+//     // update list of users in chat, client-side
+//     io.sockets.emit('updateusers', usernames);
+//     // echo globally that this client has left
+//     socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+//     socket.leave(socket.room);
+//   });
+// });
+
+// ================ Switch Chat Rooms end ============== // 
 
 http.listen(port);
 console.log('listening on ' + port);

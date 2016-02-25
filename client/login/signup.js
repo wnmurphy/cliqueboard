@@ -15,21 +15,20 @@ angular.module('twork.signup', [])
 	var holdUser = {};
 
   var createUser = function(email, username, password) {
-    return $http({
-      method: 'POST',
-      url: '/signup',
-      data: {
-        username: username,
-        email: email,
-        password: password
-      }
-    })
-    .success(function(resp, status) {
-      holdUser = resp.data;
-      $location.path('/');
-    }).error(function(err) {
-      $location.path('/signup');
-    });
+    var data = {
+      username: username,
+      email: email,
+      password: password
+    };
+
+    return $http.post('/signup', data)
+      .then(function(resp, status) {
+        holdUser = resp.data;
+        $location.path('/');
+      })
+      .catch(function(err) {
+        $location.path('/signup');
+      });
   };
 
 	return {
