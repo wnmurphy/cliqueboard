@@ -170,6 +170,7 @@ angular.module('twork.main', [])
   angular.extend($scope, Tasks);
 
   $scope.addTask = function(name, due, urgency) {
+    urgency = urgency || 'Not Urgent';
     // empty task and date input field after entry
     $scope.task = '';
     $scope.datetime = '';

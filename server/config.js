@@ -77,7 +77,7 @@ var taskSchema = mongoose.Schema({
     required: true
   },
   urgency: {
-    type: Number,
+    type: mongoose.Schema.Types.Mixed,
     required: true
   },
   complete: {
