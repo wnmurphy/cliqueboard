@@ -12,6 +12,8 @@ var bodyParser = require('body-parser');
 // ================ configure server ==============
 
 var port = process.env.PORT || 4568;
+
+app.use(morgan('dev'));
 app.use(express.static(__dirname + './../client'));
 app.use(express.cookieParser('get tworkin you tworkin tworker'));
 app.use(bodyParser.json());
@@ -23,11 +25,6 @@ app.use(session({
     maxAge: 60000
   }
 }));
-app.use(morgan('dev'));
-
-
-
-
 
 
 ///// Add CORS headers to all traffic /////
@@ -121,7 +118,7 @@ app.post('/login', function(req, res) {
 /////The below connection is for whiteboard/////
 
 io.sockets.on('connection', function(socket) {
-  console.log('connection running');
+  console.log('Socket connected');
   socket.on('drawClick', function(data) {
      // console.log(data); //< --------- log draw events 
     socket.broadcast.emit('draw', {
