@@ -4,7 +4,7 @@ angular.module('twork.signup', [])
   angular.extend($scope, signUpInfo);
 
 })
-.factory('signUpInfo', function($http) {
+.factory('signUpInfo', function($http, $location) {
 	
 	var signUpData = [];
 
@@ -26,11 +26,11 @@ angular.module('twork.signup', [])
     })
     .success(function(resp, status) {
       holdUser = resp.data;
+      $location.path('/');
     }).error(function(err) {
-      console.error('Error posting user:', err)
+      $location.path('/signup');
     });
   };
-
 
 	return {
 		signUp: signUp,

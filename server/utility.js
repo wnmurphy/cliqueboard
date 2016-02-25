@@ -3,7 +3,7 @@ var request = require('request');
 exports.loginUser = function(newUser, req, res) {
    return req.session.regenerate(function(){
     req.session.user = newUser;
-    // res.redirect('/#/tasks');
+    res.send(200, 'User logged in.');
   });
 };
 
@@ -14,38 +14,12 @@ exports.isLoggedIn = function(req, res) {
 // use on any route change to verify authentication
 exports.checkUser = function(req, res, next) {
   if (!exports.isLoggedIn(req)) {
-    console.log('redirect checkUser');
-    res.redirect('/login');
+    res.send(500, 'User not logged in.');
   } else {
     next();
   }
 };
-
-// signin: function (req, res, next) {
-//     var username = req.body.username,
-//         password = req.body.password;
-
-//     var findUser = Q.nbind(User.findOne, User);
-//     findUser({username: username})
-//       .then(function (user) {
-//         if (!user) {
-//           next(new Error('User does not exist'));
-//         } else {
-//           return user.comparePasswords(password)
-//             .then(function(foundUser) {
-//               if (foundUser) {
-//                 var token = jwt.encode(user, 'secret');
-//                 res.json({token: token});
-//               } else {
-//                 return next(new Error('No user'));
-//               }
-//             });
-//         }
-//       })
-//       .fail(function (error) {
-//         next(error);
-//       });
-//   },              
+        
 
        
 // app.post('/signin', userController.signin);

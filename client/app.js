@@ -8,8 +8,6 @@ angular.module('twork', [
   'twork.signup'
 ])
 .config(function($routeProvider, $locationProvider) {
-  // Enable push state paths (#/example)
-   
   $routeProvider
     .when('/chat', {
       templateUrl: 'v.chat/chat.html',
@@ -30,3 +28,15 @@ angular.module('twork', [
     ///Interjects before each route change to checkSession
     // $httpProvider.interceptors.push('checkSession');
 });
+// .run(function ($rootScope, $location, Auth) {
+//   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
+//     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
+//       $location.path('/signin');
+//     }
+//   });
+// });
+
+
+
+
+
