@@ -8,24 +8,22 @@ angular.module('twork.login', [])
 	var userData = [];
 
   var requestUser = function(username, password) {
-    return $http({
-      method: 'POST',
-      url: '/login',
-      data: {
-        username: username,
-        password: password
-      }
-    })
-    .success(function(resp, status) {
-      userData.push(resp.data);
-      $location.path('/tasks');
-    })
-    .error(function(err) {
-      $location.path('/login');
-    });
+    var data = {
+      username: username,
+      password: password
+    };
+
+    return $http.post('/login', data)
+      .then(function(res, status) {
+        userData.push(resp.data);
+        $location.path('/');
+      })
+      .catch(function(err) {
+        $location.path('/login');
+      });
   };
 
-	return{
+	return {
 		requestUser: requestUser,
 		userData: userData
 	}
