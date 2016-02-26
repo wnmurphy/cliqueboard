@@ -27,14 +27,17 @@
 <!-- Tasks  -->
   <div id='tasks' ng-controller="tasksController">
     <h2>Tasks</h2>
+    <p ng-if='view === "all"'>All tasks</p>
+    <p ng-if='view === "completed"'>Completed tasks</p>
+    <p ng-if='view === "incomplete"'>Incomplete tasks</p>
     <form name='createTask'>
       <input type='text' ng-model="task" placeholder='Add task name...' required>
-      <input type='date' ng-model='datetime' placeholder='mm/dd'required>
-      <input type='number' ng-model='urgency' min='1' max='5'>
+      <input type='date' ng-model='datetime' required>
+      <input type='number' ng-model='urgency' min='0' max='5'>
 
-      <button ng-click='addTask(task, datetime, urgency)' ng-disabled='task.$invalid || datetime.$invalid'>Add</button>
-      <button ng-click='view = "completed"' ng-disabled='completed.length < 1'>Complete</button>
-      <button ng-click='view = "incomplete"' ng-disabled='incomplete.length < 1'>Incomplete</button>
+      <button ng-click='addTask(task, datetime, urgency); view = "all"' type='submit' ng-disabled='createTask.$pristine'>Add</button>
+      <button ng-click='getList("completed"); view = "completed"' ng-disabled='completed.length < 1'>Complete</button>
+      <button ng-click='getList("incomplete"); view = "incomplete"' ng-disabled='incomplete.length < 1'>Incomplete</button>
     </form>
 
     <table>
@@ -48,19 +51,19 @@
       </thead>
 
       <tbody>
-        <tr ng-if='view === "all"' ng-repeat='task in tasks track by $index' ng-click='deleteTask($index, "tasks")'>
+        <tr ng-if='view === "all"' ng-repeat='task in all track by $index' ng-click='deleteTask(task, false)'>
           <td>{{ task.name }}</td>
           <td>{{ task.created }}</td>
           <td>{{ task.due }}</td>
           <td>{{ task.urgency }}</td>
         </tr>
-        <tr ng-if='view === "completed"' ng-repeat='task in completed track by $index' ng-click='deleteTask($index, "completed")'>
+        <tr ng-if='view === "completed"' ng-repeat='task in completed track by $index' ng-click='deleteTask(task, true)'>
           <td>{{ task.name }}</td>
           <td>{{ task.created }}</td>
           <td>{{ task.due }}</td>
           <td>{{ task.urgency }}</td>
         </tr>
-        <tr ng-if='view === "incomplete"' ng-repeat='task in incomplete track by $index' ng-click='deleteTask($index, "incomplete")'>
+        <tr ng-if='view === "incomplete"' ng-repeat='task in incomplete track by $index' ng-click='deleteTask(task, false)'>
           <td>{{ task.name }}</td>
           <td>{{ task.created }}</td>
           <td>{{ task.due }}</td>

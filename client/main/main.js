@@ -170,14 +170,23 @@ angular.module('twork.main', [])
   angular.extend($scope, Tasks);
 
   $scope.addTask = function(name, due, urgency) {
+    if (due !== undefined) {
+      due = $scope.formatDate(due, true);
+    } else {
+      due = 'N/A';
+    }
+
     urgency = urgency || 'Not Urgent';
+
     // empty task and date input field after entry
-    $scope.task = '';
-    $scope.datetime = '';
+    this.task = '';
+    this.datetime = '';
+    this.urgency = '';
+    this.createTask.$setPristine();
 
     var task = {
       name: name,
-      created: new Date(Date.now()),
+      created: $scope.formatDate(new Date(Date.now()), false),
       due: due,
       urgency: urgency,
       complete: false
@@ -190,52 +199,67 @@ angular.module('twork.main', [])
         }
       });
 
-    $http.get('/tasks')
+    $http.get('/tasks/all')
       .then(function(result) {
         console.log('Task GET successful');
-        result.data.forEach(function(task) {
-          task.due = $scope.formatDate(task.due, true);
-          task.created = $scope.formatDate(task.created, false);
-        });
-        $scope.tasks = result.data;
+        $scope.all = result.data;
+        $scope.getList('incomplete');
       })
       .catch(function(err) {
         console.error('Task GET error:', err);
       });
-    // $scope.tasks.push(task);
-    // $scope.incomplete.push(task);
+  };
+
+  $scope.getList = function(list, bool) {
+    $http.get('/tasks/' + list)
+      .then(function(result) {
+        console.log(list + ' task GET successful:', result.data);
+        if (list === 'completed') {
+          $scope.completed = result.data;
+        } else if (list === 'incomplete') {
+          $scope.incomplete = result.data;
+        }
+      })
+      .catch(function(err) {
+        console.error('Incomplete task GET error:', err);
+      });
+  };
+
+  $scope.deleteTask = function(task, bool) {
+    if (bool) {
+      $http.delete('/tasks/complete/' + task._id)
+        .then(function(result) {
+          console.log('Task DELETE successful');
+          $scope.getList('completed');
+        })
+        .catch(function(err) {
+          console.error('Task DELETE error:', err);
+        });
+    } else {
+      $http.put('/tasks/incomplete/' + task._id)
+        .then(function(result) {
+          console.log('Successfully PUT task:', result);
+          $scope.getList('incomplete', true);
+          $scope.completed.push(task);
+        })
+        .catch(function(err) {
+          console.error('Error PUT task:', err);
+        });
+    }
   };
 
 })
-.factory('Tasks', function() {
+.factory('Tasks', function($http) {
 
   var obj = {
 
     view: 'all',
 
-    tasks: [],
-    // completed: [],
-    // incomplete: [],
+    all: [],
 
-    incompleteCheck: function() {
-      obj.tasks.forEach(function(task) {
-        obj.incomplete.forEach(function(incTask) {
-          if (!task.complete && incTask.name !== task.name) {
-            obj.incomplete.push(task);
-          }
-        });
-      });
-    },
+    completed: [],
 
-    fetchTasks: function() {
-      $http.get('/tasks')
-        .then(function(result) {
-          $scope.tasks = result.data
-        })
-        .catch(function(err) {
-          console.error('Error fetching tasks:', err);
-        });
-    },
+    incomplete: [],
 
     formatDate: function(dateStr, due) {
       // the due parameter is just a flag for whether the date
@@ -251,7 +275,7 @@ angular.module('twork.main', [])
       var hour = rawDate.getHours() > 12 ? 
         rawDate.getHours() - 12 + ':' : 
         rawDate.getHours() + ':';
-      var minutes = rawDate.getMinutes().toString().length < 2 ? 
+      var minutes = rawDate.getMinutes().toString().length < 2 ?
         '0' + rawDate.getMinutes() :
         rawDate.getMinutes();
 
@@ -261,18 +285,6 @@ angular.module('twork.main', [])
         month + day + ' at ' + hour + minutes;
 
       return date;
-    },
-
-    deleteTask: function(index, collection) {
-      var task = obj[collection][index];
-      if (task.complete === true) {
-        obj[collection].splice(index, 1);
-      } else {
-        task.complete = true;
-        obj.completed.push(task);
-        obj.tasks.splice(index, 1);
-        obj.incomplete.splice(index, 1);
-      }
     }
 
   };

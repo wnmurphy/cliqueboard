@@ -14,7 +14,7 @@ mongoose.connect(mongoURI, function(err, res) {
   }
 });
 
-mongoose.connection.once('open', function() { //<--- may need to export the connection
+mongoose.connection.once('open', function() {
   console.log('MongoDB Connection Open');
 });
 
@@ -69,11 +69,11 @@ var taskSchema = mongoose.Schema({
     required: true
   },
   created: {
-    type: Date,
+    type: String,
     required: true
   },
   due: {
-    type: Date,
+    type: String,
     required: true
   },
   urgency: {
@@ -89,7 +89,6 @@ var taskSchema = mongoose.Schema({
 var Task = mongoose.model('Task', taskSchema)
 
 module.exports.Task = Task;
-
 
 // ================ Create and export Room model ==============
 
