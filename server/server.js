@@ -133,11 +133,6 @@ app.get('/tasks/:list', function(req, res) {
   }
 });
 
-  // get messages for room
-  // app.get();
-
-  // get tasks
-  // app.get();
 
 // ================ GET requests end ============== // 
 
@@ -184,16 +179,15 @@ app.put('/tasks/incomplete/:id', function(req, res, next) {
 
 io.sockets.on('connection', function(socket) {
 
-//////////////////// Tasks Socket /////////////////////
+// ================ Tasks socket ============== // 
 
   // socket.on('addTask', function(task) {
 
   // });
 
-//////////////////// Whiteboard Socket /////////////////////
+// ================ Whiteboard socket ============== // 
 
   socket.on('drawClick', function(data) {
-    console.log(data);
     socket.broadcast.emit('draw', {
       x: data.x,
       y: data.y,
@@ -203,15 +197,15 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('clear', function(data){
-    console.log('server received a clear event');
     socket.broadcast.emit('clear');
   });
 
 
-/////////////////////// Chat Socket ///////////////////////
+// ================ Chat socket ============== // 
   var usernames = {};
 
   socket.on('adduser', function(username){
+
     // store the username in the socket session for this client
     socket.username = username;
     // store the room name in the socket session for this client

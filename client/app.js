@@ -21,7 +21,7 @@ angular.module('twork', [
 })
 .run(function ($rootScope, $location) {
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
-    if (!$rootScope.loggedInUser) {
+    if (!$rootScope.loggedInUser && ($location.path() !== '/signup')) {
       $location.path('/login');
     }
   });
