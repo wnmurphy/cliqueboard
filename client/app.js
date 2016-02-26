@@ -45,3 +45,25 @@ angular.module('twork', [
 //     }
 //   });
 // });
+
+// app.controller("LoginCtrl", function($scope, $location, $rootScope) {
+//   $scope.login = function() {
+//     $rootScope.loggedInUser = $scope.username;
+//     $location.path("/persons");
+//   };
+// });
+
+
+//   run(function($rootScope, $location) {
+//     $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+//       if ($rootScope.loggedInUser == null) {
+
+//         // no logged user, redirect to /login
+//         if ( next.templateUrl === "partials/login.html") {
+
+//         } else {
+//           $location.path("/login");
+//         }
+//       }
+//     });
+//   });
