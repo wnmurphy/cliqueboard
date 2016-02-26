@@ -6,12 +6,6 @@ angular.module('twork.signup', [])
 })
 .factory('signUpInfo', function($http, $location, $rootScope) {
 	
-	var signUpData = [];
-
-	var signUp = function(email, user, password) {
-		signUpData.push({email: email, username: user, password: password});
-	}
-
 	var holdUserName;
 
   var createUser = function(email, username, password) {
@@ -27,7 +21,6 @@ angular.module('twork.signup', [])
        }
      }).success(function(res, status) {
        $rootScope.loggedInUser = holdUserName;
-       console.log($rootScope);
        $location.path('/');
      }).error(function(err) {
       $location.path('/signup');
@@ -35,8 +28,6 @@ angular.module('twork.signup', [])
   };
 
   return {
-    signUp: signUp,
-    signUpData: signUpData,
     createUser: createUser,
     holdUserName: holdUserName
   }
