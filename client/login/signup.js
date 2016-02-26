@@ -15,26 +15,29 @@ angular.module('twork.signup', [])
 	var holdUser = {};
 
   var createUser = function(email, username, password) {
-    var data = {
-      username: username,
-      email: email,
-      password: password
-    };
-
-    return $http.post('/signup', data)
-      .then(function(resp, status) {
-        holdUser = resp.data;
-        $location.path('/');
-      })
-      .catch(function(err) {
-        $location.path('/signup');
-      });
+     return $http({
+       method: 'POST',
+       url: '/signup',
+       data: {
+         username: username,
+         email: email,
+         password: password
+       }
+     }).success(function(res, status) {
+       holdUser = res.data;
+       // $rootScope.loggedInUser = res.data;
+       console.log('green monkeys');
+       //console.log($rootScope.loggedInUser);
+       $location.path('/');
+     }).error(function(err) {
+      $location.path('/signup');
+     });
   };
 
-	return {
-		signUp: signUp,
-		signUpData: signUpData,
-		createUser: createUser,
-		holdUser: holdUser
-	}
+  return {
+    signUp: signUp,
+    signUpData: signUpData,
+    createUser: createUser,
+    holdUser: holdUser
+  }
 });
