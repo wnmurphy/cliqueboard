@@ -193,7 +193,7 @@ io.sockets.on('connection', function(socket) {
 //////////////////// Whiteboard Socket /////////////////////
 
   socket.on('drawClick', function(data) {
-     // console.log(data); //< --------- log draw events 
+    console.log(data);
     socket.broadcast.emit('draw', {
       x: data.x,
       y: data.y,
@@ -203,8 +203,8 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('clear', function(data){
-    console.log('clear event received - server');
-    socket.emit('clear');
+    console.log('server received a clear event');
+    socket.broadcast.emit('clear');
   });
 
 
