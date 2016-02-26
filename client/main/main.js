@@ -33,6 +33,7 @@ angular.module('twork.main', [])
   //Draw to canvas
   $scope.draw = function(x, y, type, color){
     //set color property
+    this.ctx.strokeStyle = color;  
     if (type === "dragstart"){
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);
@@ -53,13 +54,13 @@ angular.module('twork.main', [])
 
   // Create draw event listener which triggers local draw event.
   $scope.socket.on('draw', function(data){
-    this.draw(data.x, data.y, data.type, data.color); 
+    $scope.draw(data.x, data.y, data.type, data.color);
   });
 
   // Create clear event listener
   $scope.socket.on('clear', function(data){
-    console.log('clear event received - client');
-    this.clear();
+    console.log('client received a clear event');
+    $scope.remoteClear();
   });
 
   //Handle draw events
@@ -76,10 +77,15 @@ angular.module('twork.main', [])
     $scope.socket.emit('drawClick', { x : x, y : y, type : type, color: color});
   });
 
+  $scope.remoteClear = function() {
+    console.log('clear called remotely');
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  };
+
   $scope.clear = function() {
+    console.log('clear called locally');
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     $scope.socket.emit('clear');
-    console.log('clear event emitted - client');
   };
 })
 
