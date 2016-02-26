@@ -59,7 +59,6 @@ angular.module('twork.main', [])
 
   // Create clear event listener
   $scope.socket.on('clear', function(data){
-    console.log('client received a clear event');
     $scope.remoteClear();
   });
 
@@ -78,12 +77,10 @@ angular.module('twork.main', [])
   });
 
   $scope.remoteClear = function() {
-    console.log('clear called remotely');
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   };
 
   $scope.clear = function() {
-    console.log('clear called locally');
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     $scope.socket.emit('clear');
   };
@@ -94,35 +91,27 @@ angular.module('twork.main', [])
   var userInfo = $rootScope.userData;
 
   $scope.socket = io.connect('http://localhost:4568');
-  console.log('USERINFO ', userInfo);
 
- // Get the username of the currently logged-in user, stored on $rootScope
+ // Store username of the currently logged-in user
   var userName = $rootScope.loggedInUser;
-  console.log(userName);
 
-    // on connection to server, ask for user's name with an anonymous callback
     $scope.socket.on('connect', function(){
-      // call the server-side function 'adduser' and send one parameter (value of prompt)
+      
+      // call the server-side function 'adduser' and send username
       $scope.socket.emit('adduser', userName);
-    // $scope.socket.emit('adduser', function(username){
-    //   return username;
-    // });
     });
 
-    // listener, whenever the server emits 'updatechat', this updates the chat body
  
   $scope.socket.on('updateusers', function(data) {
       $('#users').empty();
     
       $.each(data, function(key, value) {
-        console.log('key ', key);
-        console.log('value ', value);
           $('#users').append('<div>' + value + '</div>');
     });
   });
 
+   // Append incoming message when server emits 'updatechat'.
    $scope.socket.on('updatechat', function (username, data) {
-    console.log('data ', data)
       $('#conversation').append('<b>'+ username + ':</b> ' + data + '<br>');
     });
 
