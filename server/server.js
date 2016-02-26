@@ -50,7 +50,7 @@ app.post('/signup', function(req, res) {
   .save()
     .then(function(user){
       console.log('Saved user: ', user);
-      util.loginUser(user, req, res); //<-----util
+      util.loginUser(user, req, res);
     })
     .catch(function(err) {
       res.send(500, 'Error saving user, or user already in db.');
@@ -201,6 +201,12 @@ io.sockets.on('connection', function(socket) {
       color:data.color
     });
   });
+
+  socket.on('clear', function(data){
+    console.log('clear event received - server');
+    socket.emit('clear');
+  });
+
 
 /////////////////////// Chat Socket ///////////////////////
   var usernames = {};

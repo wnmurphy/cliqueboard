@@ -5,9 +5,11 @@ angular.module('twork.login', [])
 })
 .factory('logInUserInfo', function($http, $location, $rootScope) {
 	
-	var userData = [];
+	var holdUserName;
 
   var requestUser = function(username, password) {
+     holdUserName = username;
+
      return $http({
        method: 'POST',
        url: '/login',
@@ -16,8 +18,7 @@ angular.module('twork.login', [])
          password: password
        }
       }).success(function(res, status) {
-        userData.push(res.data);
-        $rootScope.loggedInUser = res.data;
+        $rootScope.loggedInUser = holdUserName;
         $location.path('/');
       })
       .error(function(err) {
@@ -27,7 +28,7 @@ angular.module('twork.login', [])
 
 	return {
 		requestUser: requestUser,
-		userData: userData
+		holdUserName: holdUserName
 	}
 });
 
