@@ -22,7 +22,9 @@
   </div>
   <div id="logo"><img src="img/triceratops.gif"></div>
   <ul class="menu">
-    <li><a href="#/logout">Logout</a></li>
+    <li ng-controller="loginController">
+      <button ng-click="logoutUser()" ng-show="loggedInUser">Logout</button>
+    </li>
   </ul>
 
   <div ng-view></div>

@@ -1,6 +1,6 @@
 angular.module('twork.login', [])
 
-.controller('loginController', function ($scope, logInUserInfo) {
+.controller('loginController', function ($scope, $rootScope, logInUserInfo) {
   angular.extend($scope, logInUserInfo);
 })
 .factory('logInUserInfo', function($http, $location, $rootScope) {
@@ -26,9 +26,15 @@ angular.module('twork.login', [])
       });
   };
 
+  var logoutUser = function(){
+    $rootScope.loggedInUser = undefined;
+    $location.path('/login');
+  };
+  
 	return {
 		requestUser: requestUser,
-		holdUserName: holdUserName
+		holdUserName: holdUserName,
+    logoutUser: logoutUser,
 	}
 });
 
