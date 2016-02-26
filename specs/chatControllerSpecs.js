@@ -1,9 +1,9 @@
 describe('chatController', function () {
- var $scope, $rootScope, chatController, $httpBackend;
+ var $scope, $rootScope, createController, $httpBackend;
 
  // using angular mocks, we can inject the injector
  // to retrieve our dependencies
- beforeEach(module('collaby.chat'));
+ beforeEach(module('twork'));
  beforeEach(inject(function($injector) {
 
    // mock out our dependencies

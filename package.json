@@ -20,13 +20,31 @@
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.3.1",
     "body-parser": "^1.15.0",
+    "browserify": "^13.0.0",
     "chai": "^3.5.0",
     "express": "~3.4.8",
     "express-session": "^1.13.0",
     "mocha": "^2.4.5",
-    "request":  "^2.34.0",
     "mongoose": "^4.4.4",
     "morgan": "^1.6.1",
-    "socket.io": "^1.4.5"
+    "phantomjs": "^2.1.3",
+    "request": "^2.34.0",
+    "socket.io": "^1.4.5",
+    "watchify": "^3.7.0"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.21",
+    "karma-browserify": "^5.0.2",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-expect": "^1.1.2",
+    "karma-jasmine": "^0.3.7",
+    "karma-mocha": "^0.2.2",
+    "karma-nested-reporter": "^0.1.1",
+    "karma-nyan-reporter": "0.0.43",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-unicorn-reporter": "^0.1.4",
+    "supertest": "^0.10.0"
   }
 }
