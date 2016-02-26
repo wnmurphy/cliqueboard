@@ -82,14 +82,14 @@ app.post('/login', function(req, res) {
 });
 
 app.post('/tasks', function(req, res) {
-  var task = new db.Task(req.body)
-  .save()
-    .then(function(task) {
-      console.log('Added task:', task.name);
-    })
-    .catch(function(err) {
-      console.error('Error adding task:', err);
-    });
+  new db.Task(req.body)
+    .save()
+      .then(function(task) {
+        console.log('Added task:', task.name);
+      })
+      .catch(function(err) {
+        console.error('Error adding task:', err);
+      });
 });
 
 // ================ POST requests end ============== //
@@ -97,16 +97,40 @@ app.post('/tasks', function(req, res) {
 
 // ================ GET requests start ============== //
 
-app.get('/tasks', function(req, res) {
-  db.Task.find({})
-    .exec(function(err, tasks) {
-      if (err) {
-        console.error('Error fetching tasks:', err);
-        return;
-      } else {
-        res.json(tasks);
-      }
-    });
+app.get('/tasks/:list', function(req, res) {
+  var list = req.params.list;
+
+  if (list === "all") {
+    db.Task.find({})
+      .exec(function(err, success) {
+        if (err) {
+          console.error('Error fetching tasks:', err);
+          return;
+        } else {
+          res.json(success);
+        }
+      });
+  } else if (list === "incomplete") {
+    db.Task.find({ complete: false })
+      .exec(function(err, success) {
+        if (err) {
+          console.error('Error fetching incomplete tasks:', err);
+          return;
+        } else {
+          res.json(success);
+        }
+      });
+  } else if (list === "completed") {
+    db.Task.find({ complete: true })
+      .exec(function(err, success) {
+        if (err) {
+          console.error('Error fetching completed tasks:', err);
+          return;
+        } else {
+          res.json(success);
+        }
+      });
+  }
 });
 
   // get messages for room
@@ -116,6 +140,44 @@ app.get('/tasks', function(req, res) {
   // app.get();
 
 // ================ GET requests end ============== // 
+
+
+// ================ DELETE requests start ============== // 
+ 
+app.delete('/tasks/complete/:id', function(req, res, next) {
+  var id = req.params.id;
+  db.Task.find({}).where({ _id: id })
+    .remove()
+      .exec(function(err, success) {
+        if (err) {
+          console.error('Error deleting task:', err);
+          return;
+        } else {
+          res.json(success);
+        }
+      });
+});
+
+// ================ DELETE requests end ============== // 
+
+
+// ================ PUT requests start ============== // 
+ 
+app.put('/tasks/incomplete/:id', function(req, res, next) {
+  var id = req.params.id;
+  db.Task.findByIdAndUpdate(id, { $set: { complete: true } })
+    .exec(function(err, success) {
+      if (err) {
+        console.error('Error updating task:', err);
+        return;
+      } else {
+        res.json(success);
+      }
+    });
+});
+
+// ================ PUT requests end ============== // 
+
 
 
 // ================ SOCKETS start ============== // 
