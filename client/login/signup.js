@@ -4,7 +4,7 @@ angular.module('twork.signup', [])
   angular.extend($scope, signUpInfo);
 
 })
-.factory('signUpInfo', function($http, $location) {
+.factory('signUpInfo', function($http, $location, $rootScope) {
 	
 	var signUpData = [];
 
@@ -12,9 +12,11 @@ angular.module('twork.signup', [])
 		signUpData.push({email: email, username: user, password: password});
 	}
 
-	var holdUser = {};
+	var holdUserName;
 
   var createUser = function(email, username, password) {
+     holdUserName = username;
+
      return $http({
        method: 'POST',
        url: '/signup',
@@ -24,10 +26,8 @@ angular.module('twork.signup', [])
          password: password
        }
      }).success(function(res, status) {
-       holdUser = res.data;
-       // $rootScope.loggedInUser = res.data;
-       console.log('green monkeys');
-       //console.log($rootScope.loggedInUser);
+       $rootScope.loggedInUser = holdUserName;
+       console.log($rootScope);
        $location.path('/');
      }).error(function(err) {
       $location.path('/signup');
@@ -38,6 +38,6 @@ angular.module('twork.signup', [])
     signUp: signUp,
     signUpData: signUpData,
     createUser: createUser,
-    holdUser: holdUser
+    holdUserName: holdUserName
   }
 });

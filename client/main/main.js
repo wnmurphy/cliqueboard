@@ -56,6 +56,12 @@ angular.module('twork.main', [])
     this.draw(data.x, data.y, data.type, data.color); 
   });
 
+  // Create clear event listener
+  $scope.socket.on('clear', function(data){
+    console.log('clear event received - client');
+    this.clear();
+  });
+
   //Handle draw events
   $('canvas').live('drag dragstart dragend', function(e){
     var type = e.handleObj.type;
@@ -70,22 +76,24 @@ angular.module('twork.main', [])
     $scope.socket.emit('drawClick', { x : x, y : y, type : type, color: color});
   });
 
-  // Clear the canvas
   $scope.clear = function() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    $scope.socket.emit('clear');
+    console.log('clear event emitted - client');
   };
 })
 
 //====================== Chat Controller ==================
-.controller('chatController', function ($scope, logInUserInfo) {
-  var userInfo = logInUserInfo.userData;
+.controller('chatController', function ($scope, $rootScope) {
+  var userInfo = $rootScope.userData;
 
   $scope.socket = io.connect('http://localhost:4568');
   console.log('USERINFO ', userInfo);
 
-  var userName = userInfo.map(function (user) {
-    return user.username;
-  });
+ // Get the username of the currently logged-in user, stored on $rootScope
+  var userName = $rootScope.loggedInUser;
+  console.log(userName);
+
     // on connection to server, ask for user's name with an anonymous callback
     $scope.socket.on('connect', function(){
       // call the server-side function 'adduser' and send one parameter (value of prompt)
