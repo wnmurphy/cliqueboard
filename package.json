@@ -1,10 +1,10 @@
 {
-  "name": "collab.y",
+  "name": "t'Work",
   "version": "0.0.1",
   "description": "INTEGRATION OF MULTIPLE COLLABORATIVE TOOLS TO INSPIRE MOTIVATIONS OF EMPLOYEE INSPIRATION FOR INTEGRATION",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
