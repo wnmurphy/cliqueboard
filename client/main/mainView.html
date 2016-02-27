@@ -27,22 +27,19 @@
 <!-- Tasks  -->
   <div id='tasks' ng-controller="tasksController">
     <h2>Tasks</h2>
-    <p ng-if='view === "all"'>All tasks</p>
-    <p ng-if='view === "completed"'>Completed tasks</p>
-    <p ng-if='view === "incomplete"'>Incomplete tasks</p>
     <form name='createTask'>
       <input type='text' ng-model="task" placeholder='Add task name...' required>
       <input type='date' ng-model='datetime' required>
       <input type='number' ng-model='urgency' min='0' max='5'>
 
       <button ng-click='addTask(task, datetime, urgency); view = "all"' type='submit' ng-disabled='createTask.$pristine'>Add</button>
-      <button ng-click='getList("completed"); view = "completed"' ng-disabled='completed.length < 1'>Complete</button>
-      <button ng-click='getList("incomplete"); view = "incomplete"' ng-disabled='incomplete.length < 1'>Incomplete</button>
+<!--       <button ng-click='clear()' ng-disabled='completed.length < 1'>Clear</button> -->
     </form>
 
     <table>
       <thead>
         <tr>
+          <th>Complete</th>
           <th>Task</th>
           <th>Created</th>
           <th>Due</th>
@@ -51,23 +48,13 @@
       </thead>
 
       <tbody>
-        <tr ng-if='view === "all"' ng-repeat='task in all track by $index' ng-click='deleteTask(task, false)'>
+        <tr ng-repeat='task in tasks track by $index'>
+          <td><input type='checkbox' ng-click='toggle(task)' ng-checked='task.complete'></td>
           <td>{{ task.name }}</td>
           <td>{{ task.created }}</td>
           <td>{{ task.due }}</td>
           <td>{{ task.urgency }}</td>
-        </tr>
-        <tr ng-if='view === "completed"' ng-repeat='task in completed track by $index' ng-click='deleteTask(task, true)'>
-          <td>{{ task.name }}</td>
-          <td>{{ task.created }}</td>
-          <td>{{ task.due }}</td>
-          <td>{{ task.urgency }}</td>
-        </tr>
-        <tr ng-if='view === "incomplete"' ng-repeat='task in incomplete track by $index' ng-click='deleteTask(task, false)'>
-          <td>{{ task.name }}</td>
-          <td>{{ task.created }}</td>
-          <td>{{ task.due }}</td>
-          <td>{{ task.urgency }}</td>
+          <td><button ng-click='delete(task)'>x</button></td>
         </tr>
       </tbody>
     </table>
