@@ -50,7 +50,7 @@ angular.module('twork.main', [])
   $scope.init();
   
   //Set up socket connection for incoming draw events
-  $scope.socket = io.connect('triceratest.heroku.com');
+  $scope.socket = io.connect('triceratest.herokuapp.com:80');
 
   // Create draw event listener which triggers local draw event.
   $scope.socket.on('draw', function(data){
@@ -90,7 +90,7 @@ angular.module('twork.main', [])
 .controller('chatController', function ($scope, $rootScope) {
   var userInfo = $rootScope.userData;
 
-  $scope.socket = io.connect("triceratest.heroku.com");
+  $scope.socket = io.connect("triceratest.heroku.com:80");
   // var socket = io.connect(window.location.hostname);
   // $scope.socket = io.connect('http://localhost:4568');
 
