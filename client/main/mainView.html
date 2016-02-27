@@ -38,7 +38,7 @@
         </thead>
 
         <tbody>
-          <tr ng-repeat='task in tasks track by $index'>
+          <tr ng-repeat='task in tasks'>
             <td><input type='checkbox' ng-click='toggle(task)' ng-checked='task.complete'></td>
             <td>{{ task.name }}</td>
             <td>{{ task.created }}</td>

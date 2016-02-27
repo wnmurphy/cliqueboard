@@ -86,7 +86,7 @@ var taskSchema = mongoose.Schema({
   }
 });
 
-var Task = mongoose.model('Task', taskSchema)
+var Task = mongoose.model('Task', taskSchema);
 
 module.exports.Task = Task;
 

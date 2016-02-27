@@ -36,8 +36,8 @@ app.use(session({
 
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Accept,X-Access-Token,X-Key');
+  res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, X-Access-Token, X-Key');
   if (req.method == 'OPTIONS') {
     res.status(200).end();
   } else {
@@ -98,7 +98,7 @@ app.post('/tasks', function(req, res) {
   new db.Task(req.body)
     .save()
       .then(function(task) {
-        console.log('Added task:', task.name);
+        res.json(task);
       })
       .catch(function(err) {
         console.error('Error adding task:', err);
@@ -182,9 +182,9 @@ io.sockets.on('connection', function(socket) {
 
 // ================ Tasks socket ============== //
 
-  // socket.on('addTask', function(task) {
-
-  // });
+  socket.on('addTask', function(task) {
+    socket.emit('add', task);
+  });
 
 // ================ Whiteboard socket ============== //
 
