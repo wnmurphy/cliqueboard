@@ -177,8 +177,6 @@ app.put('/tasks/:id/:status', function(req, res, next) {
 
 
 // ================ SOCKETS start ============== //
-//io.set('origin', 'http://triceratest.herokuapp.com:80');
-io.set('origin', 'localhost:4568');
 
 io.sockets.on('connection', function(socket) {
 
