@@ -90,7 +90,7 @@ angular.module('twork.main', [])
 .controller('chatController', function ($scope, $rootScope) {
   var userInfo = $rootScope.userData;
 
-  var socket = io.connect("triceratest.heroku.com");
+  $scope.socket = io.connect("triceratest.heroku.com");
   // var socket = io.connect(window.location.hostname);
   // $scope.socket = io.connect('http://localhost:4568');
 
