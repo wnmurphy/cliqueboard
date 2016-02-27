@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 
     nodemon: {
       dev: {
-        script: 'index.js'
+        script: 'server/server.js'
       }
     },
 
@@ -93,8 +93,7 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
         command: [
-            // 'karma start',
-            'git add -A',
+            'git add .',
             'git commit -m "Pushing to production"',
             'git push heroku master'
         ].join('&&')
