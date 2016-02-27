@@ -17,6 +17,9 @@
     "url": "https://github.com/dhuang919/hrr12-triceratops-greenfield/issues"
   },
   "homepage": "https://github.com/dhuang919/hrr12-triceratops-greenfield#readme",
+  "engines": {
+    "node": "0.12.7"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.3.1",
