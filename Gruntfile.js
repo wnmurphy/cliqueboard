@@ -129,7 +129,7 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
-  grunt.registerTask('default', ['ngtemplates']);
+
 
   grunt.registerTask('test', [
     // 'jshint',
