@@ -174,6 +174,19 @@ angular.module('twork.main', [])
 .controller('tasksController', function ($scope, $http, Tasks) {
   angular.extend($scope, Tasks);
 
+  $scope.init = function() {
+    $http.get('/tasks')
+      .then(function(result) {
+        $scope.tasks = result.data;
+        console.log('Task GET successful:', $scope.tasks);
+      })
+      .catch(function(err) {
+        console.error('Task GET error:', err);
+      });
+  };
+
+  $scope.init();
+
   $scope.addTask = function(name, due, urgency) {
     if (due !== undefined) {
       due = $scope.formatDate(due, true);
@@ -197,74 +210,92 @@ angular.module('twork.main', [])
       complete: false
     };
 
+    $scope.tasks.push(task);
+
     $http.post('/tasks', task)
-      .then(function(err, result) {
+      .then(function(err, success) {
         if (err) {
           console.error('Task POST error:', err);
+          return;
         }
-      });
-
-    $http.get('/tasks/all')
-      .then(function(result) {
-        console.log('Task GET successful');
-        $scope.all = result.data;
-        $scope.getList('incomplete');
-      })
-      .catch(function(err) {
-        console.error('Task GET error:', err);
+        // console.log('Task POST successful');
       });
   };
 
-  $scope.getList = function(list, bool) {
-    $http.get('/tasks/' + list)
-      .then(function(result) {
-        console.log(list + ' task GET successful:', result.data);
-        if (list === 'completed') {
-          $scope.completed = result.data;
-        } else if (list === 'incomplete') {
-          $scope.incomplete = result.data;
-        }
-      })
-      .catch(function(err) {
-        console.error('Incomplete task GET error:', err);
-      });
-  };
-
-  $scope.deleteTask = function(task, bool) {
-    if (bool) {
-      $http.delete('/tasks/complete/' + task._id)
-        .then(function(result) {
-          console.log('Task DELETE successful');
-          $scope.getList('completed');
-        })
-        .catch(function(err) {
-          console.error('Task DELETE error:', err);
+  $scope.toggle = function(task) {
+    if (!task.complete) {
+      task.complete = true;
+      $http.put('/tasks/' + task._id + '/complete')
+        .then(function(success, err) {
+          if (err) {
+            console.error('Task PUT error:', err);
+            return;
+          }
+          // console.log('Task PUT successful');
         });
     } else {
-      $http.put('/tasks/incomplete/' + task._id)
-        .then(function(result) {
-          console.log('Successfully PUT task:', result);
-          $scope.getList('incomplete', true);
-          $scope.completed.push(task);
-        })
-        .catch(function(err) {
-          console.error('Error PUT task:', err);
+      task.complete = false;
+      $http.put('/tasks/' + task._id + '/incomplete')
+        .then(function(success, err) {
+          if (err) {
+            console.error('Task PUT error:', err);
+            return;
+          }
+          // console.log('Task PUT successful');
         });
     }
   };
+
+  $scope.delete = function(task) {
+    $scope.tasks.forEach(function(item, i) {
+      if (item._id === task._id) {
+        $scope.tasks.splice(i, 1);
+      }
+    });
+
+    $http.delete('/tasks/' + task._id)
+      .then(function(result, err) {
+        if (err) {
+          console.error('Task DELETE error:', err);
+          return;
+        } else {
+          console.log('Task DELETE successful');
+        }
+      });
+  };
+
+  // $scope.clear = function() {
+  //   this.createTask.$setPristine();
+
+  //   var ids = $scope.tasks.map(function(task) {
+  //     if (task.complete) {
+  //       return task._id;
+  //     }
+  //   });
+
+  //   $http.delete('/tasks/' + ids)
+  //     .then(function(result, err) {
+  //       if (err) {
+  //         console.error('Task DELETE error:', err);
+  //         return;
+  //       } else {
+  //         console.log('Clear successful');
+  //         $scope.tasks.forEach(function(task, i) {
+  //           if (task.complete) {
+  //             $scope.tasks.splice(i, 1);
+  //           }
+  //         });
+  //       }
+  //     });
+
+  // };
 
 })
 .factory('Tasks', function($http) {
 
   var obj = {
 
-    view: 'all',
-
-    all: [],
-
-    completed: [],
-
-    incomplete: [],
+    tasks: [],
 
     formatDate: function(dateStr, due) {
       // the due parameter is just a flag for whether the date
@@ -290,11 +321,13 @@ angular.module('twork.main', [])
         month + day + ' at ' + hour + minutes;
 
       return date;
+
     }
 
   };
 
   return obj;
+
 });
 
 

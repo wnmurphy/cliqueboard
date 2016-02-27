@@ -110,40 +110,15 @@ app.post('/tasks', function(req, res) {
 
 // ================ GET requests start ============== //
 
-app.get('/tasks/:list', function(req, res) {
-  var list = req.params.list;
-
-  if (list === "all") {
-    db.Task.find({})
-      .exec(function(err, success) {
-        if (err) {
-          console.error('Error fetching tasks:', err);
-          return;
-        } else {
-          res.json(success);
-        }
-      });
-  } else if (list === "incomplete") {
-    db.Task.find({ complete: false })
-      .exec(function(err, success) {
-        if (err) {
-          console.error('Error fetching incomplete tasks:', err);
-          return;
-        } else {
-          res.json(success);
-        }
-      });
-  } else if (list === "completed") {
-    db.Task.find({ complete: true })
-      .exec(function(err, success) {
-        if (err) {
-          console.error('Error fetching completed tasks:', err);
-          return;
-        } else {
-          res.json(success);
-        }
-      });
-  }
+app.get('/tasks', function(req, res) {
+  db.Task.find({})
+    .exec(function(err, success) {
+      if (err) {
+        console.error('Error getting tasks:', err);
+      } else {
+        res.json(success);
+      }
+    });
 });
 
 
@@ -152,18 +127,18 @@ app.get('/tasks/:list', function(req, res) {
 
 // ================ DELETE requests start ============== // 
  
-app.delete('/tasks/complete/:id', function(req, res, next) {
+app.delete('/tasks/:id', function(req, res, next) {
   var id = req.params.id;
-  db.Task.find({}).where({ _id: id })
-    .remove()
-      .exec(function(err, success) {
-        if (err) {
-          console.error('Error deleting task:', err);
-          return;
-        } else {
-          res.json(success);
-        }
-      });
+  // console.log('ID:', id);
+  db.Task.remove({ _id: id })
+    .exec(function(err, success) {
+      if (err) {
+        console.error('Error deleting task:', err);
+        return;
+      } else {
+        res.json(success);
+      }
+    });
 });
 
 // ================ DELETE requests end ============== // 
@@ -171,17 +146,30 @@ app.delete('/tasks/complete/:id', function(req, res, next) {
 
 // ================ PUT requests start ============== // 
  
-app.put('/tasks/incomplete/:id', function(req, res, next) {
+app.put('/tasks/:id/:status', function(req, res, next) {
   var id = req.params.id;
-  db.Task.findByIdAndUpdate(id, { $set: { complete: true } })
-    .exec(function(err, success) {
-      if (err) {
-        console.error('Error updating task:', err);
-        return;
-      } else {
-        res.json(success);
-      }
-    });
+  var status = req.params.status;
+  if (status === 'complete') {
+    db.Task.findByIdAndUpdate(id, { $set: { complete: true } })
+      .exec(function(err, success) {
+        if (err) {
+          console.error('Error updating task:', err);
+          return;
+        } else {
+          res.json(success);
+        }
+      });
+  } else if (status === 'incomplete') {
+    db.Task.findByIdAndUpdate(id, { $set: { complete: false } })
+      .exec(function(err, success) {
+        if (err) {
+          console.error('Error updating task:', err);
+          return;
+        } else {
+          res.json(success);
+        }
+      });
+  }
 });
 
 // ================ PUT requests end ============== // 
