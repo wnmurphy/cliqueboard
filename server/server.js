@@ -189,7 +189,7 @@ app.put('/tasks/incomplete/:id', function(req, res, next) {
 
 
 // ================ SOCKETS start ============== // 
-io.set('origins', 'triceratest.herokuapp.com:80');
+io.set('origins', 'http://triceratest.herokuapp.com:80');
 
 io.sockets.on('connection', function(socket) {
 
