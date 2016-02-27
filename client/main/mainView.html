@@ -1,7 +1,5 @@
 
 <body>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-
 <!-- Whiteboard -->
   <div id="whiteboard" ng-controller="whiteboardController">
     <div class="canvas"><!-- whiteboard canvas is inserted here--></div>
@@ -11,54 +9,71 @@
   </div>
 
 <!-- Chat  -->
-  <div id='chat' ng-controller="chatController">
-    <h2>Chat</h2>
-      <div >
-      <b>USERS</b>
-      <div id="users"></div>
+<div class='row'>
+  <form class='col s12'>
+    <div class='row'>
+      <div class='input-field col s6 push-s3'>
+        <div id='chat' ng-controller="chatController">
+          <h2>Chat</h2>
+            <div >
+            <b>USERS</b>
+            <div id="users"></div>
+          </div>
+          <div>
+            <div id="conversation"></div>
+            <input id="data" autofocus />
+            <input type="button" id="datasend" value="send" />
+          </div>
+        </div>
+      </div>
     </div>
-    <div>
-      <div id="conversation"></div>
-      <input id="data" autofocus />
-      <input type="button" id="datasend" value="send" />
-    </div>
-  </div>
+  </form>
+</div>
 
 <!-- Tasks  -->
-  <div id='tasks' ng-controller="tasksController">
-    <h2>Tasks</h2>
-    <form name='createTask'>
-      <input type='text' ng-model="task" placeholder='Add task name...' required>
-      <input type='date' ng-model='datetime' required>
-      <input type='number' ng-model='urgency' min='0' max='5'>
+<div class='row'>
+  <form class='col s12'>
+    <div class='row'>
+      <div class='input-field col s6 push-s3'>
+        <div id='tasks' ng-controller="tasksController">
+          <h2>Tasks</h2>
+          <form class= "collapsible popout" data-collapisble="accordion" name='createTask'>
+            <input type='text' ng-model="task" placeholder='Add task name...' required>
+            <input type='date' ng-model='datetime' required>
+            <input type='number' ng-model='urgency' min='0' max='5'>
 
-      <button ng-click='addTask(task, datetime, urgency); view = "all"' type='submit' ng-disabled='createTask.$pristine'>Add</button>
-<!--       <button ng-click='clear()' ng-disabled='completed.length < 1'>Clear</button> -->
-    </form>
+            <button ng-click='addTask(task, datetime, urgency); view = "all"' type='submit' ng-disabled='createTask.$pristine'>Add</button>
+      <!--       <button ng-click='clear()' ng-disabled='completed.length < 1'>Clear</button> -->
+          </form>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Complete</th>
-          <th>Task</th>
-          <th>Created</th>
-          <th>Due</th>
-          <th>Urgency</th>
-        </tr>
-      </thead>
+          <table>
+            <thead>
+              <tr>
+                <th>Complete</th>
+                <th>Task</th>
+                <th>Created</th>
+                <th>Due</th>
+                <th>Urgency</th>
+              </tr>
+            </thead>
 
-      <tbody>
-        <tr ng-repeat='task in tasks track by $index'>
-          <td><input type='checkbox' ng-click='toggle(task)' ng-checked='task.complete'></td>
-          <td>{{ task.name }}</td>
-          <td>{{ task.created }}</td>
-          <td>{{ task.due }}</td>
-          <td>{{ task.urgency }}</td>
-          <td><button ng-click='delete(task)'>x</button></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+            <tbody>
+              <tr ng-repeat='task in tasks track by $index'>
+                <td><input type='checkbox' ng-click='toggle(task)' ng-checked='task.complete'></td>
+                <td>{{ task.name }}</td>
+                <td>{{ task.created }}</td>
+                <td>{{ task.due }}</td>
+                <td>{{ task.urgency }}</td>
+                <td><button ng-click='delete(task)'>x</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
 
 
 </body>

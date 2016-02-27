@@ -7,19 +7,19 @@ angular.module('twork.main', [])
   $scope.color = "#bada55";
 
   // Initialize HTML5 canvas, create new canvas element, append to .canvas div
-  $scope.init = function() { 
+  $scope.init = function() {
     this.canvas = document.createElement('canvas');
     this.canvas.height = $('.canvas').height();
     this.canvas.width = $('.canvas').width();
-    document.getElementsByClassName('canvas')[0].appendChild(this.canvas); 
+    document.getElementsByClassName('canvas')[0].appendChild(this.canvas);
 
     // Store the context
-    this.ctx = this.canvas.getContext("2d"); 
+    this.ctx = this.canvas.getContext("2d");
 
     // Set preferences for the line drawing.
     this.ctx.fillStyle = "solid";
-    this.ctx.strokeStyle = $scope.color;   
-    this.ctx.lineWidth = 1;       
+    this.ctx.strokeStyle = $scope.color;
+    this.ctx.lineWidth = 1;
     this.ctx.lineCap = "round";
 
     // Update drawing color whenever color picker changes.
@@ -33,7 +33,7 @@ angular.module('twork.main', [])
   //Draw to canvas
   $scope.draw = function(x, y, type, color){
     //set color property
-    this.ctx.strokeStyle = color;  
+    this.ctx.strokeStyle = color;
     if (type === "dragstart"){
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);
@@ -48,10 +48,10 @@ angular.module('twork.main', [])
 
   //Run init
   $scope.init();
-  
-  //Set up socket connection for incoming draw events
-  $scope.socket = io.connect('http://triceratest.herokuapp.com:80');
 
+  //Set up socket connection for incoming draw events
+  //$scope.socket = io.connect('http://triceratest.herokuapp.com:80');
+  $scope.socket = io.connect('http://localhost:4568');
   // Create draw event listener which triggers local draw event.
   $scope.socket.on('draw', function(data){
     $scope.draw(data.x, data.y, data.type, data.color);
@@ -90,23 +90,22 @@ angular.module('twork.main', [])
 .controller('chatController', function ($scope, $rootScope) {
   var userInfo = $rootScope.userData;
 
-  $scope.socket = io.connect("http://triceratest.heroku.com:80");
+  //$scope.socket = io.connect("http://triceratest.heroku.com:80");
   // var socket = io.connect(window.location.hostname);
-  // $scope.socket = io.connect('http://localhost:4568');
-
+  $scope.socket = io.connect('http://localhost:4568');
  // Store username of the currently logged-in user
   var userName = $rootScope.loggedInUser;
 
     $scope.socket.on('connect', function(){
-      
+
       // call the server-side function 'adduser' and send username
       $scope.socket.emit('adduser', userName);
     });
 
- 
+
   $scope.socket.on('updateusers', function(data) {
       $('#users').empty();
-    
+
       $.each(data, function(key, value) {
           $('#users').append('<div>' + value + '</div>');
     });
@@ -117,7 +116,7 @@ angular.module('twork.main', [])
       $('#conversation').append('<b>'+ username + ':</b> ' + data + '<br>');
     });
 
- 
+
 
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
     // $scope.socket.on('updaterooms', function(rooms, current_room) {
@@ -131,11 +130,11 @@ angular.module('twork.main', [])
     //     }
     //   });
     // });
-    
+
     // $scope.switchRoom = function(room){
     //   $scope.socket.emit('switchRoom', room);
     // }
-   
+
  // $scope.socket.on('message', function (data) {
  //  console.log(data);
  // });
@@ -308,8 +307,8 @@ angular.module('twork.main', [])
       var month = rawDate.getMonth() + 1 + '/';
 
       // keeping the hour format to 12 hour instead of 24
-      var hour = rawDate.getHours() > 12 ? 
-        rawDate.getHours() - 12 + ':' : 
+      var hour = rawDate.getHours() > 12 ?
+        rawDate.getHours() - 12 + ':' :
         rawDate.getHours() + ':';
       var minutes = rawDate.getMinutes().toString().length < 2 ?
         '0' + rawDate.getMinutes() :
@@ -329,5 +328,3 @@ angular.module('twork.main', [])
   return obj;
 
 });
-
-

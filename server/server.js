@@ -53,11 +53,11 @@ app.post('/signup', function(req, res) {
   var email = req.body.email;
   var password = req.body.password;
   // check if user already exists in db
-  
+
   // if not, add new user
   var user = new db.User({
-    username: username, 
-    email: email, 
+    username: username,
+    email: email,
     password: password
   })
   .save()
@@ -69,7 +69,7 @@ app.post('/signup', function(req, res) {
       res.send(500, 'Error saving user, or user already in db.');
     });
 });
-  
+
 // check user's credentials
 app.post('/login', function(req, res) {
   var username = req.body.username;
@@ -122,11 +122,11 @@ app.get('/tasks', function(req, res) {
 });
 
 
-// ================ GET requests end ============== // 
+// ================ GET requests end ============== //
 
 
-// ================ DELETE requests start ============== // 
- 
+// ================ DELETE requests start ============== //
+
 app.delete('/tasks/:id', function(req, res, next) {
   var id = req.params.id;
   // console.log('ID:', id);
@@ -141,11 +141,11 @@ app.delete('/tasks/:id', function(req, res, next) {
     });
 });
 
-// ================ DELETE requests end ============== // 
+// ================ DELETE requests end ============== //
 
 
-// ================ PUT requests start ============== // 
- 
+// ================ PUT requests start ============== //
+
 app.put('/tasks/:id/:status', function(req, res, next) {
   var id = req.params.id;
   var status = req.params.status;
@@ -172,22 +172,22 @@ app.put('/tasks/:id/:status', function(req, res, next) {
   }
 });
 
-// ================ PUT requests end ============== // 
+// ================ PUT requests end ============== //
 
 
 
-// ================ SOCKETS start ============== // 
-io.set('origins', 'http://triceratest.herokuapp.com:80');
+// ================ SOCKETS start ============== //
+//io.set('origin', 'http://triceratest.herokuapp.com:80');
 
 io.sockets.on('connection', function(socket) {
 
-// ================ Tasks socket ============== // 
+// ================ Tasks socket ============== //
 
   // socket.on('addTask', function(task) {
 
   // });
 
-// ================ Whiteboard socket ============== // 
+// ================ Whiteboard socket ============== //
 
   socket.on('drawClick', function(data) {
     socket.broadcast.emit('draw', {
@@ -203,7 +203,7 @@ io.sockets.on('connection', function(socket) {
   });
 
 
-// ================ Chat socket ============== // 
+// ================ Chat socket ============== //
   var usernames = {};
 
   socket.on('adduser', function(username){
@@ -219,8 +219,8 @@ io.sockets.on('connection', function(socket) {
 
     // add the client's username to the globl list
     usernames[username] = username;
-    
-    
+
+
     // echo to client they've connected
     socket.emit('updatechat', 'SERVER', 'you have connected');
     // echo to room 1 that a person has connected to their room
@@ -245,23 +245,23 @@ io.sockets.on('connection', function(socket) {
   });
 });
 
-// ================ SOCKETS end ============== // 
+// ================ SOCKETS end ============== //
 
 
 
-// ================ Multi Chat Rooms start ============== // 
+// ================ Multi Chat Rooms start ============== //
 
 // rooms which are currently available in chat
 //var rooms = ['room1','room2','room3'];
 // io.sockets.on('connection', function(socket){
-//     socket.on('subscribe', function(room) { 
+//     socket.on('subscribe', function(room) {
 //         console.log('joining room', room);
-//         socket.join(room); 
+//         socket.join(room);
 //     })
 
-//     socket.on('unsubscribe', function(room) {  
+//     socket.on('unsubscribe', function(room) {
 //         console.log('leaving room', room);
-//         socket.leave(room); 
+//         socket.leave(room);
 //     })
 
 //     socket.on('send', function(data) {
@@ -269,12 +269,12 @@ io.sockets.on('connection', function(socket) {
 //         io.sockets.in(data.room).emit('message', data);
 //     });
 // });
- 
-// ================ Multi Chat Rooms end ============== // 
+
+// ================ Multi Chat Rooms end ============== //
 
 
 
-// ================ Switch Chat Rooms start ============== // 
+// ================ Switch Chat Rooms start ============== //
 
 //   // socket.on('switchRoom', function(newroom){
 //   //  // leave the current room (stored in session)
@@ -302,7 +302,7 @@ io.sockets.on('connection', function(socket) {
 //   });
 // });
 
-// ================ Switch Chat Rooms end ============== // 
+// ================ Switch Chat Rooms end ============== //
 
 http.listen(port);
 console.log('listening on ' + port);

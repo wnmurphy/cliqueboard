@@ -8,11 +8,11 @@ angular.module('twork', [
 .config(function($routeProvider, $locationProvider) {
   $routeProvider
     .when('/login', {
-      templateUrl: 'login/loginView-old.html',
+      templateUrl: 'login/loginView.html',
       controller: 'loginController'
     })
     .when('/signup', {
-      templateUrl: 'login/signupView-old.html',
+      templateUrl: 'login/signupView.html',
       controller: 'signupController'
     })
     .when('/', {
