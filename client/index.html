@@ -8,7 +8,14 @@
   <!-- Styles -->
   <link rel="stylesheet" href="styles/style.css">
   <link href="https://fonts.googleapis.com/css?family=Short+Stack" rel="stylesheet" type="text/css">
-
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!-- Google fonts -->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+  <!-- Materialize CSS CDN -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css'>
+  <!-- Materialize JS CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
@@ -16,20 +23,24 @@
   <script src="lib/jquery.event.drag-2.0.js"></script>
 </head>
 
-<body >
-  <div class="app-title">
-    <h1>t'Work</h1>
-    <h4>"Get t'Work."</h4>
+<body>
+  <div class="row">
+    <div class="col s10 offset-s10">
+      <div class="app-title">
+        <h3>t'Work</h3>
+        <h5>"Get t'Work."</h5>
+      </div>
+      <div id="logo"><img src="img/triceratops.gif"></div>
+      <ul class="menu">
+        <li ng-controller="loginController">
+          <button ng-click="logoutUser()" ng-show="loggedInUser">Logout</button>
+        </li>
+      </ul>
   </div>
-  <div id="logo"><img src="img/triceratops.gif"></div>
-  <ul class="menu">
-    <li ng-controller="loginController">
-      <button ng-click="logoutUser()" ng-show="loggedInUser">Logout</button>
-    </li>
-  </ul>
+</div>
 
   <div ng-view></div>
-   
+
   <!-- internal dependencies -->
   <script src="login/signup.js"></script>
   <script src="login/login.js"></script>
