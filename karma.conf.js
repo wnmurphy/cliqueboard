@@ -18,6 +18,7 @@ module.exports = function(config) {
     frameworks: ['browserify','jasmine'],
     
     plugins : [
+        'karma-require',
         'karma-browserify',
         'karma-jasmine',
         'karma-unicorn-reporter',
@@ -29,23 +30,18 @@ module.exports = function(config) {
     ],
 
       files: [
-
-        'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js',
-        'https://cdn.socket.io/socket.io-1.4.5.js',
-        'client/lib/jquery.event.drag-2.0.js',
         'client/bower_components/angular/angular.js',
         'client/bower_components/angular-route/angular-route.js',
         'client/bower_components/angular-mocks/angular-mocks.js',
+        'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js',
+        'https://cdn.socket.io/socket.io-1.4.5.js',
+        'client/lib/jquery.event.drag-2.0.js',
         'https://code.jquery.com/jquery-1.11.2.min.js',
 
         //be careful with * might be including too much
         'client/app.js',
         'client/login/*.js',
-        'client/v.chat/*.js',
         'client/main/*.js',
-        'client/v.tasks/*.js',
-        'client/v.whiteboard/*.js',
-
         
         // 'node_modules/expect.js/index.js',
         

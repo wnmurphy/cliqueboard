@@ -12,19 +12,19 @@
         <form  name="signupForm" ng-submit='createUser(email, user, password)' class='col s12' novalidate>
           <div class='row'>
             <div class='input-field col s6 push-s3'>
-              <input id='username' type='text' class='validate' ng-model='user'>
+              <input id='username' type='text' class='validate' ng-model='user' placeholer="username">
               <label class='white-text'for='username' data-error='Invalid' data-success='Valid'>Username</label>
             </div>
           </div>
           <div class='row'>
             <div class='input-field col s6 push-s3'>
-              <input id='email' type='email' class='validate' ng-model='email'>
+              <input id='email' type='email' class='validate' ng-model='email' placeholder="email">
               <label class='white-text' for='email' data-error='Invalid' data-success='Valid'>Email</label>
             </div>
           </div>
           <div class='row'>
             <div class='input-field col s6 push-s3'>
-              <input id='password' type='password' class='validate' ng-model='password'>
+              <input id='password' type='password' class='validate' ng-model='password' placeholder="password">
               <label class='white-text' for='password' data-error='Invalid' data-success='Valid'>Password</label>
             </div>
           </div>

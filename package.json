@@ -58,7 +58,11 @@
     "karma-nested-reporter": "^0.1.1",
     "karma-nyan-reporter": "0.0.43",
     "karma-phantomjs-launcher": "^0.1.4",
+    "karma-requirejs": "^0.2.5",
     "karma-unicorn-reporter": "^0.1.4",
+    "requirejs": "^2.1.22",
+    "should": "^8.2.2",
+    "socket.io-client": "^1.4.5",
     "supertest": "^0.10.0"
   }
 }

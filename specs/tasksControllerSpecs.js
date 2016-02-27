@@ -1,5 +1,5 @@
 describe('tasksController', function () {
-  var $scope, $rootScope, createController, $httpBackend;
+  var $scope, $rootScope, createController, $httpBackend, Tasks;
 
   // using angular mocks, we can inject the injector
   // to retrieve our dependencies
@@ -9,6 +9,7 @@ describe('tasksController', function () {
     // mock out our dependencies
     $rootScope = $injector.get('$rootScope');
     $httpBackend = $injector.get('$httpBackend');
+    Tasks = $injector.get('Tasks');
     $scope = $rootScope.$new();
 
     var $controller = $injector.get('$controller');
@@ -16,13 +17,16 @@ describe('tasksController', function () {
     createController = function () {
       return $controller('tasksController', {
         $scope: $scope,
+        Tasks: Tasks
       });
     };
   }));
 
-  it('should have a getList method on the $scope', function() {
+
+
+  it('should have a toggle method on the $scope', function() {
     createController();
-    expect($scope.getList).to.be.a('function');
+    expect($scope.toggle).to.be.a('function');
   });
 
   it('should have an addTasks method on the $scope', function() {
@@ -35,9 +39,9 @@ describe('tasksController', function () {
       expect($scope.tasks).to.be.an('array');
   });
 
-  it('should have an completeTasks method on the $scope', function() {
+  it('should have a delete method on the $scope', function() {
       createController();
-      expect($scope.completeTasks).to.be.a('function');
+      expect($scope.delete).to.be.a('function');
   });
 
 });

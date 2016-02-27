@@ -1,5 +1,7 @@
+
+
 describe('chatController', function () {
- var $scope, $rootScope, createController, $httpBackend;
+ var $scope, $rootScope, createController, $httpBackend, socketURL, options, io, should;
 
  // using angular mocks, we can inject the injector
  // to retrieve our dependencies
@@ -9,6 +11,14 @@ describe('chatController', function () {
    // mock out our dependencies
    $rootScope = $injector.get('$rootScope');
    $httpBackend = $injector.get('$httpBackend');
+   should = require('should');
+   io = require('socket.io-client');
+   options ={
+      transports: ['websocket'],
+      'force new connection': true
+    };
+   socketURL = 'http://localhost:3000';
+
    $scope = $rootScope.$new();
 
    var $controller = $injector.get('$controller');
@@ -16,6 +26,10 @@ describe('chatController', function () {
    createController = function () {
      return $controller('chatController', {
        $scope: $scope,
+       should: should,
+       io: io,
+       options: options,
+       socketURL: socketURL
      });
    };
  }));
