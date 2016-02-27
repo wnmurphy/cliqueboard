@@ -713,40 +713,38 @@ PATTERNS:[{gSize:3,lgSize:3,maxFrac:3,minFrac:0,minInt:1,negPre:"-",negSuf:"",po
   angular.extend($scope, logInUserInfo);
 })
 .factory('logInUserInfo', function($http, $location, $rootScope) {
-	
+
 	var holdUserName;
 
   var requestUser = function(username, password) {
      holdUserName = username;
 
-     return $http({
-       method: 'POST',
-       url: '/login',
-       data: {
-         username: username,
-         password: password
-       }
-      }).success(function(res, status) {
-        $rootScope.loggedInUser = holdUserName;
-        $location.path('/');
-      })
-      .error(function(err) {
-        $location.path('/login');
-      });
-  };
+  var data = {
+       username: username,
+       password: password
+       };
+
+      return $http.post('/login', data)
+       .then(function(res, status) {
+         $rootScope.loggedInUser = holdUserName;
+         $location.path('/');
+       })
+       .catch(function(err) {
+         $location.path('/login');
+       });
+    };
 
   var logoutUser = function(){
     $rootScope.loggedInUser = undefined;
     $location.path('/login');
   };
-  
+
 	return {
 		requestUser: requestUser,
 		holdUserName: holdUserName,
     logoutUser: logoutUser,
 	}
 });
-
 ;angular.module('twork.signup', [])
 
 .controller('signupController', function ($scope, signUpInfo) {
@@ -754,27 +752,30 @@ PATTERNS:[{gSize:3,lgSize:3,maxFrac:3,minFrac:0,minInt:1,negPre:"-",negSuf:"",po
 
 })
 .factory('signUpInfo', function($http, $location, $rootScope) {
-	
+
 	var holdUserName;
 
   var createUser = function(email, username, password) {
      holdUserName = username;
 
-     return $http({
-       method: 'POST',
-       url: '/signup',
-       data: {
-         username: username,
+      var data = {
          email: email,
+         username: username,
          password: password
-       }
-     }).success(function(res, status) {
-       $rootScope.loggedInUser = holdUserName;
-       $location.path('/');
-     }).error(function(err) {
-      $location.path('/signup');
-     });
-  };
+       };
+
+       return $http.post('/signup', data)
+         .then(function(resp, status) {
+           $rootScope.loggedInUser = holdUserName
+           $location.path('/');
+         })
+         .catch(function(err) {
+           $location.path('/signup');
+         });
+      };
+
+
+
 
   return {
     createUser: createUser,
@@ -791,11 +792,11 @@ angular.module('twork', [
 .config(function($routeProvider, $locationProvider) {
   $routeProvider
     .when('/login', {
-      templateUrl: 'login/loginView-old.html',
+      templateUrl: 'login/loginView.html',
       controller: 'loginController'
     })
     .when('/signup', {
-      templateUrl: 'login/signupView-old.html',
+      templateUrl: 'login/signupView.html',
       controller: 'signupController'
     })
     .when('/', {
