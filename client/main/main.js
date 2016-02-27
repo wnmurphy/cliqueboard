@@ -50,7 +50,7 @@ angular.module('twork.main', [])
   $scope.init();
   
   //Set up socket connection for incoming draw events
-  $scope.socket = io.connect('http://localhost:4568');
+  $scope.socket = io.connect('process.env.MONGOLAB_URI');
 
   // Create draw event listener which triggers local draw event.
   $scope.socket.on('draw', function(data){
@@ -90,7 +90,8 @@ angular.module('twork.main', [])
 .controller('chatController', function ($scope, $rootScope) {
   var userInfo = $rootScope.userData;
 
-  $scope.socket = io.connect('http://localhost:4568');
+  var socket = io.connect(window.location.hostname);
+  // $scope.socket = io.connect('http://localhost:4568');
 
  // Store username of the currently logged-in user
   var userName = $rootScope.loggedInUser;
