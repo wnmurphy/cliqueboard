@@ -1,9 +1,9 @@
 describe('whiteboardController', function () {
-  var $scope, $rootScope, whiteboardController, $httpBackend;
+  var $scope, $rootScope, createController, $httpBackend;
 
   // using angular mocks, we can inject the injector
   // to retrieve our dependencies
-  beforeEach(module('collaby.whiteboard'));
+  beforeEach(module('twork'));
   beforeEach(inject(function($injector) {
 
     // mock out our dependencies

@@ -1,9 +1,9 @@
 describe('tasksController', function () {
-  var $scope, $rootScope, tasksController, $httpBackend;
+  var $scope, $rootScope, createController, $httpBackend;
 
   // using angular mocks, we can inject the injector
   // to retrieve our dependencies
-  beforeEach(module('collaby.tasks'));
+  beforeEach(module('twork'));
   beforeEach(inject(function($injector) {
 
     // mock out our dependencies
@@ -20,9 +20,9 @@ describe('tasksController', function () {
     };
   }));
 
-  it('should have an fetchTasks method on the $scope', function() {
+  it('should have a getList method on the $scope', function() {
     createController();
-    expect($scope.fetchTasks).to.be.a('function');
+    expect($scope.getList).to.be.a('function');
   });
 
   it('should have an addTasks method on the $scope', function() {
