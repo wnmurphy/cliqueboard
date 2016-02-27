@@ -174,18 +174,24 @@ angular.module('twork.main', [])
 .controller('tasksController', function ($scope, $http, Tasks) {
   angular.extend($scope, Tasks);
 
-  $scope.init = function() {
-    $http.get('/tasks')
-      .then(function(result) {
-        $scope.tasks = result.data;
-        console.log('Task GET successful:', $scope.tasks);
-      })
-      .catch(function(err) {
-        console.error('Task GET error:', err);
-      });
-  };
+  $scope.socket = io.connect('http://localhost:4568');
 
-  $scope.init();
+  $scope.socket.on('stream', function(data) {
+    console.log('task socket data:', data);
+  });
+
+  // $scope.init = function() {
+  //   $http.get('/tasks')
+  //     .then(function(result) {
+  //       $scope.tasks = result.data;
+  //       console.log('Task GET successful:', $scope.tasks);
+  //     })
+  //     .catch(function(err) {
+  //       console.error('Task GET error:', err);
+  //     });
+  // };
+
+  // $scope.init();
 
   $scope.addTask = function(name, due, urgency) {
     if (due !== undefined) {
@@ -213,12 +219,13 @@ angular.module('twork.main', [])
     $scope.tasks.push(task);
 
     $http.post('/tasks', task)
-      .then(function(err, success) {
+      .then(function(success, err) {
         if (err) {
           console.error('Task POST error:', err);
           return;
+        } else {
+          console.log('Task POST successful:', success);
         }
-        // console.log('Task POST successful');
       });
   };
 
