@@ -4,22 +4,24 @@
   <div class="col s8">
     <div id="whiteboard" ng-controller="whiteboardController">
       <div class="canvas"><!-- whiteboard canvas is inserted here--></div>
-      <button id="clearWhiteboardBtn" ng-click="clear()">Clear board</button>
-      <input id="colorpicker" type="color" value="#bada55" ng-model="color"/>
-      <hr>
+      <input id="colorpicker" type="color" ng-model="color"/>
+      <a class='btn' id="clearWhiteboardBtn" ng-click="clear()"><i class='material-icons right'>clear_all</i>Clear board</a>
     </div>
  </div>
 
   <!-- Tasks  -->
   <div class="col s4">
     <div id='tasks' ng-controller="tasksController">
-      <i class="material-icons prefix">assignment</i>Tasks
-      <form name='createTask'>
-        <input type='text' ng-model="task" placeholder='Add task name' required>
+      <h4><i class="material-icons prefix">assignment</i>Tasks</h4>
+      <form input-field name='createTask'>
+        <label>Add Task</label>
+        <input type='text' ng-model="task" required>
+        <label>Due Date</label>
         <input type='date' class='datepicker' ng-model='datetime' required>
-        <input type='number' ng-model='urgency' placeholder='Urgency from 1-5' min='0' max='5'>
+        <label>Urgency (1-5)</label>
+        <input type='number' ng-model='urgency' min='0' max='5'>
+        <a class='btn-floating btn-tiny' ng-click='addTask(task, datetime, urgency)' ng-disabled='createTask.$pristine'><i class='material-icons right'>add</i></a>
 
-        <button ng-click='addTask(task, datetime, urgency)' type='submit' ng-disabled='createTask.$pristine'>Add</button>
   <!--       <button ng-click='clear()' ng-disabled='completed.length < 1'>Clear</button> -->
       </form>
 
@@ -41,7 +43,7 @@
             <td>{{ task.created }}</td>
             <td>{{ task.due }}</td>
             <td>{{ task.urgency }}</td>
-            <td><a class='btn-floating' ng-click='delete(task)'>x</a></td>
+            <td><a class='btn-floating red' ng-click='delete(task)'><i class='material-icons'>delete</i></a></td>
           </tr>
         </tbody>
       </table>
@@ -53,7 +55,7 @@
 <!-- Chat  -->
 <div class ="row">
    <div id='chat' ng-controller="chatController">
-      <h4>Chat</h4>
+      <h4><i class='material-icons'>chat</i>Chat</h4>
         <div class="col s1">
           <b>USERS</b>
            <div id="users"></div>

@@ -4,7 +4,7 @@ angular.module('twork.main', [])
 //====================== Whiteboard Controller ==================
 .controller('whiteboardController', function ($scope) {
   $scope.name = 'whiteboard';
-  $scope.color = "#bada55";
+  $scope.color = "#000000";
 
   // Initialize HTML5 canvas, create new canvas element, append to .canvas div
   $scope.init = function() {

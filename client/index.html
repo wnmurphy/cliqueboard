@@ -1,61 +1,44 @@
 <!DOCTYPE html>
 <html ng-app="twork">
-<head>
-  <!-- Hello!!! -->
-  <meta charset="utf-8">
-  <title>t'Work</title>
-  <!-- Meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Styles -->
-  <!-- <link rel="stylesheet" href="styles/style.css"> -->
-   <link rel="stylesheet" href="dist/style.min.css">
+  <head>
+    <meta charset="utf-8">
+    <title>t'Work</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+    <!-- Materialize CDNs -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <!-- Angular & Socket.io Dependencies -->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script src="lib/jquery.event.drag-2.0.js"></script>
+    <!-- Additional CSS -->
+    <link rel="stylesheet" href="styles/style.css">
+     <!-- <link rel="stylesheet" href="dist/style.min.css"> -->
+  </head>
 
-  <link href="https://fonts.googleapis.com/css?family=Short+Stack" rel="stylesheet" type="text/css">
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <!-- Google fonts -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
-  <!-- Materialize CSS CDN -->
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css'>
-  <!-- Materialize JS CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-  <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/angular-route/angular-route.min.js"></script>
-  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script src="lib/jquery.event.drag-2.0.js"></script>
-</head>
+  <body ng-class='!loggedInUser ? "blue lighten-1" : ""'>
+    <ul class="menu">
+      <li ng-controller="loginController">
+        <a class='btn' ng-click="logoutUser()" ng-show="loggedInUser"><i class='material-icons right'>call_made</i>Logout</a>
+      </li>
+    </ul>
 
-<body ng-class='!loggedInUser ? "blue lighten-1" : ""'>
-<ul class="menu">
-  <li ng-controller="loginController">
-    <button ng-click="logoutUser()" ng-show="loggedInUser">Logout</button>
-  </li>
-</ul>
-<!--   <div class="row">
-    <div class="col s10 offset-s10">
-      <div class="app-title">
-        <h3>t'Work</h3>
-        <h5>"Get t'Work."</h5>
-      </div>
-      <div id="logo"><img src="img/triceratops.gif"></div>
-      <ul class="menu">
-        <li ng-controller="loginController">
-          <button ng-click="logoutUser()" ng-show="loggedInUser">Logout</button>
-        </li>
-      </ul>
-  </div>
-</div> -->
+    <div ng-view>
+    </div>
 
-  <div ng-view></div>
+    <!-- internal dependencies -->
+    <!-- <script src="dist/built.min.js"></script> -->
+    <!-- <script src='dist/WithAnnotationsCtrl.min.js'></script> -->
 
-  <!-- internal dependencies -->
-  <script src="dist/built.min.js"></script>
-  <script src='dist/WithAnnotationsCtrl.min.js'></script>
-
- <!--  <script src="login/signup.js"></script>
-  <script src="login/login.js"></script>
-  <script src="app.js"></script>
-  <script src="main/main.js"></script> -->
-</body>
+    <script src="login/signup.js"></script>
+    <script src="login/login.js"></script>
+    <script src="app.js"></script>
+    <script src="main/main.js"></script>
+  </body>
 </html>
