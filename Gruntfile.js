@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       },
       js: {
         // src: ['client/lib/jquery.js', 'client/lib/underscore.js','client/lib/backbone.js','client/lib/handlebars.js', 'client/client/*.js'],
-        src: ['client/lib/jquery.event.drag-2.0.js', 'client/login/*.js', 'client/main/*.js', 'client/app.js'],
+        src: ['client/lib/jquery.event.drag-2.0.js', 'client/login/login.js','client/login/signup.js', 'client/main/main.js', 'client/app.js'],
         dest: 'client/dist/built.js'
       }
     },
@@ -43,16 +43,9 @@ module.exports = function(grunt) {
     jshint: {
       files:[
          [
-         'client/lib/jquery.event.drag-2.0.js',
-         'client/bower_components/angular-route/angular-route.min.js', 
-         'client/bower_components/angular/angular.min.js', 
          'client/login/*.js',
-         'client/v.chat/*.js', 
-         'client/v.tasks/*.js',
-         'client/whiteboard/*.js', 
          'client/app.js',
-         'client/server/*.js', 
-         'client/test/*.js'
+         'client/server/*.js' 
          ],
       ],
       options: {
@@ -77,7 +70,7 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           'client/**/*.js',
-          'client/lib/**/*.js',
+          'client/lib/*.js',
         ],
         tasks: [
           'concat',
