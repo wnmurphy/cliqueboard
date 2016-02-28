@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       },
       js: {
         // src: ['client/lib/jquery.js', 'client/lib/underscore.js','client/lib/backbone.js','client/lib/handlebars.js', 'client/client/*.js'],
-        src: ['client/lib/jquery.event.drag-2.0.js','client/bower_components/angular-route/angular-route.min.js', 'client/bower_components/angular/angular.min.js', 'client/login/*.js','client/v.chat/*.js', 'client/v.tasks/*.js','client/whiteboard/*.js', 'client/app.js','client/server/*.js', 'client/test/*.js'],
+        src: ['client/lib/jquery.event.drag-2.0.js', 'client/login/*.js', 'client/app.js','client/server/*.js', 'client/test/*.js'],
         dest: 'client/dist/built.js'
       }
     },
