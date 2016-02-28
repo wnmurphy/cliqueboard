@@ -1,7 +1,4 @@
-
-<body>
-
-  <!-- Whiteboard -->
+<!-- Whiteboard -->
 <div class="row">
 
   <div class="col s8">
@@ -16,17 +13,17 @@
   <!-- Tasks  -->
   <div class="col s4">
     <div id='tasks' ng-controller="tasksController">
-      <i class="material-icons">filter_drama</i>Tasks
+      <i class="material-icons prefix">assignment</i>Tasks
       <form name='createTask'>
-        <input type='text' ng-model="task" placeholder='Add task name...' required>
-        <input type='date' ng-model='datetime' required>
-        <input type='number' ng-model='urgency' min='0' max='5'>
+        <input type='text' ng-model="task" placeholder='Add task name' required>
+        <input type='date' class='datepicker' ng-model='datetime' required>
+        <input type='number' ng-model='urgency' placeholder='Urgency from 1-5' min='0' max='5'>
 
-        <button ng-click='addTask(task, datetime, urgency); view = "all"' type='submit' ng-disabled='createTask.$pristine'>Add</button>
+        <button ng-click='addTask(task, datetime, urgency)' type='submit' ng-disabled='createTask.$pristine'>Add</button>
   <!--       <button ng-click='clear()' ng-disabled='completed.length < 1'>Clear</button> -->
       </form>
 
-      <table>
+      <table class='bordered highlight centered'>
         <thead>
           <tr>
             <th>Complete</th>
@@ -39,12 +36,12 @@
 
         <tbody>
           <tr ng-repeat='task in tasks track by $index'>
-            <td><input type='checkbox' ng-click='toggle(task)' ng-checked='task.complete'></td>
+            <td><input type='checkbox'><label></label></td>
             <td>{{ task.name }}</td>
             <td>{{ task.created }}</td>
             <td>{{ task.due }}</td>
             <td>{{ task.urgency }}</td>
-            <td><button ng-click='delete(task)'>x</button></td>
+            <td><a class='btn-floating' ng-click='delete(task)'>x</a></td>
           </tr>
         </tbody>
       </table>
@@ -53,21 +50,18 @@
 
 </div>
 
-      <!-- Chat  -->
-  <div class ="row">
-     <div id='chat' ng-controller="chatController">
-        <h4>Chat</h4>
-          <div class="col s1">
-            <b>USERS</b>
-             <div id="users"></div>
-          </div>
-          <div class="col s10">
-            <div id="conversation"></div>
-              <input id="data" autofocus />
-              <input type="button" id="datasend" value="send" />
-          </div>
-      </div>
-  </div>
-
-
-</body>
+<!-- Chat  -->
+<div class ="row">
+   <div id='chat' ng-controller="chatController">
+      <h4>Chat</h4>
+        <div class="col s1">
+          <b>USERS</b>
+           <div id="users"></div>
+        </div>
+        <div class="col s10">
+          <div id="conversation"></div>
+            <input id="data" autofocus />
+            <input type="button" id="datasend" value="send" />
+        </div>
+    </div>
+</div>

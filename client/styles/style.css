@@ -1,7 +1,7 @@
 body {
   margin-left: 2%;
   margin-top: 10px;
-  font-family: 'Short Stack', cursive;
+  /*font-family: 'Short Stack', cursive;*/
 }
 
 a {
@@ -11,7 +11,7 @@ a {
 }
 
 
-h1 {
+/*h1 {
   font-family: Orbitron;
 }
 .input-field label {
@@ -24,7 +24,7 @@ h1 {
 .input-field input[type]:focus {
   border-bottom: 1px solid #fff;
   box-shadow: 0 1px 0 0 #fff;
-}
+}*/
 
 h4{
   margin-top: 0px;
@@ -33,7 +33,7 @@ h4{
 
 .canvas {
   height: 500px;
-  width: 900px;
+  width: 100%;
   border: 3px solid black;
 }
 
