@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     ngAnnotate: {
         demo: {
             files: {
-                'WithAnnotationsCtrl.js': ['client/app.js', 'client/main/main.js', 'client/login/login.js','client/login/signup.js']
+                'client/dist/WithAnnotationsCtrl.js': ['client/app.js', 'client/main/main.js', 'client/login/login.js','client/login/signup.js']
             },
         }
     },
