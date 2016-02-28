@@ -2,13 +2,20 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    ngAnnotate: {
+        demo: {
+            files: {
+                'WithAnnotationsCtrl.js': ['client/app.js', 'client/main/main.js', 'client/login/login.js','client/login/signup.js']
+            },
+        }
+    },
     concat: {
       options: {
         separator: ';',
       },
       js: {
         // src: ['client/lib/jquery.js', 'client/lib/underscore.js','client/lib/backbone.js','client/lib/handlebars.js', 'client/client/*.js'],
-        src: ['client/app.js','client/lib/jquery.event.drag-2.0.js', 'client/login/login.js','client/login/signup.js', 'client/main/main.js'],
+        src: ['client/lib/jquery.event.drag-2.0.js'],
         dest: 'client/dist/built.js'
       }
     },
@@ -35,6 +42,7 @@ module.exports = function(grunt) {
       js: {
         files:{
           'client/dist/built.min.js': ['client/dist/built.js'],
+          'client/dist/WithAnnotationsCtrl.min.js': ['client/dist/WithAnnotationsCtrl.js']
           // 'client/dist/templates.min.js': ['client/dist/templates.js']
         }
       }
@@ -94,7 +102,7 @@ module.exports = function(grunt) {
     },
   });
 
-
+  grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -131,6 +139,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'test',
+    'ngAnnotate',
     'concat',
     'cssmin',
     'uglify'

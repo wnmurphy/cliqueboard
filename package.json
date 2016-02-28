@@ -50,6 +50,7 @@
     "watchify": "^3.7.0"
   },
   "devDependencies": {
+    "grunt-ng-annotate": "^1.0.1",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.21",
     "karma-browserify": "^5.0.2",
