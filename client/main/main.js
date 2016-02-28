@@ -161,7 +161,7 @@ angular.module('twork.main', [])
 
     // when the client hits ENTER on their keyboard
     $('#data').keypress(function(e) {
-      if(e.which == 13) {
+      if (e.which == 13) {
         $(this).blur();
         $('#datasend').focus().click();
       }
@@ -176,10 +176,17 @@ angular.module('twork.main', [])
 
   $scope.socket = io('http://localhost:4568');
 
+  $scope.socket.on('add', function(task) {
+    console.log('TASKS SOCKET ADD:', task);
+    $scope.tasks.push(task);
+  });
+
   $scope.init = function() {
     $http.get('/tasks')
       .then(function(result) {
-        $scope.tasks = result.data;
+        result.data.forEach(function(task) {
+          $scope.tasks.push(task);
+        });
         console.log('Task GET successful:', $scope.tasks);
       })
       .catch(function(err) {
@@ -214,12 +221,14 @@ angular.module('twork.main', [])
 
     $http.post('/tasks', task)
       .then(function(success) {
-          console.log('Task POST successful:', success);
-          $scope.socket.emit('addTask', success.data);
+        console.log('Task POST successful:', success);
+        $scope.tasks.push(success.data);
       })
       .catch(function(err) {
         console.error('Task POST error:', err);
       });
+
+    $scope.socket.emit('addTask', task);
   };
 
   $scope.toggle = function(task) {
@@ -260,9 +269,6 @@ angular.module('twork.main', [])
       });
   };
 
-  $scope.socket.on('add', function(task) {
-    $scope.tasks.push(task);
-  });
 
   // $scope.clear = function() {
   //   this.createTask.$setPristine();

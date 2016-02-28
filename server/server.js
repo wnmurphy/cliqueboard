@@ -62,7 +62,7 @@ app.post('/signup', function(req, res) {
   })
   .save()
     .then(function(user){
-      console.log('Saved user: ', user);
+      // console.log('Saved user:', user);
       util.loginUser(user, req, res);
     })
     .catch(function(err) {
@@ -183,7 +183,7 @@ io.sockets.on('connection', function(socket) {
 // ================ Tasks socket ============== //
 
   socket.on('addTask', function(task) {
-    socket.emit('add', task);
+    socket.broadcast.emit('add', task);
   });
 
 // ================ Whiteboard socket ============== //
