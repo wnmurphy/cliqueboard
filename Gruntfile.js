@@ -7,9 +7,9 @@ module.exports = function(grunt) {
         separator: ';',
       },
       js: {
-        // src: ['public/lib/jquery.js', 'public/lib/underscore.js','public/lib/backbone.js','public/lib/handlebars.js', 'public/public/*.js'],
-        src: ['public/lib/jquery.event.drag-2.0.js','public/bower_components/angular-route/angular-route.min.js', 'public/bower_components/angular/angular.min.js', 'public/login/*.js','public/v.chat/*.js', 'public/v.tasks/*.js','public/whiteboard/*.js', 'public/app.js','public/server/*.js', 'public/test/*.js'],
-        dest: 'public/dist/built.js'
+        // src: ['client/lib/jquery.js', 'client/lib/underscore.js','client/lib/backbone.js','client/lib/handlebars.js', 'client/client/*.js'],
+        src: ['client/lib/jquery.event.drag-2.0.js','client/bower_components/angular-route/angular-route.min.js', 'client/bower_components/angular/angular.min.js', 'client/login/*.js','client/v.chat/*.js', 'client/v.tasks/*.js','client/whiteboard/*.js', 'client/app.js','client/server/*.js', 'client/test/*.js'],
+        dest: 'client/dist/built.js'
       }
     },
 
@@ -34,8 +34,8 @@ module.exports = function(grunt) {
     uglify: {
       js: {
         files:{
-          'public/dist/built.min.js': ['public/dist/built.js'],
-          // 'public/dist/templates.min.js': ['public/dist/templates.js']
+          'client/dist/built.min.js': ['client/dist/built.js'],
+          // 'client/dist/templates.min.js': ['client/dist/templates.js']
         }
       }
     },
@@ -43,24 +43,24 @@ module.exports = function(grunt) {
     jshint: {
       files:[
          [
-         'public/lib/jquery.event.drag-2.0.js',
-         'public/bower_components/angular-route/angular-route.min.js', 
-         'public/bower_components/angular/angular.min.js', 
-         'public/login/*.js',
-         'public/v.chat/*.js', 
-         'public/v.tasks/*.js',
-         'public/whiteboard/*.js', 
-         'public/app.js',
-         'public/server/*.js', 
-         'public/test/*.js'
+         'client/lib/jquery.event.drag-2.0.js',
+         'client/bower_components/angular-route/angular-route.min.js', 
+         'client/bower_components/angular/angular.min.js', 
+         'client/login/*.js',
+         'client/v.chat/*.js', 
+         'client/v.tasks/*.js',
+         'client/whiteboard/*.js', 
+         'client/app.js',
+         'client/server/*.js', 
+         'client/test/*.js'
          ],
       ],
       options: {
         force: 'false',
         jshintrc: '.jshintrc',
         ignores: [
-          'public/lib/**/*.js',
-          'public/dist/*.js'
+          'client/lib/**/*.js',
+          'client/dist/*.js'
         ]
       }
     },
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
     cssmin: {
       dist:{
         files:{
-          'public/dist/style.min.css': 'public//*css'
+          'client/dist/style.min.css': 'client//*css'
         }
       }
     },
@@ -76,8 +76,8 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: [
-          'public/**/*.js',
-          'public/lib/**/*.js',
+          'client/**/*.js',
+          'client/lib/**/*.js',
         ],
         tasks: [
           'concat',
@@ -85,7 +85,7 @@ module.exports = function(grunt) {
         ]
       },
       css: {
-        files: 'public/styles/*.css',
+        files: 'client/styles/*.css',
         tasks: ['cssmin']
       }
     },
