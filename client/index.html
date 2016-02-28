@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html ng-app="twork">
   <head>
-    <!-- Hello!!! -->
     <meta charset="utf-8">
     <title>t'Work</title>
-    <!-- Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles/style.css">
-     <!-- <link rel="stylesheet" href="dist/style.min.css"> -->
-
-    <link href="https://fonts.googleapis.com/css?family=Short+Stack" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
-    <!-- Materialize CSS CDN -->
+    <!-- Materialize CDNs -->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css'>
-    <!-- Materialize JS CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <!-- Angular & Socket.io Dependencies -->
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <script src="lib/jquery.event.drag-2.0.js"></script>
+    <!-- Additional CSS -->
+    <link rel="stylesheet" href="styles/style.css">
+     <!-- <link rel="stylesheet" href="dist/style.min.css"> -->
   </head>
 
   <body ng-class='!loggedInUser ? "blue lighten-1" : ""'>
@@ -33,7 +29,8 @@
       </li>
     </ul>
 
-    <div ng-view></div>
+    <div ng-view>
+    </div>
 
     <!-- internal dependencies -->
     <!-- <script src="dist/built.min.js"></script> -->
