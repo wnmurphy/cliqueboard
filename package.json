@@ -17,6 +17,9 @@
     "url": "https://github.com/dhuang919/hrr12-triceratops-greenfield/issues"
   },
   "homepage": "https://github.com/dhuang919/hrr12-triceratops-greenfield#readme",
+  "engines": {
+    "node": "0.12.7"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.3.1",
@@ -47,6 +50,7 @@
     "watchify": "^3.7.0"
   },
   "devDependencies": {
+    "grunt-ng-annotate": "^1.0.1",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.21",
     "karma-browserify": "^5.0.2",

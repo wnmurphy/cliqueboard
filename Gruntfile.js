@@ -2,13 +2,20 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    ngAnnotate: {
+        demo: {
+            files: {
+                'client/dist/WithAnnotationsCtrl.js': ['client/app.js', 'client/main/main.js', 'client/login/login.js','client/login/signup.js']
+            },
+        }
+    },
     concat: {
       options: {
         separator: ';',
       },
       js: {
         // src: ['client/lib/jquery.js', 'client/lib/underscore.js','client/lib/backbone.js','client/lib/handlebars.js', 'client/client/*.js'],
-        src: ['client/lib/jquery.event.drag-2.0.js','client/bower_components/angular-route/angular-route.min.js', 'client/bower_components/angular/angular.min.js', 'client/login/*.js','client/v.chat/*.js', 'client/v.tasks/*.js','client/whiteboard/*.js', 'client/app.js','client/server/*.js', 'client/test/*.js'],
+        src: ['client/lib/jquery.event.drag-2.0.js'],
         dest: 'client/dist/built.js'
       }
     },
@@ -35,7 +42,7 @@ module.exports = function(grunt) {
       js: {
         files:{
           'client/dist/built.min.js': ['client/dist/built.js'],
-          // 'client/dist/templates.min.js': ['client/dist/templates.js']
+          'client/dist/WithAnnotationsCtrl.min.js': ['client/dist/WithAnnotationsCtrl.js']
         }
       }
     },
@@ -43,16 +50,9 @@ module.exports = function(grunt) {
     jshint: {
       files:[
          [
-         'client/lib/jquery.event.drag-2.0.js',
-         'client/bower_components/angular-route/angular-route.min.js', 
-         'client/bower_components/angular/angular.min.js', 
          'client/login/*.js',
-         'client/v.chat/*.js', 
-         'client/v.tasks/*.js',
-         'client/whiteboard/*.js', 
          'client/app.js',
-         'client/server/*.js', 
-         'client/test/*.js'
+         'client/server/*.js' 
          ],
       ],
       options: {
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
     cssmin: {
       dist:{
         files:{
-          'client/dist/style.min.css': 'client/**/*css'
+          'client/dist/style.min.css': 'client/styles/*css'
         }
       }
     },
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           'client/**/*.js',
-          'client/lib/**/*.js',
+          'client/lib/*.js',
         ],
         tasks: [
           'concat',
@@ -85,7 +85,7 @@ module.exports = function(grunt) {
         ]
       },
       css: {
-        files: 'client/**/*.css',
+        files: 'client/styles/*.css',
         tasks: ['cssmin']
       }
     },
@@ -101,7 +101,7 @@ module.exports = function(grunt) {
     },
   });
 
-
+  grunt.loadNpmTasks('grunt-ng-annotate');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -129,7 +129,7 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
   // Main grunt tasks
   ////////////////////////////////////////////////////
-  grunt.registerTask('default', ['ngtemplates']);
+
 
   grunt.registerTask('test', [
     // 'jshint',
@@ -138,6 +138,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'test',
+    'ngAnnotate',
     'concat',
     'cssmin',
     'uglify'

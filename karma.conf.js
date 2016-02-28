@@ -36,6 +36,7 @@ module.exports = function(config) {
         'https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js',
         'https://cdn.socket.io/socket.io-1.4.5.js',
         'client/lib/jquery.event.drag-2.0.js',
+        "https://code.jquery.com/jquery-2.1.1.min.js",
         'https://code.jquery.com/jquery-1.11.2.min.js',
 
         //be careful with * might be including too much
