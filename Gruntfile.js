@@ -43,7 +43,6 @@ module.exports = function(grunt) {
         files:{
           'client/dist/built.min.js': ['client/dist/built.js'],
           'client/dist/WithAnnotationsCtrl.min.js': ['client/dist/WithAnnotationsCtrl.js']
-          // 'client/dist/templates.min.js': ['client/dist/templates.js']
         }
       }
     },
