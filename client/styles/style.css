@@ -57,8 +57,7 @@ hr{
 }
 
 #clearWhiteboardBtn{
-  position: relative;
-  left: 730px;
+  float: right;
 }
 
 td {

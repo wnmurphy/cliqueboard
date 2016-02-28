@@ -4,9 +4,8 @@
   <div class="col s8">
     <div id="whiteboard" ng-controller="whiteboardController">
       <div class="canvas"><!-- whiteboard canvas is inserted here--></div>
-      <button id="clearWhiteboardBtn" ng-click="clear()">Clear board</button>
+      <a class='btn' id="clearWhiteboardBtn" ng-click="clear()"><i class='material-icons right'>clear_all</i>Clear board</a>
       <input id="colorpicker" type="color" value="#bada55" ng-model="color"/>
-      <hr>
     </div>
  </div>
 
