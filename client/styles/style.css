@@ -1,34 +1,5 @@
-body {
-  margin-left: 2%;
-  margin-top: 10px;
-  /*font-family: 'Short Stack', cursive;*/
-}
-
-a {
-  color: #333;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-
-/*h1 {
-  font-family: Orbitron;
-}
-.input-field label {
-  color: #fff;
-}
-.input-field input {
-  border-bottom: 1px solid #fff;
-  box-shadow: 0 1px 0 0 #fff;
-}
-.input-field input[type]:focus {
-  border-bottom: 1px solid #fff;
-  box-shadow: 0 1px 0 0 #fff;
-}*/
-
-h4{
-  margin-top: 0px;
-  color: #222222;
+html {
+  margin: 2% 2% 0 2%;
 }
 
 .canvas {
@@ -37,31 +8,6 @@ h4{
   border: 3px solid black;
 }
 
-.menu li{
-  display: inline;
-}
-
-.menu li:hover{
-  background-color: #bada55;
-}
-
-img{
-  width: 5%;
-  height: auto;
-}
-
-hr{
-  width: 45%;
-  position: relative;
-  right: 450px;
-}
-
-#clearWhiteboardBtn{
+#clearWhiteboardBtn {
   float: right;
-}
-
-td {
-  border: 1px solid;
-  padding: 0 3px 0 3px;
-  text-align: center;
 }
