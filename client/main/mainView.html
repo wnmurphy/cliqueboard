@@ -10,59 +10,68 @@
  </div>
 
   <!-- Tasks  -->
-  <div class="col s4">
-    <div id='tasks' ng-controller="tasksController">
-      <h4><i class="material-icons prefix">assignment</i>Tasks</h4>
-      <form name='createTask'>
-        <div input-field>
-          <input type='text' ng-model='task.name' required>
-          <label>Add Task</label>
-        </div>
-        <input-field>
-          <input input-date type='text' id='datepicker' ng-model='task.date' required>
-          <label for='datepicker'>Due Date</label>
-        </input-field>
-        <label class='urgency'>Urgency</label>
-        <select class='browser-default' ng-model='task.urgency'>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-        <a class='btn-floating' ng-click='addTask(task.name, task.date, task.urgency)' ng-disabled='createTask.$pristine'><i class='material-icons right'>add</i></a>
-      </form>
 
-      <table class='bordered highlight centered'>
-        <thead>
-          <tr>
-            <th>Complete</th>
-            <th>Task</th>
-            <th>Created</th>
-            <th>Due</th>
-            <th>Urgency</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat='task in tasks track by $index'>
-            <td>
+  <div class="col s4">
+
+    <div id='tasks' ng-controller="tasksController">
+      <ul class="collapsible popout" data-collapsible="accordion" watch>
+        <li>
+          <div class="collapsible-header">
+             <h4><i class="material-icons prefix">assignment</i>Tasks</h4></div>
+          <div class="collapsible-body">
+            <form name='createTask'>
               <div input-field>
-                <input type='checkbox'>
-                <label></label>
+                <input type='text' ng-model='task.name' required>
+                <label>Add Task</label>
               </div>
-            </td>
-            <td>{{ task.name }}</td>
-            <td>{{ task.created }}</td>
-            <td>{{ task.due }}</td>
-            <td>{{ task.urgency }}</td>
-            <td><a class='btn-floating red' ng-click='delete(task)'><i class='material-icons'>delete</i></a></td>
-          </tr>
-        </tbody>
-      </table>
-     </div>
+              <input-field>
+                <input input-date type='text' id='datepicker' ng-model='task.date' required>
+                <label for='datepicker'>Due Date</label>
+              </input-field>
+              <label class='urgency'>Urgency</label>
+              <select class='browser-default' ng-model='task.urgency'>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+              <a class='btn-floating' ng-click='addTask(task.name, task.date, task.urgency)' ng-disabled='createTask.$pristine'><i class='material-icons right'>add</i></a>
+            </form>
+
+            <table class='bordered highlight centered'>
+              <thead>
+                <tr>
+                  <th>Complete</th>
+                  <th>Task</th>
+                  <th>Created</th>
+                  <th>Due</th>
+                  <th>Urgency</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat='task in tasks track by $index'>
+                  <td>
+                    <div input-field>
+                      <input type='checkbox'>
+                      <label></label>
+                    </div>
+                  </td>
+                  <td>{{ task.name }}</td>
+                  <td>{{ task.created }}</td>
+                  <td>{{ task.due }}</td>
+                  <td>{{ task.urgency }}</td>
+                  <td><a class='btn-floating red' ng-click='delete(task)'><i class='material-icons'>delete</i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </li>
+      </ul>
+    </div>
    </div>
 
-</div>
+ </div>
 
 <!-- Chat  -->
 <div class ="row">
