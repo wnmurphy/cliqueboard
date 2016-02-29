@@ -183,8 +183,8 @@ angular.module('twork.main', [])
   $scope.socket = io('http://localhost:4568');
 
   $scope.socket.on('add', function(task) {
-    console.log('TASKS SOCKET ADD:', task);
     $scope.tasks.push(task);
+    console.log('broadcast:', task);
   });
 
   $scope.init = function() {
@@ -217,7 +217,7 @@ angular.module('twork.main', [])
     this.urgency = '';
     this.createTask.$setPristine();
 
-    var task = {
+    var newTask = {
       name: name,
       created: $scope.formatDate(new Date(Date.now()), false),
       due: due,
@@ -225,16 +225,16 @@ angular.module('twork.main', [])
       complete: false
     };
 
-    $http.post('/tasks', task)
+    $http.post('/tasks', newTask)
       .then(function(success) {
         console.log('Task POST successful:', success);
-        $scope.tasks.push(success.data);
+        // $scope.tasks.push(success.data);
       })
       .catch(function(err) {
         console.error('Task POST error:', err);
       });
 
-    $scope.socket.emit('addTask', task);
+    $scope.socket.emit('addTask', newTask);
   };
 
   $scope.toggle = function(task) {
