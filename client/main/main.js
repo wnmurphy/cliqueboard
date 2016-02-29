@@ -92,11 +92,11 @@ angular.module('twork.main', [])
 })
 
 //====================== Chat Controller ==================
-.controller('chatController', function ($scope, $rootScope, $http) {
+.controller('chatController', function ($scope, $rootScope, $http, $compile) {
   var userInfo = $rootScope.userData;
 
   $scope.init = function() {
-    
+
   };
 
   // Set up socket connection for incoming/outgoing chat events.
@@ -121,42 +121,30 @@ angular.module('twork.main', [])
 
    // Append incoming message when server emits 'updatechat'.
    $scope.socket.on('updatechat', function (username, data) {
+      console.log('updatechat listener in controller reached');
       $('#conversation').append('<b>'+ username + ':</b> ' + data + '<br>');
     });
 
   // Socket events for multiple room functionality, currently unused, available as future feature:
+  // listener, whenever the server emits 'updaterooms', this updates the room the client is in
+  	$scope.socket.on('updaterooms', function(rooms, current_room) {
+  		$('#rooms').empty();
+      $.each(rooms, function(key, value) {
 
-    // listener, whenever the server emits 'updaterooms', this updates the room the client is in
-    // $scope.socket.on('updaterooms', function(rooms, current_room) {
-    //   $('#rooms').empty();
-    //   $.each(rooms, function(key, value) { //////Will this work with angular????????//////////
-    //     if(value == current_room){
-    //       $('#rooms').append('<div>' + value + '</div>');
-    //     }
-    //     else {
-    //       $('#rooms').append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + '</a></div>');
-    //     }
-    //   });
-    // });
+        if(value == current_room){
+          $('#rooms').append('<div class="btn">' + value + '</div>');
+        } else {
+          var element = $compile(`<div><a class="btn" ng-click="switchRoom('${value}')">${value}</a></div>`)($scope);
+  				$('#rooms').append(element);
+  			}
+  		});
+  	});
 
-    // $scope.switchRoom = function(room){
-    //   $scope.socket.emit('switchRoom', room);
-    // }
 
- // $scope.socket.on('message', function (data) {
- //  console.log(data);
- // });
-
- // socket.emit('subscribe', 'roomOne');
- // socket.emit('subscribe', 'roomTwo');
-
- // $('#send').click(function() {
- //  var room = $('#room').val(),
- //   message = $('#message').val();
-
- //  socket.emit('send', { room: room, message: message });
- // });
-
+  	$scope.switchRoom = function(room) {
+      console.log('switchRoom func in controller reached:', room);
+  		$scope.socket.emit('switchRoom', room);
+  	};
 
   // Submit message when Send button is clicked.
     $(function() {
@@ -176,7 +164,7 @@ angular.module('twork.main', [])
         .catch(function(err) {
           console.error('Message POST error:', err);
         });
-    });
+     });
 
   // Submit message when Send button is clicked.
     $('#data').keypress(function(e) {
@@ -187,7 +175,6 @@ angular.module('twork.main', [])
     });
   });
 })
-
 
 //====================== Tasks Controller ==================
 .controller('tasksController', function ($scope, $http, Tasks) {
@@ -216,7 +203,7 @@ angular.module('twork.main', [])
     });
   });
 
-  // the task object is created to provide access to the input 
+  // the task object is created to provide access to the input
   // field models in mainView.html at lines 24, 28, and 32
   $scope.task = {
     name: null,
@@ -345,7 +332,7 @@ angular.module('twork.main', [])
         month + day :
         month + day + ' at ' + hour + minutes;
 
-      // Angular-materialize's datepicker defaults to 12/31 if 
+      // Angular-materialize's datepicker defaults to 12/31 if
       // no date is chosen
       if (date === '12/31') {
         date = 'N/A';

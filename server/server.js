@@ -187,7 +187,7 @@ app.put('/tasks/:id/:status', function(req, res, next) {
 
 
 // ================ SOCKETS start ============== //
-// Defines a socket connection 
+// Defines a socket connection
 // Creates listeners for shared Task, Whiteboard, and Chat events.
 
 
@@ -225,46 +225,56 @@ io.sockets.on('connection', function(socket) {
 
 // ================ Chat socket ============== //
   var usernames = {};
+  var rooms = ['Lobby','WorkRoom','NapTime'];
+    // when the client emits 'adduser', this listens and executes
+  	socket.on('adduser', function(username){
+  		// store the username in the socket session for this client
+  		socket.username = username;
+  		// store the room name in the socket session for this client
+  		socket.room = 'Lobby';
+  		// add the client's username to the global list
+  		usernames[username] = username;
+  		// send client to room 1
+  		socket.join('Lobby');
+  		// echo to client they've connected
+  		socket.emit('updatechat', 'SERVER', 'you have connected to ' + socket.room);
+  		// echo to room 1 that a person has connected to their room
+  		socket.broadcast.to('Lobby').emit('updatechat', 'SERVER', username + ' has connected to this room');
+  		socket.emit('updaterooms', rooms, 'Lobby');
+      io.sockets.emit('updateusers', usernames)
+  	});
 
-  socket.on('adduser', function(username){
+  	// when the client emits 'sendchat', this listens and executes
+  	socket.on('sendchat', function (data) {
+  		// we tell the client to execute 'updatechat' with 2 parameters
+  		io.sockets.in(socket.room).emit('updatechat', socket.username, data);
+  	});
 
-    // Store the username in the socket session for this client
-    socket.username = username;
+  	socket.on('switchRoom', function(newroom){
+      console.log('switchRoom listener in server reached');
+  		// leave the current room (stored in session)
+  		socket.leave(socket.room);
+  		// join new room, received as function parameter
+  		socket.join(newroom);
+  		socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
+  		// sent message to OLD room
+  		socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
+  		// update socket session room title
+  		socket.room = newroom;
+  		socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
+  		socket.emit('updaterooms', rooms, newroom);
+  	});
 
-    // Define a default chat room
-      socket.room = 'room1';
-        // Add client to that room
-          socket.join('room1');
-
-    // Add the client's username to the global list
-    usernames[username] = username;
-
-    // Echo successful connection to client.
-    socket.emit('updatechat', 'SERVER', 'you have connected');
-
-    // Echo to room that user has connected.
-    socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
- 
-    // Update list of connected users.
-    socket.emit('updateusers', usernames);
-  });
-
-  // Define a message event.
-  socket.on('sendchat', function (data) {
-    // we tell the client to execute 'updatechat' with 2 parameters
-    io.sockets.in(socket.room).emit('updatechat', socket.username, data.text);
-  });
-
-  // Define a disconnect from chat event.
-  socket.on('disconnect', function(){
-    // Remove the user's name from global usernames list
-    delete usernames[socket.username];
-    // Update list of users in chat, client-side
-    io.sockets.emit('updateusers', usernames);
-    // Echo to all clients that user has left.
-    socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
-    socket.leave(socket.room);
-  });
+  	// when the user disconnects.. perform this
+  	socket.on('disconnect', function(){
+  		// remove the username from global usernames list
+  		delete usernames[socket.username];
+  		// update list of users in chat, client-side
+  		io.sockets.emit('updateusers', usernames);
+  		// echo globally that this client has left
+  		socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+  		socket.leave(socket.room);
+  	});
 });
 
 
