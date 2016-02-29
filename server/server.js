@@ -47,14 +47,13 @@ app.all('*', function(req, res, next) {
 
 // ================ POST requests start ============== //
 
-  // add new user to database
+  // Create a new user and add him or her to database.
 app.post('/signup', function(req, res) {
   var username = req.body.username;
   var email = req.body.email;
   var password = req.body.password;
-  // check if user already exists in db
 
-  // if not, add new user
+  // Build a new user object
   var user = new db.User({
     username: username,
     email: email,
@@ -62,7 +61,6 @@ app.post('/signup', function(req, res) {
   })
   .save()
     .then(function(user){
-      // console.log('Saved user:', user);
       util.loginUser(user, req, res);
     })
     .catch(function(err) {
@@ -70,7 +68,7 @@ app.post('/signup', function(req, res) {
     });
 });
 
-// check user's credentials
+// Check user's credentials for login.
 app.post('/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
@@ -94,6 +92,7 @@ app.post('/login', function(req, res) {
     });
 });
 
+// Create a new task.
 app.post('/tasks', function(req, res) {
   new db.Task(req.body)
     .save()
@@ -122,6 +121,7 @@ app.post('/chat', function(req, res) {
 
 // ================ GET requests start ============== //
 
+// Retrieve current tasks.
 app.get('/tasks', function(req, res) {
   db.Task.find({})
     .exec(function(err, success) {
@@ -135,11 +135,10 @@ app.get('/tasks', function(req, res) {
 });
 
 
-// ================ GET requests end ============== //
-
 
 // ================ DELETE requests start ============== //
 
+//Remove a task from the database.
 app.delete('/tasks/:id', function(req, res, next) {
   var id = req.params.id;
   // console.log('ID:', id);
@@ -154,11 +153,11 @@ app.delete('/tasks/:id', function(req, res, next) {
     });
 });
 
-// ================ DELETE requests end ============== //
 
 
 // ================ PUT requests start ============== //
 
+// Toggle a task's status as complete/incomplete.
 app.put('/tasks/:id/:status', function(req, res, next) {
   var id = req.params.id;
   var status = req.params.status;
@@ -185,11 +184,12 @@ app.put('/tasks/:id/:status', function(req, res, next) {
   }
 });
 
-// ================ PUT requests end ============== //
-
 
 
 // ================ SOCKETS start ============== //
+// Defines a socket connection 
+// Creates listeners for shared Task, Whiteboard, and Chat events.
+
 
 io.sockets.on('connection', function(socket) {
 
@@ -228,44 +228,44 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('adduser', function(username){
 
-    // store the username in the socket session for this client
+    // Store the username in the socket session for this client
     socket.username = username;
-    // store the room name in the socket session for this client
 
-    ///////For adding someone to a room One Day////////////////
+    // Define a default chat room
       socket.room = 'room1';
-        //send client to room 1
+        // Add client to that room
           socket.join('room1');
 
-    // add the client's username to the globl list
+    // Add the client's username to the global list
     usernames[username] = username;
 
-
-    // echo to client they've connected
+    // Echo successful connection to client.
     socket.emit('updatechat', 'SERVER', 'you have connected');
-    // echo to room 1 that a person has connected to their room
+
+    // Echo to room that user has connected.
     socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
+ 
+    // Update list of connected users.
     socket.emit('updateusers', usernames);
   });
 
-  // when the client emits 'sendchat', this listens and executes
+  // Define a message event.
   socket.on('sendchat', function (data) {
     // we tell the client to execute 'updatechat' with 2 parameters
     io.sockets.in(socket.room).emit('updatechat', socket.username, data.text);
   });
 
+  // Define a disconnect from chat event.
   socket.on('disconnect', function(){
-    // remove the username from global usernames list
+    // Remove the user's name from global usernames list
     delete usernames[socket.username];
-    // update list of users in chat, client-side
+    // Update list of users in chat, client-side
     io.sockets.emit('updateusers', usernames);
-    // echo globally that this client has left
+    // Echo to all clients that user has left.
     socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
     socket.leave(socket.room);
   });
 });
-
-// ================ SOCKETS end ============== //
 
 
 
@@ -290,39 +290,36 @@ io.sockets.on('connection', function(socket) {
 //     });
 // });
 
-// ================ Multi Chat Rooms end ============== //
-
 
 
 // ================ Switch Chat Rooms start ============== //
 
-//   // socket.on('switchRoom', function(newroom){
-//   //  // leave the current room (stored in session)
-//   //  socket.leave(socket.room);
-//   //  // join new room, received as function parameter
-//   //  socket.join(newroom);
-//   //  socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
-//   //  // sent message to OLD room
-//   //  socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
-//   //  // update socket session room title
-//   //  socket.room = newroom;
-//   //  socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
-//   //  socket.emit('updateusers', rooms, newroom);
-//   // });
+  // socket.on('switchRoom', function(newroom){
+  //  // leave the current room (stored in session)
+  //  socket.leave(socket.room);
+  //  // join new room, received as function parameter
+  //  socket.join(newroom);
+  //  socket.emit('updatechat', 'SERVER', 'you have connected to '+ newroom);
+  //  // sent message to OLD room
+  //  socket.broadcast.to(socket.room).emit('updatechat', 'SERVER', socket.username+' has left this room');
+  //  // update socket session room title
+  //  socket.room = newroom;
+  //  socket.broadcast.to(newroom).emit('updatechat', 'SERVER', socket.username+' has joined this room');
+  //  socket.emit('updateusers', rooms, newroom);
+  // });
 
-//   // when the user disconnects.. perform this
-//   socket.on('disconnect', function(){
-//     // remove the username from global usernames list
-//     delete usernames[socket.username];
-//     // update list of users in chat, client-side
-//     io.sockets.emit('updateusers', usernames);
-//     // echo globally that this client has left
-//     socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
-//     socket.leave(socket.room);
-//   });
-// });
+  // when the user disconnects.. perform this
+  //   socket.on('disconnect', function(){
+  //     // remove the username from global usernames list
+  //     delete usernames[socket.username];
+  //     // update list of users in chat, client-side
+  //     io.sockets.emit('updateusers', usernames);
+  //     // echo globally that this client has left
+  //     socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+  //     socket.leave(socket.room);
+  //   });
+  // });
 
-// ================ Switch Chat Rooms end ============== //
 
 http.listen(port);
 console.log('listening on ' + port);
