@@ -66,7 +66,7 @@ app.post('/signup', function(req, res) {
       util.loginUser(user, req, res);
     })
     .catch(function(err) {
-      res.send(500, 'Error saving user, or user already in db.');
+      res.send(400, 'Error saving user, or user already in db.');
     });
 });
 
@@ -77,7 +77,7 @@ app.post('/login', function(req, res) {
   db.User.findOne({ username: username })
     .exec(function(err, user) {
       if (!user) {
-        res.send(500, 'User not found in db.');
+        res.send(404, 'User not found in db.');
       } else {
         var savedPassword = user.password;
         db.User.comparePassword(password, savedPassword, function(err, isMatch) {
@@ -87,7 +87,7 @@ app.post('/login', function(req, res) {
           if (isMatch) {
             return util.loginUser(user, req, res);
           } else {
-            res.send(500, 'Incorrect password for user.');
+            res.send(401, 'Incorrect password for user.');
           }
         });
       }
@@ -105,6 +105,18 @@ app.post('/tasks', function(req, res) {
       });
 });
 
+app.post('/chat', function(req, res) {
+  db.User.findByIdAndUpdate(req.session.user._id, { $push: { "messages": req.body } })
+    .exec(function(err, success) {
+      if (err) {
+        console.error('Error saving message:', err);
+        return;
+      } else {
+        res.json(success);
+      }
+    });
+});
+
 // ================ POST requests end ============== //
 
 
@@ -115,6 +127,7 @@ app.get('/tasks', function(req, res) {
     .exec(function(err, success) {
       if (err) {
         console.error('Error getting tasks:', err);
+        return;
       } else {
         res.json(success);
       }
@@ -238,7 +251,7 @@ io.sockets.on('connection', function(socket) {
   // when the client emits 'sendchat', this listens and executes
   socket.on('sendchat', function (data) {
     // we tell the client to execute 'updatechat' with 2 parameters
-    io.sockets.in(socket.room).emit('updatechat', socket.username, data);
+    io.sockets.in(socket.room).emit('updatechat', socket.username, data.text);
   });
 
   socket.on('disconnect', function(){

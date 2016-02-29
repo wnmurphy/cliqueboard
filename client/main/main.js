@@ -87,8 +87,12 @@ angular.module('twork.main', [])
 })
 
 //====================== Chat Controller ==================
-.controller('chatController', function ($scope, $rootScope) {
+.controller('chatController', function ($scope, $rootScope, $http) {
   var userInfo = $rootScope.userData;
+
+  $scope.init = function() {
+    
+  };
 
   //creates an open connection for collobartive messaging
   //Set up socket connection for incoming/outgoing chat events
@@ -153,10 +157,21 @@ angular.module('twork.main', [])
     $(function() {
     // when the client clicks SEND
     $('#datasend').click( function() {
-      var message = $('#data').val();
+      var message = {
+        text: $('#data').val()
+      };
+
       $('#data').val('');
-      // tell server to execute 'sendchat' and send along one parameter
-      $scope.socket.emit('sendchat', message);
+
+      $http.post('/chat', message)
+        .then(function(success) {
+          console.log('Message POST successful');
+          // tell server to execute 'sendchat' and send along one parameter
+          $scope.socket.emit('sendchat', message);
+        })
+        .catch(function(err) {
+          console.error('Message POST error:', err);
+        });
     });
 
     // when the client hits ENTER on their keyboard
