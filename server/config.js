@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var bluebird = require('bluebird');
 
-// Create connection
 var mongoURI = process.env.MONGOLAB_URI || 'mongodb://127.0.0.1:27017/twork';
 
 mongoose.connect(mongoURI, function(err, res) {
@@ -19,7 +18,7 @@ mongoose.connection.once('open', function() {
 });
 
 
-// ================ Create and export User model ==============
+// ================ Create and export database User model ==============
 var userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -42,6 +41,7 @@ var userSchema = mongoose.Schema({
 
 var User = mongoose.model('User', userSchema);
 
+// Password checking function:
 User.comparePassword = function(candidatePassword, savedPassword, callback) {
   bcrypt.compare(candidatePassword, savedPassword, function(err, isMatch) {
     if (err) {
@@ -51,6 +51,7 @@ User.comparePassword = function(candidatePassword, savedPassword, callback) {
   });
 };
 
+// Password hashing function:
 userSchema.pre('save', function(next){
   var cipher = bluebird.promisify(bcrypt.hash);
   return cipher(this.password, null, null).bind(this)
@@ -63,7 +64,7 @@ userSchema.pre('save', function(next){
 module.exports.User = User;
 
 
-// ================ Create and export Task model ==============
+// ================ Create and export databse Task model ==============
 
 var taskSchema = mongoose.Schema({
   name: {
@@ -92,7 +93,7 @@ var Task = mongoose.model('Task', taskSchema);
 
 module.exports.Task = Task;
 
-// ================ Create and export Room model ==============
+// ================ Create and export database Room model ==============
 
 // var roomSchema = mongoose.Schema({
 //   roomname: {

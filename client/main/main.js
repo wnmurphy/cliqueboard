@@ -30,10 +30,11 @@ angular.module('twork.main', [])
     });
   };
 
-  //Draw to canvas
+  // Draw to canvas.
   $scope.draw = function(x, y, type, color) {
-    //set color property
+    // Set color property.
     this.ctx.strokeStyle = color;
+
     if (type === "dragstart") {
       this.ctx.beginPath();
       this.ctx.moveTo(x, y);
@@ -46,10 +47,10 @@ angular.module('twork.main', [])
     return;
   };
 
-  //Run init
+  // Initialize canvas, per above.
   $scope.init();
 
-  //Set up socket connection for incoming draw events
+  // Set up socket connection for incoming draw events.
   $scope.socket = io();
 
   // Create draw event listener which triggers local draw event.
@@ -57,32 +58,36 @@ angular.module('twork.main', [])
     $scope.draw(data.x, data.y, data.type, data.color);
   });
 
-  // Create clear event listener
+  // Create clear event listener.
   $scope.socket.on('clear', function(data) {
     $scope.remoteClear();
   });
 
-  //Handle draw events
+  // Handle draw events.
   $('canvas').live('drag dragstart dragend', function(e) {
     var type = e.handleObj.type;
     var color = $scope.color;
     var offset = $(this).offset();
-    //If you're having alignment problems, change 'page' here to 'client' or 'screen'.
+
+    // If you're having alignment problems, change 'page' here to 'client' or 'screen'.
     e.offsetX = e.pageX - offset.left;
     e.offsetY = e.pageY - offset.top;
     var x = e.offsetX;
     var y = e.offsetY;
+
     $scope.draw(x, y, type, color);
     $scope.socket.emit('drawClick', { x : x, y : y, type : type, color: color});
   });
 
-  $scope.remoteClear = function() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  };
-
+  // Define a clear canvas function, which emits a clear event to other clients.
   $scope.clear = function() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     $scope.socket.emit('clear');
+  };
+
+  // To avoid infinite emit/on loop, define a separate clear function for remote clear events.
+  $scope.remoteClear = function() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   };
 })
 
@@ -94,23 +99,21 @@ angular.module('twork.main', [])
     
   };
 
-  //creates an open connection for collobartive messaging
-  //Set up socket connection for incoming/outgoing chat events
+  // Set up socket connection for incoming/outgoing chat events.
   $scope.socket = io();
 
- // Store username of the currently logged-in user
+ // Store username of the currently logged-in user.
   var userName = $rootScope.loggedInUser;
 
     $scope.socket.on('connect', function() {
 
-      // call the server-side function 'adduser' and send username
+      // Call the server-side function 'adduser' and send username.
       $scope.socket.emit('adduser', userName);
     });
 
-
+  // Listen for updateusers event, empty user list, and rebuild.
   $scope.socket.on('updateusers', function(data) {
       $('#users').empty();
-
       $.each(data, function(key, value) {
           $('#users').append('<div>' + value + '</div>');
     });
@@ -121,7 +124,7 @@ angular.module('twork.main', [])
       $('#conversation').append('<b>'+ username + ':</b> ' + data + '<br>');
     });
 
-
+  // Socket events for multiple room functionality, currently unused, available as future feature:
 
     // listener, whenever the server emits 'updaterooms', this updates the room the client is in
     // $scope.socket.on('updaterooms', function(rooms, current_room) {
@@ -153,9 +156,10 @@ angular.module('twork.main', [])
 
  //  socket.emit('send', { room: room, message: message });
  // });
-    // on load of page
+
+
+  // Submit message when Send button is clicked.
     $(function() {
-    // when the client clicks SEND
     $('#datasend').click( function() {
       var message = {
         text: $('#data').val()
@@ -174,7 +178,7 @@ angular.module('twork.main', [])
         });
     });
 
-    // when the client hits ENTER on their keyboard
+  // Submit message when Send button is clicked.
     $('#data').keypress(function(e) {
       if (e.which == 13) {
         $(this).blur();
@@ -191,6 +195,7 @@ angular.module('twork.main', [])
 
   $scope.socket = io();
 
+  // Define listener for adding task.
   $scope.socket.on('add', function(task) {
     $scope.$apply(function() {
       $scope.tasks[task._id] = task;
@@ -198,6 +203,7 @@ angular.module('twork.main', [])
     });
   });
 
+  // Define listener for deleting task.
   $scope.socket.on('delete', function(taskId) {
     $scope.$apply(function() {
       delete $scope.tasks[taskId];
@@ -244,7 +250,7 @@ angular.module('twork.main', [])
 
     urgency = urgency || 'Not Urgent';
 
-    // empty input fields after submission and reset form to pristine
+    // Empty input fields after submission and reset form.
     $scope.task.name = null;
     $scope.task.date = null;
     $scope.task.urgency = null;

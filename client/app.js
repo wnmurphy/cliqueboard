@@ -1,4 +1,3 @@
-// Declare app level module which depends on views, and components
 angular.module('twork', [
   'ngRoute',
   'twork.login',
@@ -21,6 +20,7 @@ angular.module('twork', [
     });
 })
 .run(function ($rootScope, $location) {
+  // Check for user authentication on any re-reroute.
   $rootScope.$on('$routeChangeStart', function (event, next, current) {
     if (!$rootScope.loggedInUser && ($location.path() !== '/signup')) {
       $location.path('/login');

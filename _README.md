@@ -1,12 +1,12 @@
-# Collab.y
+# t'Work
 
 Making the world a better place by providing an arsenal of tools for team collaboration.
 
 ## Team
 
-  - __Product Owner__: Neil
-  - __Scrum Master__: Derek
-  - __Development Team Members__: Daniel, Brandon
+  - __Product Owner__: Neil Murphy
+  - __Scrum Master__: Derek Huang
+  - __Development Team Members__: Daniel Ramos, Brandon Stookey
 
 ## Table of Contents
 
@@ -20,7 +20,12 @@ Making the world a better place by providing an arsenal of tools for team collab
 
 ## Usage
 
-> Some usage instructions
+  To install the app locally:
+    1. Fork and clone the repo.
+    2. Run **npm install** from the root.
+    3. Run **bower install** from the root.
+    4. Run **nodemon server.js**
+    5. Open localhost:4568 in Chrome.
 
 ## Requirements
 
