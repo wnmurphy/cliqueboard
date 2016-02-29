@@ -20,29 +20,31 @@
       <ul class="collapsible popout" data-collapsible="accordion" watch>
         <li>
           <div class="collapsible-header">
-             <h4>Tasks<i class="material-icons prefix">assignment</i></h4></div>
+           <h4>Tasks<i class="material-icons prefix">assignment</i></h4>
+          </div>
           <div class="collapsible-body">
-            <form name='createTask'>
-              <div input-field id='taskContainer'>
-                <input type='text' id='taskInput' ng-model='task.name' required>
-                <label>Add Task</label>
-              </div>
-              <div input-field id='dateContainer'>
-                <input input-date type='text' id='datepicker' ng-model='task.date' required>
-                <label for='datepicker'>Due Date</label>
-              </div>
-              <div id='urgencyContainer'>
-                <label class='urgency'>Urgency</label>
-                <select class='browser-default' ng-model='task.urgency'>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-                <a ng-class='createTask.$pristine ? "btn disabled" : "btn"' ng-click='addTask(task.name, task.date, task.urgency)'>Add</a>
-              </div>
-            </form>
+
+              <form name='createTask'>
+                <div input-field id='taskContainer'>
+                  <input type='text' id='taskInput' ng-model='task.name' required>
+                  <label>Add Task</label>
+                </div>
+                <div input-field id='dateContainer'>
+                  <input input-date type='text' id='datepicker' ng-model='task.date' required>
+                  <label for='datepicker'>Due Date</label>
+                </div>
+                <div id='urgencyContainer'>
+                  <label class='urgency'>Urgency</label>
+                  <select class='browser-default' ng-model='task.urgency'>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                  <a ng-class='createTask.$pristine ? "btn disabled" : "btn"' ng-click='addTask(task.name, task.date, task.urgency)'>Add</a>
+                </div>
+              </form>
 
             <table class='bordered highlight centered'>
               <thead>
@@ -66,6 +68,7 @@
                   <td>{{ value.created }}</td>
                   <td>{{ value.due }}</td>
                   <td>{{ value.urgency }}</td>
+                  <td><a class='btn-tiny red-text' ng-click='delete(value)'>x</a></td>
                 </tr>
               </tbody>
             </table>
