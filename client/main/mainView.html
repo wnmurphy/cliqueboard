@@ -1,5 +1,5 @@
 <!-- Whiteboard -->
-<div class="row">
+<div class="row" style='margin-bottom: 10px'>
 
   <div class="col s8">
     <div id="whiteboard" ng-controller="whiteboardController">
@@ -53,10 +53,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat='(key, value) in tasks track by key' ng-click='delete(value)'>
+                <tr ng-repeat='(key, value) in tasks track by key'>
                   <td id='checkbox'>
                     <input-field>
-                      <input type='checkbox'>
+                      <input type='checkbox' ng-model='{{key}}' ng-checked='value.complete'>
                       <label></label>
                     </input-field>
                   </td>
@@ -64,6 +64,7 @@
                   <td>{{ value.created }}</td>
                   <td>{{ value.due }}</td>
                   <td>{{ value.urgency }}</td>
+                  <pre>key = {{ key }}</pre>
                 </tr>
               </tbody>
             </table>
