@@ -23,13 +23,15 @@
      <!-- <link rel="stylesheet" href="dist/style.min.css"> -->
   </head>
 
-  <body ng-class='!loggedInUser ? "blue lighten-1" : ""'>
-    <ul class="menu">
-      <li ng-controller="loginController">
-        <a class='btn' ng-click="logoutUser()" ng-show="loggedInUser"><i class='material-icons right'>call_made</i>Logout</a>
-      </li>
-    </ul>
-
+  <body ng-class='!loggedInUser ? "blue lighten-1" : ""' ng-controller="loginController">
+    <div ng-show="loggedInUser">
+        <span>
+            <img id="logo" src="img/triceratops.gif">
+        </span>
+        <span class="menu">
+            <a class='btn' ng-click="logoutUser()"><i class='material-icons right'>call_made</i>Logout</a>
+        </span>
+    </div>
     <div ng-view>
     </div>
 
