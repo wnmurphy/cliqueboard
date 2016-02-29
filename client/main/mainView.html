@@ -1,5 +1,5 @@
 <!-- Whiteboard -->
-<div class="row">
+<div class="row" style='margin-bottom: 10px'>
 
   <div class="col s8">
     <div id="whiteboard" ng-controller="whiteboardController">
@@ -20,27 +20,31 @@
       <ul class="collapsible popout" data-collapsible="accordion" watch>
         <li>
           <div class="collapsible-header">
-             <h4>Tasks<i class="material-icons prefix">assignment</i></h4></div>
+           <h4>Tasks<i class="material-icons prefix">assignment</i></h4>
+          </div>
           <div class="collapsible-body">
-            <form name='createTask'>
-              <div input-field id='taskContainer'>
-                <input type='text' id='taskInput' ng-model='task.name' required>
-                <label>Add Task</label>
-              </div>
-              <div input-field id='dateContainer'>
-                <input input-date type='text' id='datepicker' ng-model='task.date' required>
-                <label for='datepicker'>Due Date</label>
-              </div>
-              <label class='urgency'>Urgency</label>
-              <select class='browser-default' ng-model='task.urgency'>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-              <a class='btn-floating' ng-click='addTask(task.name, task.date, task.urgency)' ng-disabled='createTask.$pristine'><i class='material-icons right'>add</i></a>
-            </form>
+
+              <form name='createTask'>
+                <div input-field id='taskContainer'>
+                  <input type='text' id='taskInput' ng-model='task.name' required>
+                  <label>Add Task</label>
+                </div>
+                <div input-field id='dateContainer'>
+                  <input input-date type='text' id='datepicker' ng-model='task.date' required>
+                  <label for='datepicker'>Due Date</label>
+                </div>
+                <div id='urgencyContainer'>
+                  <label class='urgency'>Urgency</label>
+                  <select class='browser-default' ng-model='task.urgency'>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                  <a ng-class='createTask.$pristine ? "btn disabled" : "btn"' ng-click='addTask(task.name, task.date, task.urgency)'>Add</a>
+                </div>
+              </form>
 
             <table class='bordered highlight centered'>
               <thead>
@@ -53,17 +57,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat='(key, value) in tasks track by key' ng-click='delete(value)'>
+                <tr ng-repeat='(key, value) in tasks track by key'>
                   <td id='checkbox'>
                     <input-field>
-                      <input type='checkbox'>
-                      <label></label>
+                      <input type='checkbox' id='check' ng-click='toggle(value)' ng-checked='value.complete'>
+                      <label for='check'></label>
                     </input-field>
                   </td>
                   <td>{{ value.name }}</td>
                   <td>{{ value.created }}</td>
                   <td>{{ value.due }}</td>
                   <td>{{ value.urgency }}</td>
+                  <td><a class='btn-tiny red-text' ng-click='delete(value)'>x</a></td>
                 </tr>
               </tbody>
             </table>
@@ -79,7 +84,7 @@
 <div class ="row" id='chat'>
    <div ng-controller="chatController">
       <h4>Chat<i class='material-icons'>chat</i></h4>
-        <div class="col s1">
+        <div class="col s1" id='usersContainer'>
           <b>USERS</b>
            <div id="users"></div>
         </div>

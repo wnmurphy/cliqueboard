@@ -23,18 +23,20 @@ mongoose.connection.once('open', function() {
 var userSchema = mongoose.Schema({
   username: {
     type: String,
-    required: true,
-    index: {
-      unique: true
-    }
+    unique: true,
+    required: true
   },
   email: {
     type: String,
+    unique: true,
     required: true
   },
   password: {
     type: String,
     required: true
+  },
+  messages: {
+    type: Array
   }
 });
 
@@ -92,17 +94,17 @@ module.exports.Task = Task;
 
 // ================ Create and export Room model ==============
 
-var roomSchema = mongoose.Schema({
-  roomname: {
-    type: String,
-    required: true
-  },
-  messages: {
-    type: Array,
-    required: true
-  }
-});
+// var roomSchema = mongoose.Schema({
+//   roomname: {
+//     type: String,
+//     required: true
+//   },
+//   messages: {
+//     type: Array,
+//     required: true
+//   }
+// });
 
-var Room = mongoose.model('Room', roomSchema);
+// var Room = mongoose.model('Room', roomSchema);
 
-module.exports.Room = Room;
+// module.exports.Room = Room;

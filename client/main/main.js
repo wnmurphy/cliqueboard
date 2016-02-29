@@ -87,8 +87,12 @@ angular.module('twork.main', [])
 })
 
 //====================== Chat Controller ==================
-.controller('chatController', function ($scope, $rootScope) {
+.controller('chatController', function ($scope, $rootScope, $http) {
   var userInfo = $rootScope.userData;
+
+  $scope.init = function() {
+    
+  };
 
   //creates an open connection for collobartive messaging
   //Set up socket connection for incoming/outgoing chat events
@@ -153,10 +157,21 @@ angular.module('twork.main', [])
     $(function() {
     // when the client clicks SEND
     $('#datasend').click( function() {
-      var message = $('#data').val();
+      var message = {
+        text: $('#data').val()
+      };
+
       $('#data').val('');
-      // tell server to execute 'sendchat' and send along one parameter
-      $scope.socket.emit('sendchat', message);
+
+      $http.post('/chat', message)
+        .then(function(success) {
+          console.log('Message POST successful');
+          // tell server to execute 'sendchat' and send along one parameter
+          $scope.socket.emit('sendchat', message);
+        })
+        .catch(function(err) {
+          console.error('Message POST error:', err);
+        });
     });
 
     // when the client hits ENTER on their keyboard
@@ -186,6 +201,12 @@ angular.module('twork.main', [])
   $scope.socket.on('delete', function(taskId) {
     $scope.$apply(function() {
       delete $scope.tasks[taskId];
+    });
+  });
+
+  $scope.socket.on('toggle', function(taskId, status) {
+    $scope.$apply(function() {
+      $scope.tasks[taskId].complete = status;
     });
   });
 
@@ -256,6 +277,7 @@ angular.module('twork.main', [])
       task.complete = true;
       $http.put('/tasks/' + task._id + '/complete')
         .then(function(success) {
+          $scope.socket.emit('toggleTask', task._id, true);
           console.log('Task PUT successful');
         })
         .catch(function(err) {
@@ -265,6 +287,7 @@ angular.module('twork.main', [])
       task.complete = false;
       $http.put('/tasks/' + task._id + '/incomplete')
         .then(function(success) {
+          $scope.socket.emit('toggleTask', task._id, false);
           console.log('Task PUT successful');
         })
         .catch(function(err) {
@@ -315,6 +338,12 @@ angular.module('twork.main', [])
       var date = due ?
         month + day :
         month + day + ' at ' + hour + minutes;
+
+      // Angular-materialize's datepicker defaults to 12/31 if 
+      // no date is chosen
+      if (date === '12/31') {
+        date = 'N/A';
+      }
 
       return date;
     }
