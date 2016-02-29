@@ -16,7 +16,7 @@ angular.module('twork.main', [])
     // Store the context
     this.ctx = this.canvas.getContext("2d");
 
-    // Set preferences for the line drawing.
+    // Set preferences⁄ for the line drawing.
     this.ctx.fillStyle = "solid";
     this.ctx.strokeStyle = $scope.color;
     this.ctx.lineWidth = 1;
@@ -174,6 +174,12 @@ angular.module('twork.main', [])
 .controller('tasksController', function ($scope, $http, Tasks) {
   angular.extend($scope, Tasks);
 
+  $scope.task = {
+    name: null,
+    date: null,
+    urgency: null
+  };
+
   $scope.socket = io('http://localhost:4568');
 
   $scope.socket.on('add', function(task) {
@@ -269,33 +275,6 @@ angular.module('twork.main', [])
       });
   };
 
-
-  // $scope.clear = function() {
-  //   this.createTask.$setPristine();
-
-  //   var ids = $scope.tasks.map(function(task) {
-  //     if (task.complete) {
-  //       return task._id;
-  //     }
-  //   });
-
-  //   $http.delete('/tasks/' + ids)
-  //     .then(function(result, err) {
-  //       if (err) {
-  //         console.error('Task DELETE error:', err);
-  //         return;
-  //       } else {
-  //         console.log('Clear successful');
-  //         $scope.tasks.forEach(function(task, i) {
-  //           if (task.complete) {
-  //             $scope.tasks.splice(i, 1);
-  //           }
-  //         });
-  //       }
-  //     });
-
-  // };
-
 })
 .factory('Tasks', function($http) {
 
@@ -327,7 +306,6 @@ angular.module('twork.main', [])
         month + day + ' at ' + hour + minutes;
 
       return date;
-
     }
 
   };
