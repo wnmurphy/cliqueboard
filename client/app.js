@@ -3,7 +3,8 @@ angular.module('twork', [
   'ngRoute',
   'twork.login',
   'twork.signup',
-  'twork.main'
+  'twork.main',
+  'ui.materialize'
 ])
 .config(function($routeProvider, $locationProvider) {
   $routeProvider
