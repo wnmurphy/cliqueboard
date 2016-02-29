@@ -177,12 +177,16 @@ angular.module('twork.main', [])
   $scope.socket = io();
 
   $scope.socket.on('add', function(task) {
-    $scope.tasks[task._id] = task;
-    console.log('ADDED:', task);
+    $scope.$apply(function() {
+      $scope.tasks[task._id] = task;
+      console.log('ADDED:', task);
+    });
   });
 
   $scope.socket.on('delete', function(taskId) {
-    delete $scope.tasks[taskId];
+    $scope.$apply(function() {
+      delete $scope.tasks[taskId];
+    });
   });
 
   // the task object is created to provide access to the input 
