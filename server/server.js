@@ -190,6 +190,10 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('delete', taskId);
   });
 
+  socket.on('toggleTask', function(taskId, status) {
+    socket.broadcast.emit('toggle', taskId, status);
+  });
+
 // ================ Whiteboard socket ============== //
 
   socket.on('drawClick', function(data) {

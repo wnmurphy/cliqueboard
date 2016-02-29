@@ -189,6 +189,12 @@ angular.module('twork.main', [])
     });
   });
 
+  $scope.socket.on('toggle', function(taskId, status) {
+    $scope.$apply(function() {
+      $scope.tasks[taskId].complete = status;
+    });
+  });
+
   // the task object is created to provide access to the input 
   // field models in mainView.html at lines 24, 28, and 32
   $scope.task = {
@@ -256,6 +262,7 @@ angular.module('twork.main', [])
       task.complete = true;
       $http.put('/tasks/' + task._id + '/complete')
         .then(function(success) {
+          $scope.socket.emit('toggleTask', task._id, true);
           console.log('Task PUT successful');
         })
         .catch(function(err) {
@@ -265,6 +272,7 @@ angular.module('twork.main', [])
       task.complete = false;
       $http.put('/tasks/' + task._id + '/incomplete')
         .then(function(success) {
+          $scope.socket.emit('toggleTask', task._id, false);
           console.log('Task PUT successful');
         })
         .catch(function(err) {
@@ -315,6 +323,12 @@ angular.module('twork.main', [])
       var date = due ?
         month + day :
         month + day + ' at ' + hour + minutes;
+
+      // Angular-materialize's datepicker defaults to 12/31 if 
+      // no date is chosen
+      if (date === '12/31') {
+        date = 'N/A';
+      }
 
       return date;
     }

@@ -26,17 +26,22 @@ html {
 
 label.urgency {
   font-size: 1rem;
-  margin-left: 3%;
+  margin-left: 6%;
 }
 
 select {
   width: 13%;
   height: 2rem;
-  margin: 2% 0 0 3%;
+  margin: 2% 2% 0 3%;
+}
+
+select.browser-default {
+  display: inline-block;
 }
 
 a.btn-floating {
-  margin: 3% 0 0 4%;
+  display: inline-block;
+  margin: 3% 0 3% 4%;
 }
 
 /* Task checkbox */
@@ -92,11 +97,15 @@ table {
   border: 1px solid black;
 }
 
+#usersContainer {
+  border: 1px solid black;
+}
+
 /* Chat input text field */
 #data {
   width: 75%;
 }
 
-#logo{
+#logo {
   width: 10%;
 }
