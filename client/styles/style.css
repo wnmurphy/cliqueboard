@@ -39,8 +39,48 @@ a.btn-floating {
   margin: 3% 0 0 4%;
 }
 
-#tasks > table > tbody > tr > td:nth-child(1) > div > div {
-  width: 50%;
-  height: 2.5rem;
-  margin: 0 0 10% 16%;
+/* Task checkbox */
+td#checkbox {
+  padding: 0 3% 8% 2%;
+}
+
+input[type].valid {
+  border-bottom: #fff;
+  box-shadow: 0 1px 0 0 #fff;
+}
+
+input[type].valid+label:after, input[type]:focus.valid+label:after {
+  color: #fff;
+}
+
+#taskContainer {
+  margin-left: 3%;
+}
+
+#taskInput {
+  width: 95%;
+}
+
+#dateContainer {
+  margin-left: 3%;
+}
+
+#datepicker {
+  width: 95%;
+}
+
+table {
+  width: 90%;
+  margin-left: 3%;
+}
+
+/* Chat div */
+#chat {
+  width: 65%;
+  margin: 0;
+}
+
+/* Chat input text field */
+#data {
+  width: 75%;
 }

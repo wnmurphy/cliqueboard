@@ -186,6 +186,10 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('add', task);
   });
 
+  socket.on('deleteTask', function(taskId) {
+    socket.broadcast.emit('delete', taskId);
+  });
+
 // ================ Whiteboard socket ============== //
 
   socket.on('drawClick', function(data) {
