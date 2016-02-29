@@ -17,17 +17,17 @@
       <ul class="collapsible popout" data-collapsible="accordion" watch>
         <li>
           <div class="collapsible-header">
-             <h4><i class="material-icons prefix">assignment</i>Tasks</h4></div>
+             <h4>Tasks<i class="material-icons prefix">assignment</i></h4></div>
           <div class="collapsible-body">
             <form name='createTask'>
-              <div input-field>
-                <input type='text' ng-model='task.name' required>
+              <div input-field id='taskContainer'>
+                <input type='text' id='taskInput' ng-model='task.name' required>
                 <label>Add Task</label>
               </div>
-              <input-field>
+              <div input-field id='dateContainer'>
                 <input input-date type='text' id='datepicker' ng-model='task.date' required>
                 <label for='datepicker'>Due Date</label>
-              </input-field>
+              </div>
               <label class='urgency'>Urgency</label>
               <select class='browser-default' ng-model='task.urgency'>
                 <option>1</option>
@@ -50,18 +50,17 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat='task in tasks track by $index'>
-                  <td>
-                    <div input-field>
+                <tr ng-repeat='(key, value) in tasks track by key' ng-click='delete(value)'>
+                  <td id='checkbox'>
+                    <input-field>
                       <input type='checkbox'>
                       <label></label>
-                    </div>
+                    </input-field>
                   </td>
-                  <td>{{ task.name }}</td>
-                  <td>{{ task.created }}</td>
-                  <td>{{ task.due }}</td>
-                  <td>{{ task.urgency }}</td>
-                  <td><a class='btn-floating red' ng-click='delete(task)'><i class='material-icons'>delete</i></a></td>
+                  <td>{{ value.name }}</td>
+                  <td>{{ value.created }}</td>
+                  <td>{{ value.due }}</td>
+                  <td>{{ value.urgency }}</td>
                 </tr>
               </tbody>
             </table>
@@ -74,9 +73,9 @@
  </div>
 
 <!-- Chat  -->
-<div class ="row">
-   <div id='chat' ng-controller="chatController">
-      <h4><i class='material-icons'>chat</i>Chat</h4>
+<div class ="row" id='chat'>
+   <div ng-controller="chatController">
+      <h4>Chat<i class='material-icons'>chat</i></h4>
         <div class="col s1">
           <b>USERS</b>
            <div id="users"></div>
@@ -84,7 +83,7 @@
         <div class="col s10">
           <div id="conversation"></div>
             <input id="data" autofocus />
-            <input type="button" id="datasend" value="send" />
+            <a class="btn" id="datasend"><i class='material-icons right'>send</i>Send</a>
         </div>
     </div>
 </div>

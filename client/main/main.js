@@ -174,24 +174,36 @@ angular.module('twork.main', [])
 .controller('tasksController', function ($scope, $http, Tasks) {
   angular.extend($scope, Tasks);
 
+  $scope.socket = io();
+
+  $scope.socket.on('add', function(task) {
+    $scope.$apply(function() {
+      $scope.tasks[task._id] = task;
+      console.log('ADDED:', task);
+    });
+  });
+
+  $scope.socket.on('delete', function(taskId) {
+    $scope.$apply(function() {
+      delete $scope.tasks[taskId];
+    });
+  });
+
+  // the task object is created to provide access to the input 
+  // field models in mainView.html at lines 24, 28, and 32
   $scope.task = {
     name: null,
     date: null,
     urgency: null
   };
 
-  $scope.socket = io('http://localhost:4568');
-
-  $scope.socket.on('add', function(task) {
-    console.log('TASKS SOCKET ADD:', task);
-    $scope.tasks.push(task);
-  });
-
   $scope.init = function() {
     $http.get('/tasks')
       .then(function(result) {
         result.data.forEach(function(task) {
-          $scope.tasks.push(task);
+          if (!$scope.tasks[task._id]) {
+            $scope.tasks[task._id] = task;
+          }
         });
         console.log('Task GET successful:', $scope.tasks);
       })
@@ -211,13 +223,13 @@ angular.module('twork.main', [])
 
     urgency = urgency || 'Not Urgent';
 
-    // empty task and date input field after entry
-    this.task = '';
-    this.datetime = '';
-    this.urgency = '';
-    this.createTask.$setPristine();
+    // empty input fields after submission and reset form to pristine
+    $scope.task.name = null;
+    $scope.task.date = null;
+    $scope.task.urgency = null;
+    $scope.createTask.$setPristine();
 
-    var task = {
+    var newTask = {
       name: name,
       created: $scope.formatDate(new Date(Date.now()), false),
       due: due,
@@ -225,16 +237,18 @@ angular.module('twork.main', [])
       complete: false
     };
 
-    $http.post('/tasks', task)
+    $http.post('/tasks', newTask)
       .then(function(success) {
         console.log('Task POST successful:', success);
-        $scope.tasks.push(success.data);
+        if (!$scope.tasks[success.data._id]) {
+          $scope.socket.emit('addTask', success.data);
+          $scope.tasks[success.data._id] = success.data;
+        }
       })
       .catch(function(err) {
         console.error('Task POST error:', err);
       });
 
-    $scope.socket.emit('addTask', task);
   };
 
   $scope.toggle = function(task) {
@@ -260,19 +274,16 @@ angular.module('twork.main', [])
   };
 
   $scope.delete = function(task) {
-    $scope.tasks.forEach(function(item, i) {
-      if (item._id === task._id) {
-        $scope.tasks.splice(i, 1);
-      }
-    });
-
     $http.delete('/tasks/' + task._id)
       .then(function(result) {
+        $scope.socket.emit('deleteTask', task._id);
         console.log('Task DELETE successful');
       })
       .catch(function(err) {
         console.error('Task DELETE error:', err);
       });
+
+    delete $scope.tasks[task._id];
   };
 
 })
@@ -280,7 +291,7 @@ angular.module('twork.main', [])
 
   var obj = {
 
-    tasks: [],
+    tasks: {},
 
     formatDate: function(dateStr, due) {
       // the due parameter is just a flag for whether the date
