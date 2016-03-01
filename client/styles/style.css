@@ -9,7 +9,7 @@ html {
 .canvas {
   height: 500px;
   width: 100%;
-  background: #fdf7da;
+  background: #f1f1f1;
   border: 10px ridge #e3e3e3;
 }
 
@@ -87,8 +87,10 @@ table {
 /* Chat div */
 #chat {
   width: 65%;
-  margin: 0 0 0 1%;
+  margin: 0 0 2% 1%;
+  padding-bottom: 1%;
   border: 1px solid black;
+
 }
 
 #conversation {
@@ -98,7 +100,7 @@ table {
 }
 
 #usersContainer {
-  border: 1px solid black;
+  margin-left: 1%;
 }
 
 /* Chat input text field */
@@ -107,5 +109,5 @@ table {
 }
 
 #logo {
-  width: 10%;
+  width: 7%;
 }
