@@ -121,57 +121,58 @@ angular.module('twork.main', [])
 
    // Append incoming message when server emits 'updatechat'.
    $scope.socket.on('updatechat', function (username, data) {
-      console.log('updatechat listener in controller reached');
+      // console.log('updatechat listener in controller reached');
       $('#conversation').append('<b>'+ username + ':</b> ' + data + '<br>');
     });
 
   // Socket events for multiple room functionality, currently unused, available as future feature:
   // listener, whenever the server emits 'updaterooms', this updates the room the client is in
-  	$scope.socket.on('updaterooms', function(rooms, current_room) {
-  		$('#rooms').empty();
+    $scope.socket.on('updaterooms', function(rooms, current_room) {
+      $('#rooms').empty();
       $.each(rooms, function(key, value) {
 
         if(value == current_room){
-          $('#rooms').append('<div class="btn">' + value + '</div>');
+          $('#rooms').append('<li><a class="btn">' + value + '</a></li>');
         } else {
-          var element = $compile(`<div><a class="btn" ng-click="switchRoom('${value}')">${value}</a></div>`)($scope);
-  				$('#rooms').append(element);
-  			}
-  		});
-  	});
+          var element = $compile(`<li><a class="btn" ng-click="switchRoom('${value}')">${value}</a></li>`)($scope);
+          $('#rooms').append(element);
+        }
+      });
+    });
 
 
-  	$scope.switchRoom = function(room) {
+    $scope.switchRoom = function(room) {
       console.log('switchRoom func in controller reached:', room);
-  		$scope.socket.emit('switchRoom', room);
-  	};
+      $scope.socket.emit('switchRoom', room);
+    };
 
+    $scope.inputFocus = function () {
+      document.getElementById("data").focus();
+    };
   // Submit message when Send button is clicked.
     $(function() {
     $('#datasend').click( function() {
-      var message = {
-        text: $('#data').val()
-      };
-
+      var message = $('#data').val()
       $('#data').val('');
-
-      $http.post('/chat', message)
-        .then(function(success) {
-          console.log('Message POST successful');
-          // tell server to execute 'sendchat' and send along one parameter
-          $scope.socket.emit('sendchat', message);
-        })
-        .catch(function(err) {
-          console.error('Message POST error:', err);
-        });
+      $scope.socket.emit('sendchat', message);
+      // $http.post('/chat', message)
+      //   .then(function(success) {
+      //     console.log('Message POST successful');
+      //     // tell server to execute 'sendchat' and send along one parameter
+      //     $scope.socket.emit('sendchat', message);
+      //   })
+      //   .catch(function(err) {
+      //     console.error('Message POST error:', err);
+      //   });
      });
 
   // Submit message when Send button is clicked.
     $('#data').keypress(function(e) {
-      if (e.which == 13) {
-        $(this).blur();
-        $('#datasend').focus().click();
-      }
+     if (e.which == 13) {
+       $(this).blur();
+       $('#datasend').focus().click();
+       $('#data').focus();
+     }
     });
   });
 })
@@ -217,6 +218,7 @@ angular.module('twork.main', [])
         result.data.forEach(function(task) {
           if (!$scope.tasks[task._id]) {
             $scope.tasks[task._id] = task;
+            $scope.tasks[task._id].checked = $scope.tasks[task._id].complete;
           }
         });
         console.log('Task GET successful:', $scope.tasks);
@@ -265,7 +267,7 @@ angular.module('twork.main', [])
 
   };
 
-  $scope.toggle = function(task) {
+  $scope.toggle = function(task, key) {
     if (!task.complete) {
       task.complete = true;
       $http.put('/tasks/' + task._id + '/complete')

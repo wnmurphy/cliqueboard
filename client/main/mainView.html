@@ -60,8 +60,8 @@
                 <tr ng-repeat='(key, value) in tasks track by key'>
                   <td id='checkbox'>
                     <input-field>
-                      <input type='checkbox' id='check' ng-click='toggle(value)' ng-checked='value.complete'>
-                      <label for='check'></label>
+                      <input type='checkbox' ng-model='value.checked' id='{{ key }}' ng-click='toggle(value)' ng-checked='value.complete'>
+                      <label for='{{ key }}'></label>
                     </input-field>
                   </td>
                   <td>{{ value.name }}</td>
@@ -82,20 +82,26 @@
 
 <!-- Chat  -->
 <div class ="row" id='chat'>
-   <div ng-controller="chatController">
-      <h4>Chat<i class='material-icons'>chat</i></h4>
-        <div class="col s1" id='usersContainer'>
-          <b>USERS</b>
-           <div id="users"></div>
-        </div>
-        <div class="col s2">
-          <b>ROOMS</b>
-          <div id="rooms"></div>
-        </div>
-        <div class="col s8">
-          <div id="conversation"></div>
-            <input id="data" autofocus />
-            <a class="btn" id="datasend"><i class='material-icons right'>send</i>Send</a>
-        </div>
+  <div ng-controller="chatController">
+    <nav>
+      <div class="nav-wrapper white">
+        <a href='#' class='brand-logo right black-text'>ROOMS</a>
+        <ul class='left hide-on-med-and-down' id="rooms">
+        </ul>
+      </div>
+    </nav>
+    <h4>Chat<i class='material-icons'>chat</i></h4>
+    <div class="col s1" id='usersContainer'>
+      <b>USERS</b>
+      <div class="chip">
+
+      <div id="users"></div>
     </div>
+    </div>
+    <div class="col s8">
+      <div id="conversation"></div>
+        <input id="data" autofocus />
+        <a class="btn" id="datasend" ng-click = "inputFocus()"><i class='material-icons right'>send</i>Send</a>
+    </div>
+  </div>
 </div>
