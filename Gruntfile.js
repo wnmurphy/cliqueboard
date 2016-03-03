@@ -137,11 +137,11 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'test',
-    'ngAnnotate',
-    'concat',
-    'cssmin',
-    'uglify'
+    // 'test',
+    // 'ngAnnotate',
+    // 'concat',
+    // 'cssmin',
+    // 'uglify'
   ]);
 
   grunt.registerTask('upload', function(n) {
