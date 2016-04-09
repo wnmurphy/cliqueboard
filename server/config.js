@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var bluebird = require('bluebird');
 
-var mongoURI = process.env.MONGOLAB_URI || 'mongodb://127.0.0.1:27017/CliqueBoard';
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://127.0.0.1:27017/Cliqueboard';
 
 mongoose.connect(mongoURI, function(err, res) {
   if (err) {

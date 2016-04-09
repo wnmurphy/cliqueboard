@@ -5,7 +5,7 @@ describe('chatController', function () {
 
  // using angular mocks, we can inject the injector
  // to retrieve our dependencies
- beforeEach(module('CliqueBoard'));
+ beforeEach(module('Cliqueboard'));
  beforeEach(inject(function($injector) {
 
    // mock out our dependencies
@@ -66,7 +66,7 @@ describe('chatController', function () {
      }
    });
  });
- 
+
    it('Should be able to broadcast messages', function(done){
    var client1, client2, client3;
    var message = 'Hello World';
