@@ -4,7 +4,7 @@
   "description": "INTEGRATION OF MULTIPLE COLLABORATIVE TOOLS TO INSPIRE MOTIVATIONS OF EMPLOYEE INSPIRATION FOR INTEGRATION",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "nodemon server/server.js",
     "postinstall": "./node_modules/bower/bin/bower install"
   },
   "repository": {
