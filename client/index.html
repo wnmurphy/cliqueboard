@@ -26,10 +26,10 @@
   <body ng-class='!loggedInUser ? "blue lighten-1" : ""' ng-controller="loginController">
     <div ng-show="loggedInUser">
         <span id="logo">
-            <img id="logo" src="img/triceratops.gif">
+          <img id="logo" src="img/triceratops.gif">
         </span>
         <span class="menu">
-            <a class='btn' ng-click="logoutUser()"><i class='material-icons right'>call_made</i>Logout</a>
+          <a class='btn' ng-click="logoutUser()"><i class='material-icons right'>call_made</i>Logout</a>
         </span>
     </div>
     <div ng-view>
