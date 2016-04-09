@@ -1,4 +1,4 @@
-angular.module('twork.signup', [])
+angular.module('CliqueBoard.signup', [])
 
 .controller('signupController', function ($scope, signUpInfo) {
   angular.extend($scope, signUpInfo);
