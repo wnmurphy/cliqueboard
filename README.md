@@ -1,4 +1,4 @@
-# Clique Board
+# Cliqueboard
 
 Providing an arsenal of tools for team collaboration
 
