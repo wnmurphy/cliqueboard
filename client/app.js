@@ -1,8 +1,8 @@
-angular.module('twork', [
+angular.module('CliqueBoard', [
   'ngRoute',
-  'twork.login',
-  'twork.signup',
-  'twork.main',
+  'CliqueBoard.login',
+  'CliqueBoard.signup',
+  'CliqueBoard.main',
   'ui.materialize'
 ])
 .config(function($routeProvider, $locationProvider) {

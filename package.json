@@ -1,10 +1,9 @@
 {
-  "name": "t'Work",
+  "name": "CliqueBoard",
   "version": "0.0.1",
-  "description": "INTEGRATION OF MULTIPLE COLLABORATIVE TOOLS TO INSPIRE MOTIVATIONS OF EMPLOYEE INSPIRATION FOR INTEGRATION",
-  "main": "server.js",
+  "description": "Web application facilitating group workflow",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "nodemon server/server.js",
     "postinstall": "./node_modules/bower/bin/bower install"
   },
   "repository": {
@@ -64,6 +63,7 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-requirejs": "^0.2.5",
     "karma-unicorn-reporter": "^0.1.4",
+    "nodemon": "^1.9.1",
     "requirejs": "^2.1.22",
     "should": "^8.2.2",
     "socket.io-client": "^1.4.5",
