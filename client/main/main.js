@@ -1,4 +1,4 @@
-angular.module('CliqueBoard.main', [])
+angular.module('Cliqueboard.main', [])
 
 
 //====================== Whiteboard Controller ==================

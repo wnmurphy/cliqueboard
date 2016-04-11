@@ -3,7 +3,7 @@ describe('whiteboardController', function () {
 
   // using angular mocks, we can inject the injector
   // to retrieve our dependencies
-  beforeEach(module('CliqueBoard'));
+  beforeEach(module('Cliqueboard'));
   beforeEach(inject(function($injector) {
 
     // mock out our dependencies

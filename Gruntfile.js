@@ -1,20 +1,18 @@
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     ngAnnotate: {
-        demo: {
-            files: {
-                'client/dist/WithAnnotationsCtrl.js': ['client/app.js', 'client/main/main.js', 'client/login/login.js','client/login/signup.js']
-            },
-        }
+      demo: {
+        files: {
+          'client/dist/WithAnnotationsCtrl.js': ['client/app.js', 'client/main/main.js', 'client/login/login.js','client/login/signup.js']
+        },
+      }
     },
     concat: {
       options: {
         separator: ';',
       },
       js: {
-        // src: ['client/lib/jquery.js', 'client/lib/underscore.js','client/lib/backbone.js','client/lib/handlebars.js', 'client/client/*.js'],
         src: ['client/lib/jquery.event.drag-2.0.js'],
         dest: 'client/dist/built.js'
       }
@@ -24,7 +22,6 @@ module.exports = function(grunt) {
       unit: {
         configFile: 'karma.conf.js',
       },
-      //continuous integration mode: run tests once in PhantomJS browser.
       continuous: {
         configFile: 'karma.conf.js',
         singleRun: true,
@@ -49,11 +46,11 @@ module.exports = function(grunt) {
 
     jshint: {
       files:[
-         [
-         'client/login/*.js',
-         'client/app.js',
-         'client/server/*.js' 
-         ],
+        [
+          'client/login/*.js',
+          'client/app.js',
+          'client/server/*.js'
+        ],
       ],
       options: {
         force: 'false',
@@ -93,9 +90,9 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
         command: [
-            'git add .',
-            'git commit -m "Pushing to production"',
-            'git push heroku master'
+          'git add .',
+          'git commit -m "Pushing to production"',
+          'git push heroku master'
         ].join('&&')
       }
     },
@@ -115,14 +112,12 @@ module.exports = function(grunt) {
   grunt.registerTask('server-dev', function (target) {
     // Running nodejs in a different process and displaying output on the main console
     var nodemon = grunt.util.spawn({
-         cmd: 'grunt',
-         grunt: true,
-         args: 'nodemon'
+      cmd: 'grunt',
+      grunt: true,
+      args: 'nodemon'
     });
-    console.log("PORT: ", target);
     nodemon.stdout.pipe(process.stdout);
     nodemon.stderr.pipe(process.stderr);
-
     grunt.task.run([ 'watch' ]);
   });
 
@@ -130,23 +125,21 @@ module.exports = function(grunt) {
   // Main grunt tasks
   ////////////////////////////////////////////////////
 
-
   grunt.registerTask('test', [
     // 'jshint',
     // 'karma'
   ]);
 
   grunt.registerTask('build', [
-    // 'test',
-    // 'ngAnnotate',
-    // 'concat',
-    // 'cssmin',
-    // 'uglify'
+    'test',
+    'ngAnnotate',
+    'concat',
+    'cssmin',
+    'uglify'
   ]);
 
-  grunt.registerTask('upload', function(n) {
-    if(grunt.option('production')) {
-      console.log("Pushing to production!"),
+  grunt.registerTask('upload', function (n) {
+    if (grunt.option('production')) {
       // upload to heroku
       grunt.task.run(['shell:prodServer']);
     } else {
@@ -155,21 +148,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('deploy', [
-    // 'test',
     'build',
     'upload'
   ]);
-  // grunt.registerTask('heroku:prod', ['build']);
   grunt.registerTask('heroku:production', 'build');
-
 };
-
-
-//
-//grunt deploy local deployment
-  //build it, then turn on server local
-//grunt deploy --prod
-  //got to heroku
-  //push to heroku
-  //then heroku will autommatically catch the heroku task
-  //and build it

@@ -23,7 +23,7 @@ var port = process.env.PORT || 4568;
 
 app.use(morgan('dev'));
 app.use(express.static(__dirname + './../client'));
-app.use(express.cookieParser('get CliqueBoardin you CliqueBoardin CliqueBoarder'));
+app.use(express.cookieParser('get Cliqueboardin you Cliqueboardin Cliqueboarder'));
 app.use(express.bodyParser());
 app.use(session({
   secret: 'keyboard cat',

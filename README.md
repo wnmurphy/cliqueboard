@@ -1,4 +1,4 @@
-# Clique Board
+# Cliqueboard
 
 Providing an arsenal of tools for team collaboration
 
@@ -43,4 +43,4 @@ Open localhost:4568 in Chrome
 
 ### Roadmap
 
-View the project roadmap [here](https://github.com/HRR12-Triceratops/hrr12-triceratops-greenfield/issues)
+View the project roadmap [here](https://github.com/Quadceras/Cliqueboard/issues)

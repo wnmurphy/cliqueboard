@@ -1,8 +1,8 @@
-angular.module('CliqueBoard', [
+angular.module('Cliqueboard', [
   'ngRoute',
-  'CliqueBoard.login',
-  'CliqueBoard.signup',
-  'CliqueBoard.main',
+  'Cliqueboard.login',
+  'Cliqueboard.signup',
+  'Cliqueboard.main',
   'ui.materialize'
 ])
 .config(function($routeProvider, $locationProvider) {

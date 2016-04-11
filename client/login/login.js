@@ -1,4 +1,4 @@
-angular.module('CliqueBoard.login', [])
+angular.module('Cliqueboard.login', [])
 
 .controller('loginController', function ($scope, $rootScope, logInUserInfo) {
   angular.extend($scope, logInUserInfo);
