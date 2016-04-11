@@ -1,6 +1,11 @@
 # Cliqueboard
 
-Providing an arsenal of tools for team collaboration
+Project collaboration suite.
+
+Provides an arsenal of tools for team collaboration:
+- Collaborative socket-based whiteboarding
+- Multi-room chat
+- Ticket/issue tracking
 
 ## Team
 
